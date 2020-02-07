@@ -3,10 +3,11 @@ package hello;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "RATING")
+@Table(name = "rating")
 public class Rating {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
 
@@ -22,13 +23,24 @@ public class Rating {
     @Column(name = "author")
     private String author;
 
-    public Rating(int stars, String title, String content, String author) {
+    @Column(name = "ratedBookId")
+    private long ratedBookId;
+
+    public Rating(int stars, String title, String content, String author, long ratedBookId) {
         this.stars = stars;
         this.title = title;
         this.content = content;
         this.author = author;
+        this.ratedBookId = ratedBookId;
     }
 
+    public long getRatedBookId() {
+        return ratedBookId;
+    }
+
+    public void setRatedBookId(long ratedBookId) {
+        this.ratedBookId = ratedBookId;
+    }
 
     public long getId() {
         return id;
