@@ -1,4 +1,4 @@
-package hello;
+package hello.persistence.model;
 
 import javax.persistence.*;
 
@@ -26,10 +26,9 @@ public class Rating {
     @Column(name = "ratedBookId")
     private long ratedBookId;
 
-    public Rating(int stars, String title, String content, String author, long ratedBookId) {
+    public Rating(int stars, String title, String author, long ratedBookId) {
         this.stars = stars;
         this.title = title;
-        this.content = content;
         this.author = author;
         this.ratedBookId = ratedBookId;
     }

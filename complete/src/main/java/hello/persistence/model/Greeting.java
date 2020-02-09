@@ -1,4 +1,4 @@
-package hello;
+package hello.persistence.model;
 
 public class Greeting {
 

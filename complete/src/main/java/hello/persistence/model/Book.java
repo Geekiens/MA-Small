@@ -1,30 +1,33 @@
-package hello;
+package hello.persistence.model;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
-@Table(name = "rating")
-public class Rating {
+@Table(name = "book")
+public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
 
-
+    @Column(name = "author")
     private String author;
 
+    @Column(name = "title")
     private String title;
 
+    @Column(name = "publishingYear")
     private String publishingYear;
 
+    @Column(name = "content")
     private String content;
 
-
-
-    @Column(name = "ratedBookId")
-    private long ratedBookId;
-
+    public Book(String author, String title) {
+        this.author = author;
+        this.title = title;
+    }
 
     public void setId(long id) {
         this.id = id;
@@ -66,14 +69,21 @@ public class Rating {
         this.content = content;
     }
 
-    public long getRatedBookId() {
-        return ratedBookId;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Book book = (Book) o;
+        return getId() == book.getId() &&
+                getAuthor().equals(book.getAuthor()) &&
+                getTitle().equals(book.getTitle()) &&
+                Objects.equals(getPublishingYear(), book.getPublishingYear()) &&
+                Objects.equals(getContent(), book.getContent());
     }
 
-    public void setRatedBookId(long ratedBookId) {
-        this.ratedBookId = ratedBookId;
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getAuthor(), getTitle(), getPublishingYear(), getContent());
     }
-
-
-    }
+}
 
