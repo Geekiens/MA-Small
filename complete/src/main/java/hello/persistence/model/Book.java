@@ -19,14 +19,23 @@ public class Book {
     private String title;
 
     @Column(name = "publishingYear")
-    private String publishingYear;
+    private int publishingYear;
 
     @Column(name = "content")
     private String content;
 
+    public Book() {}
+
     public Book(String author, String title) {
         this.author = author;
         this.title = title;
+    }
+
+    public Book(String author, String title, int publishingYear, String content) {
+        this.author = author;
+        this.title = title;
+        this.publishingYear = publishingYear;
+        this.content = content;
     }
 
     public void setId(long id) {
@@ -53,11 +62,11 @@ public class Book {
         this.title = title;
     }
 
-    public String getPublishingYear() {
+    public int getPublishingYear() {
         return publishingYear;
     }
 
-    public void setPublishingYear(String publishingYear) {
+    public void setPublishingYear(int publishingYear) {
         this.publishingYear = publishingYear;
     }
 
