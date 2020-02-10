@@ -31,5 +31,10 @@ public class BookController {
         System.out.println("Book:" + book.getAuthor());
     }
 
+    @DeleteMapping(path = "/books/{id}", consumes = "application/json")
+    public void deleteBook(@PathVariable("id") long id) {
+        bookService.deleteBook(id);
+    }
+
 
 }

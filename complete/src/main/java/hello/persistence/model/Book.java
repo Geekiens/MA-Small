@@ -18,6 +18,26 @@ public class Book {
     @Column(name = "title")
     private String title;
 
+    @Column(name = "genre")
+    private String genre;
+
+    @Column(name = "keywords")
+    private String[] keywords;
+
+    @Column(name = "languages")
+    private String[] languages;
+
+    @Column(name = "publisher")
+    private  String publisher;
+
+
+    @Column(name = "pages")
+    private int pages;
+
+
+    @Column(name = "isbn")
+    private String isbn;
+
     @Column(name = "publishingYear")
     private int publishingYear;
 
@@ -31,9 +51,10 @@ public class Book {
         this.title = title;
     }
 
-    public Book(String author, String title, int publishingYear, String content) {
+    public Book(String author, String title, String isbn, int publishingYear, String content) {
         this.author = author;
         this.title = title;
+        this.isbn = isbn;
         this.publishingYear = publishingYear;
         this.content = content;
     }
@@ -76,6 +97,14 @@ public class Book {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
     }
 
     @Override
