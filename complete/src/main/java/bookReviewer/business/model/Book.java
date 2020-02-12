@@ -1,6 +1,6 @@
-package hello.business.model;
+package bookReviewer.business.model;
 
-public class Book extends hello.persistence.model.Book {
+public class Book extends bookReviewer.persistence.model.Book {
     Offer[] offers;
 
     Book() {

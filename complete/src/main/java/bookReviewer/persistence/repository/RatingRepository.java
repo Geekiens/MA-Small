@@ -1,6 +1,6 @@
-package hello.persistence.repository;
+package bookReviewer.persistence.repository;
 
-import hello.persistence.model.Rating;
+import bookReviewer.persistence.model.Rating;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

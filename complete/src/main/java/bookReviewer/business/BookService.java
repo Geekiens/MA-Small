@@ -1,7 +1,7 @@
-package hello.business;
+package bookReviewer.business;
 
-import hello.persistence.model.Book;
-import hello.persistence.repository.BookRepository;
+import bookReviewer.persistence.model.Book;
+import bookReviewer.persistence.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

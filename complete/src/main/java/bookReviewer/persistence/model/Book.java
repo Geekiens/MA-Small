@@ -1,4 +1,4 @@
-package hello.persistence.model;
+package bookReviewer.persistence.model;
 
 import javax.persistence.*;
 import java.util.Objects;

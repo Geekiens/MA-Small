@@ -1,12 +1,11 @@
-package hello.presentation;
+package bookReviewer.presentation;
 
-import hello.business.BookService;
-import hello.persistence.model.Book;
+import bookReviewer.business.BookService;
+import bookReviewer.persistence.model.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 
 @RestController
 public class BookController {

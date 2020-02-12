@@ -1,4 +1,4 @@
-package hello.business.model;
+package bookReviewer.business.model;
 
 import java.math.BigDecimal;
 

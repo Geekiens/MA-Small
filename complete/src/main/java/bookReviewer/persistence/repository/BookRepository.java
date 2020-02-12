@@ -1,6 +1,6 @@
-package hello.persistence.repository;
+package bookReviewer.persistence.repository;
 
-import hello.persistence.model.Book;
+import bookReviewer.persistence.model.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

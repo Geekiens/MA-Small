@@ -1,6 +1,6 @@
-package hello.business;
+package bookReviewer.business;
 
-import hello.business.model.Offer;
+import bookReviewer.business.model.Offer;
 
 import java.util.ArrayList;
 
