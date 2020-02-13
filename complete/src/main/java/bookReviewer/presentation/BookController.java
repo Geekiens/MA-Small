@@ -1,7 +1,7 @@
 package bookReviewer.presentation;
 
 import bookReviewer.business.BookService;
-import bookReviewer.persistence.model.Book;
+import bookReviewer.business.model.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

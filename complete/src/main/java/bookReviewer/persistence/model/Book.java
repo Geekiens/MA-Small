@@ -30,10 +30,8 @@ public class Book {
     @Column(name = "publisher")
     private  String publisher;
 
-
     @Column(name = "pages")
     private int pages;
-
 
     @Column(name = "isbn")
     private String isbn;
@@ -59,6 +57,10 @@ public class Book {
         this.content = content;
     }
 
+    public long getId() {
+        return id;
+    }
+
     public void setId(long id) {
         this.id = id;
     }
@@ -71,16 +73,60 @@ public class Book {
         this.author = author;
     }
 
-    public long getId() {
-        return id;
-    }
-
     public String getTitle() {
         return title;
     }
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public String[] getKeywords() {
+        return keywords;
+    }
+
+    public void setKeywords(String[] keywords) {
+        this.keywords = keywords;
+    }
+
+    public String[] getLanguages() {
+        return languages;
+    }
+
+    public void setLanguages(String[] languages) {
+        this.languages = languages;
+    }
+
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
+
+    public int getPages() {
+        return pages;
+    }
+
+    public void setPages(int pages) {
+        this.pages = pages;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
     }
 
     public int getPublishingYear() {
@@ -97,14 +143,6 @@ public class Book {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public String getIsbn() {
-        return isbn;
-    }
-
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
     }
 
     @Override

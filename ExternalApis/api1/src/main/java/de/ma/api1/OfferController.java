@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import javax.websocket.server.PathParam;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 public class OfferController {
@@ -12,6 +13,11 @@ public class OfferController {
     @RequestMapping(value = "/offer", method = RequestMethod.GET)
     public ArrayList<Offer> offer(@PathParam(value="isbn") String isbn) {
         ArrayList<Offer> offers;
+        try {
+            TimeUnit.SECONDS.sleep(0);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         switch (isbn) {
             case "000-00-00000-00-1":
                 offers = createAllOffers(isbn, 699L);
@@ -57,7 +63,7 @@ public class OfferController {
     }
 
     private String generateAffiliateLink (String isbn, String media) {
-        return "www.vendor1.de/" + isbn + "?media=" + media + "&affiliate=bookreviewer";
+        return "www.Buchladen123.de/" + isbn + "?media=" + media + "&affiliate=bookreviewer";
     }
 }
 
