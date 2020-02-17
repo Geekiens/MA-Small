@@ -2,21 +2,39 @@ package bookReviewer.business;
 
 import bookReviewer.business.model.*;
 
+import bookReviewer.persistence.model.OfferPersistence;
+import bookReviewer.persistence.repository.OfferRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
+@Service
 public class OfferService {
 
-    public ArrayList<Offer> getOffers(String isbn) {
+    BookService bookService;
+
+    OfferRepository offerRepository;
+
+    public ArrayList<Offer> getOffers(Long id) {
+        String isbn = bookService.getIsbnById(id);
         ArrayList<Offer> allOffers = new ArrayList<Offer>();
         allOffers.addAll(getBuchladen123Offers(isbn));
         allOffers.addAll(getBuchVerkauf24Offers(isbn));
         allOffers.addAll(getYourFavoriteBookVendorOffers(isbn));
         return allOffers;
+    }
+
+    private void cacheRequestedOffers(ArrayList<Offer> offers) {
+        LocalDate date =LocalDate.now();
+        for (Offer offer : offers) {
+            OfferPersistence offerPersistence = new OfferPersistence(offer.getPrice(), date, offer.getVendor(), offer.getMediaType());
+            // Create if not exists, load all offers for isbn before
+        }
     }
 
     private ArrayList<Offer> getBuchladen123Offers(String isbn) {
@@ -84,8 +102,12 @@ public class OfferService {
     }
 
     private MediaType mapMediaTypeOfBuchVerkauf24(OfferApi2 offerApi2) {
+        return mapNumberToMediaType(offerApi2.getType());
+    }
+
+    private MediaType mapNumberToMediaType(int type) {
         MediaType mediaType;
-        switch (offerApi2.getType()) {
+        switch (type) {
             case 0:
                 mediaType = MediaType.HARDCOVER;
                 break;
@@ -165,26 +187,7 @@ public class OfferService {
     }
 
     private MediaType mapMediaTypeOfYourFavoriteBookVendor(OfferApi3 offerApi3) {
-        MediaType mediaType;
-        switch (offerApi3.getType()) {
-            case 0:
-                mediaType = MediaType.HARDCOVER;
-                break;
-            case 1:
-                mediaType = MediaType.PAPERBACK;
-                break;
-            case 2:
-                mediaType = MediaType.EBOOK;
-                break;
-            case 3:
-                mediaType = MediaType.AUDIOBOOK;
-                break;
-            default:
-                System.out.println("No mediaType assigned - Using hardcover as default");
-                mediaType = MediaType.HARDCOVER;
-                break;
-        }
-        return mediaType;
+        return mapNumberToMediaType(offerApi3.getType());
     }
 
     private SimpleClientHttpRequestFactory getClientHttpRequestFactory() {

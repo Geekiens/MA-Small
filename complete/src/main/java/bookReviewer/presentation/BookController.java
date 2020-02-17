@@ -1,10 +1,15 @@
 package bookReviewer.presentation;
 
 import bookReviewer.business.BookService;
-import bookReviewer.business.model.Book;
+import bookReviewer.business.OfferService;
+import bookReviewer.business.model.Offer;
+import bookReviewer.persistence.model.Book;
+import bookReviewer.presentation.mapper.BookMapper;
+import bookReviewer.presentation.model.BookPresentation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -14,9 +19,15 @@ public class BookController {
     @Autowired
     BookService bookService;
 
+    @Autowired
+    OfferService offerService;
+
+    BookMapper bookMapper;
+
     @GetMapping(path="/books/{id}", produces = "application/json")
-    public Book getBook(@PathVariable("id") long id) {
-        return bookService.getBook(id);
+    public BookPresentation getBook(@PathVariable("id") long id) {
+        return bookMapper.map(bookService.getBook(id), offerService.getOffers(id));
+
     }
 
     @GetMapping(path="/books", produces = "application/json")
