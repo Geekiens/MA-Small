@@ -1,9 +1,11 @@
 package bookReviewer.business;
 
+import bookReviewer.business.Mapper.OfferMapper;
 import bookReviewer.business.model.*;
 
+import bookReviewer.persistence.model.CachedOfferHistoryPersistence;
 import bookReviewer.persistence.model.OfferPersistence;
-import bookReviewer.persistence.repository.OfferRepository;
+import bookReviewer.persistence.repository.CachedOfferHistoryRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
@@ -12,13 +14,17 @@ import org.springframework.web.client.RestTemplate;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class OfferService {
 
-    BookService bookService;
+    private BookService bookService;
 
-    OfferRepository offerRepository;
+    private CachedOfferHistoryRepository cachedOfferHistoryRepository;
+
+    private OfferMapper offerMapper;
+
 
     public ArrayList<Offer> getOffers(Long id) {
         String isbn = bookService.getIsbnById(id);
@@ -26,31 +32,55 @@ public class OfferService {
         allOffers.addAll(getBuchladen123Offers(isbn));
         allOffers.addAll(getBuchVerkauf24Offers(isbn));
         allOffers.addAll(getYourFavoriteBookVendorOffers(isbn));
+
         return allOffers;
     }
 
-    private void cacheRequestedOffers(ArrayList<Offer> offers) {
-        LocalDate date =LocalDate.now();
+    private ArrayList<Offer> getCachedRequestedOffers(String isbn) {
+        List<CachedOfferHistoryPersistence> cachedOfferHistory = cachedOfferHistoryRepository.findAllByIsbn(isbn);
+        return offerMapper.mapCachedOfferHistoryPersistenceToOfferList(cachedOfferHistory);
+    }
+
+    private void cacheRequestedOffers(ArrayList<Offer> offers, String isbn) {
         for (Offer offer : offers) {
-            OfferPersistence offerPersistence = new OfferPersistence(offer.getPrice(), date, offer.getVendor(), offer.getMediaType());
-            // Create if not exists, load all offers for isbn before
+            CachedOfferHistoryPersistence cachedOfferHistory = cachedOfferHistoryRepository.findByIsbnAndVendorAndMediaType(isbn, offer.getVendor(), offer.getMediaType());
+            OfferPersistence mostCurrentOffer = cachedOfferHistory.getOffers().get(cachedOfferHistory.getOffers().size() -1);
+
+            if (mostCurrentOffer.getRequestDate() != LocalDate.now() || mostCurrentOffer.getPrice() != offer.getPrice()) {
+                OfferPersistence newCachedOffer = new OfferPersistence(offer.getPrice(), LocalDate.now());
+                cachedOfferHistory.addOffer(newCachedOffer);
+                cachedOfferHistoryRepository.save(cachedOfferHistory);
+            }
         }
+    }
+
+    private ArrayList<Offer> fillWithCachedOffers(String vendor, String isbn){
+        ArrayList<Offer> cachedOffers = getCachedRequestedOffers(isbn);
+        ArrayList<Offer> vendorOffers = new ArrayList<>();
+        for (Offer offer : cachedOffers){
+            if (vendor.equalsIgnoreCase(offer.getVendor())) {
+                vendorOffers.add(offer);
+            }
+        }
+        return vendorOffers;
     }
 
     private ArrayList<Offer> getBuchladen123Offers(String isbn) {
         RestTemplate restTemplate = new RestTemplate(getClientHttpRequestFactory());
         try {
             ResponseEntity<OfferApi1[]> response = restTemplate.getForEntity(
-                    "http://localhost:9090/offer?isbn=123-12-12345-12-1",
+                    "http://localhost:9090/offer?isbn=" + isbn,
                     OfferApi1[].class);
             OfferApi1[] offerApi1s = response.getBody();
-            return offerApi1tToOfferMapper(offerApi1s);
+
+            ArrayList<Offer> offers = offerApi1tToOfferMapper(offerApi1s);
+            cacheRequestedOffers(offers, isbn);
+            return offers;
 
         } catch (Exception e) {
             System.out.println("Failed to query offers of Buchladen123.de");
             e.printStackTrace();
-            // TODO: get cached offers of this vendor
-            return new ArrayList<>();
+            return fillWithCachedOffers(Vendor.BUCHLADEN123DE.getVendorName(), isbn);
         }
     }
 
@@ -60,7 +90,7 @@ public class OfferService {
             BigDecimal price = new BigDecimal(offerApi1.getPrice()).divide(new BigDecimal(100));
 
             Offer offer = new Offer(price,
-                    "Buchladen123.de",
+                    Vendor.BUCHLADEN123DE.getVendorName(),
                     offerApi1.getAffiliate(),
                     MediaType.valueOf(offerApi1.getMedia().toUpperCase()));
             offers.add(offer);
@@ -72,16 +102,18 @@ public class OfferService {
         RestTemplate restTemplate = new RestTemplate(getClientHttpRequestFactory());
         try {
             ResponseEntity<OfferApi2[]> response = restTemplate.getForEntity(
-                    "http://localhost:9091/offer/123-12-12345-12-1",
+                    "http://localhost:9091/offer/" + isbn,
                     OfferApi2[].class);
             OfferApi2[] offerApi2s = response.getBody();
-            return offerApi2tToOfferMapper(offerApi2s, isbn);
 
+            ArrayList<Offer> offers = offerApi2tToOfferMapper(offerApi2s, isbn);
+            cacheRequestedOffers(offers, isbn);
+            return offers;
         } catch (Exception e) {
             System.out.println("Failed to query offers of Buch-Verkauf24.de");
             e.printStackTrace();
-            // TODO: get cached offers of this vendor
-            return new ArrayList<>();
+            return fillWithCachedOffers(Vendor.BUCHVERKAUF24.getVendorName(), isbn);
+
         }
     }
 
@@ -93,7 +125,7 @@ public class OfferService {
             MediaType mediaType = mapMediaTypeOfBuchVerkauf24(offerApi2);
 
             Offer offer = new Offer(price,
-                    "Buchverkauf 24",
+                    Vendor.BUCHVERKAUF24.getVendorName(),
                     "www.buch-verkauf24.de/bookreviewer/" + isbn,
                     mediaType);
             offers.add(offer);
@@ -135,13 +167,14 @@ public class OfferService {
                     "http://localhost:9092/offer/123-12-12345-12-1",
                     OfferApi3[].class);
             OfferApi3[] offerApi3s = response.getBody();
-            return offerApi3tToOfferMapper(offerApi3s, isbn);
 
+            ArrayList<Offer> offers = offerApi3tToOfferMapper(offerApi3s, isbn);
+            cacheRequestedOffers(offers, isbn);
+            return offers;
         } catch (Exception e) {
             System.out.println("Failed to query offers of Buch-Verkauf24.de");
             e.printStackTrace();
-            // TODO: get cached offers of this vendor
-            return new ArrayList<>();
+            return fillWithCachedOffers(Vendor.YOUR_FAVORITE_BOOK_VENDOR.getVendorName(), isbn);
         }
     }
 
@@ -160,7 +193,7 @@ public class OfferService {
             MediaType mediaType = mapMediaTypeOfYourFavoriteBookVendor(offerApi3);
 
             Offer offer = new Offer(price,
-                    "Your favorite book vendor",
+                    Vendor.YOUR_FAVORITE_BOOK_VENDOR.getVendorName(),
                     "www.your-favorite-book-vendor.com/bookreviewer/" + isbn,
                     mediaType);
             offers.add(offer);

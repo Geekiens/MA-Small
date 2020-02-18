@@ -1,19 +1,22 @@
 package bookReviewer.persistence.model;
 
-import bookReviewer.business.model.MediaType;
+import javax.persistence.*;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+@Entity
+@Table(name="OFFER")
 public class OfferPersistence {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cachedOfferHistoryPersistence_id", nullable = false)
+    private CachedOfferHistoryPersistence cachedOfferHistoryPersistence;
 
     @Column(name="price")
     private BigDecimal price;
@@ -21,20 +24,19 @@ public class OfferPersistence {
     @Column(name="requestDate")
     private LocalDate requestDate;
 
-    @Column(name="vendor")
-    private String vendor;
-
-    @Column(name="mediaType")
-    private MediaType mediaType;
 
     public OfferPersistence() {
     }
 
-    public OfferPersistence(BigDecimal price, LocalDate requestDate, String vendor, MediaType mediaType) {
+    public OfferPersistence(BigDecimal price, LocalDate requestDate) {
         this.price = price;
         this.requestDate = requestDate;
-        this.vendor = vendor;
-        this.mediaType = mediaType;
+    }
+
+    public OfferPersistence(CachedOfferHistoryPersistence cachedOfferHistoryPersistence, BigDecimal price, LocalDate requestDate) {
+        this.cachedOfferHistoryPersistence = cachedOfferHistoryPersistence;
+        this.price = price;
+        this.requestDate = requestDate;
     }
 
     public long getId() {
@@ -43,6 +45,14 @@ public class OfferPersistence {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public CachedOfferHistoryPersistence getCachedOfferHistoryPersistence() {
+        return cachedOfferHistoryPersistence;
+    }
+
+    public void setCachedOfferHistoryPersistence(CachedOfferHistoryPersistence cachedOfferHistoryPersistence) {
+        this.cachedOfferHistoryPersistence = cachedOfferHistoryPersistence;
     }
 
     public BigDecimal getPrice() {
@@ -59,21 +69,5 @@ public class OfferPersistence {
 
     public void setRequestDate(LocalDate requestDate) {
         this.requestDate = requestDate;
-    }
-
-    public String getVendor() {
-        return vendor;
-    }
-
-    public void setVendor(String vendor) {
-        this.vendor = vendor;
-    }
-
-    public MediaType getMediaType() {
-        return mediaType;
-    }
-
-    public void setMediaType(MediaType mediaType) {
-        this.mediaType = mediaType;
     }
 }

@@ -3,7 +3,7 @@ package bookReviewer.persistence.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "rating")
+@Table(name = "RATING")
 public class Rating {
 
     @Id

@@ -10,7 +10,7 @@ public class BookMapper {
     public BookMapper() {
     }
 
-    public BookPresentation map(Book book, List<Offer> offers){
+    public BookPresentation map(Book book, List<Offer> offers) {
 
         BookPresentation bookPresentation = new BookPresentation(book.getAuthor(),
                 book.getTitle(),
@@ -26,13 +26,20 @@ public class BookMapper {
 
         for (Offer offer : offers) {
             switch (offer.getMediaType()) {
-                case HARDCOVER: bookPresentation.addHardcoverOffer(offer); break;
-                case PAPERBACK: bookPresentation.addPaperbackOffer(offer); break;
-                case EBOOK: bookPresentation.addEbookOffer(offer); break;
-                case AUDIOBOOK: bookPresentation.addAudiobookOffer(offer); break;
+                case HARDCOVER:
+                    bookPresentation.addHardcoverOffer(offer);
+                    break;
+                case PAPERBACK:
+                    bookPresentation.addPaperbackOffer(offer);
+                    break;
+                case EBOOK:
+                    bookPresentation.addEbookOffer(offer);
+                    break;
+                case AUDIOBOOK:
+                    bookPresentation.addAudiobookOffer(offer);
+                    break;
             }
         }
         return bookPresentation;
     }
-    }
-q
+}
