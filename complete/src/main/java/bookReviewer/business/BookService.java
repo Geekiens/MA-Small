@@ -18,9 +18,8 @@ public class BookService {
 
     public List<Book> getBooks() {
         //Book[] ps = restTemplate.getForEntity(productsURL, Product[].class).getBody();
-        // ArrayList<Book> books = bookRepository.findAll();
-        // return bookRepository.findAll();
-        return new ArrayList<Book>();
+        List<Book> books = bookRepository.findAll();
+        return books;
     }
 
     public Book getBook(long id) {
@@ -40,6 +39,7 @@ public class BookService {
     }
 
     public String getIsbnById(long id) {
+        System.out.println("getISBN entered");
         Book book = getBook(id);
         if (book == null) {
             return null;

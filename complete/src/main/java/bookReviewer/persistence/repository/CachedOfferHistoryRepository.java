@@ -12,9 +12,9 @@ import java.util.List;
 @Repository
 public interface CachedOfferHistoryRepository extends JpaRepository<CachedOfferHistoryPersistence, Long> {
 
-    @Query("select c from CachedOfferHistoryPersistence c " +
-            "where c.isbn = :isbn")
-    List<CachedOfferHistoryPersistence> findAllByIsbn(
+    //@Query("select c from CachedOfferHistoryPersistence c " +
+    //        "where c.isbn = :isbn")
+    List<CachedOfferHistoryPersistence> findByIsbn(
                     @Param("isbn") String isbn);
 
     @Query("select c from CachedOfferHistoryPersistence c " +

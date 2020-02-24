@@ -25,13 +25,13 @@ public class OfferController {
                 break;
             case "000-00-00000-00-2":
                 offers = createAllOffers(isbn, 499L);
+                offers.remove(0);
                 offers.remove(1);
-                offers.remove(2);
                 break;
             case "000-00-00000-00-3":
                 offers = createAllOffers(isbn, 1099L);
+                offers.remove(2);
                 offers.remove(3);
-                offers.remove(4);
                 break;
             default:
                 offers = createAllOffers(isbn, 999L);

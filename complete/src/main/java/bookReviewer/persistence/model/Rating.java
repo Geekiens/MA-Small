@@ -1,5 +1,9 @@
 package bookReviewer.persistence.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 
 @Entity
@@ -23,22 +27,26 @@ public class Rating {
     @Column(name = "author")
     private String author;
 
-    @Column(name = "ratedBookId")
-    private long ratedBookId;
 
-    public Rating(int stars, String title, String author, long ratedBookId) {
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "book_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private Book ratedBook;
+
+    public Rating(int stars, String title, String author, Book ratedBook) {
         this.stars = stars;
         this.title = title;
         this.author = author;
-        this.ratedBookId = ratedBookId;
+        this.ratedBook = ratedBook;
     }
 
-    public long getRatedBookId() {
-        return ratedBookId;
+    public Book getRatedBookId() {
+        return ratedBook;
     }
 
-    public void setRatedBookId(long ratedBookId) {
-        this.ratedBookId = ratedBookId;
+    public void setRatedBookId(Book ratedBook) {
+        this.ratedBook = ratedBook;
     }
 
     public long getId() {

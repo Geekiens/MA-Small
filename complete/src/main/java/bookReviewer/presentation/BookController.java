@@ -22,7 +22,7 @@ public class BookController {
     @Autowired
     OfferService offerService;
 
-    BookMapper bookMapper;
+    BookMapper bookMapper = new BookMapper();
 
     @GetMapping(path="/books/{id}", produces = "application/json")
     public BookPresentation getBook(@PathVariable("id") long id) {
@@ -41,7 +41,7 @@ public class BookController {
         System.out.println("Book:" + book.getAuthor());
     }
 
-    @DeleteMapping(path = "/books/{id}", consumes = "application/json")
+    @DeleteMapping(path = "/books/{id}")
     public void deleteBook(@PathVariable("id") long id) {
         bookService.deleteBook(id);
     }

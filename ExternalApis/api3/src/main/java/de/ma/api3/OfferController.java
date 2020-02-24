@@ -17,19 +17,19 @@ public class OfferController {
         switch (isbn) {
             case "000-00-00000-00-1":
                 offers = createAllOffers(new BigDecimal("6.99"), isbn);
-                offers.remove(4);
+                offers.remove(3);
                 break;
             case "000-00-00000-00-2":
                 offers = createAllOffers(new BigDecimal("3.99"), isbn);
-                offers.remove(1);
+                offers.remove(0);
                 break;
             case "000-00-00000-00-3":
                 offers = createAllOffers(new BigDecimal("12.99"), isbn);
+                offers.remove(2);
                 offers.remove(3);
-                offers.remove(4);
                 break;
             default:
-                offers = createAllOffers(new BigDecimal("10.99"), isbn);
+                offers = createAllOffers(new BigDecimal("13.99"), isbn);
                 break;
         }
         return offers;

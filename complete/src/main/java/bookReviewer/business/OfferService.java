@@ -6,11 +6,14 @@ import bookReviewer.business.model.*;
 import bookReviewer.persistence.model.CachedOfferHistoryPersistence;
 import bookReviewer.persistence.model.OfferPersistence;
 import bookReviewer.persistence.repository.CachedOfferHistoryRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import javax.xml.ws.http.HTTPException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -19,35 +22,69 @@ import java.util.List;
 @Service
 public class OfferService {
 
+    @Autowired
     private BookService bookService;
 
+    @Autowired
     private CachedOfferHistoryRepository cachedOfferHistoryRepository;
 
-    private OfferMapper offerMapper;
+    private OfferMapper offerMapper = new OfferMapper();
 
 
     public ArrayList<Offer> getOffers(Long id) {
+        System.out.println("Entered getOffers");
         String isbn = bookService.getIsbnById(id);
+        System.out.println(isbn);
         ArrayList<Offer> allOffers = new ArrayList<Offer>();
+        System.out.println("Init empty List");
         allOffers.addAll(getBuchladen123Offers(isbn));
         allOffers.addAll(getBuchVerkauf24Offers(isbn));
         allOffers.addAll(getYourFavoriteBookVendorOffers(isbn));
+        System.out.println("Returning List");
+        System.out.println(allOffers);
 
         return allOffers;
     }
 
     private ArrayList<Offer> getCachedRequestedOffers(String isbn) {
-        List<CachedOfferHistoryPersistence> cachedOfferHistory = cachedOfferHistoryRepository.findAllByIsbn(isbn);
+        List<CachedOfferHistoryPersistence> cachedOfferHistory = cachedOfferHistoryRepository.findByIsbn(isbn);
+        if (cachedOfferHistory == null) return new ArrayList<>();
+        System.out.println(cachedOfferHistory.size());
+        System.out.println(cachedOfferHistory);
+        System.out.println(cachedOfferHistory.get(0));
+        System.out.println(cachedOfferHistory.get(0).getVendor());
+
+
+        System.out.println("not returned for null");
         return offerMapper.mapCachedOfferHistoryPersistenceToOfferList(cachedOfferHistory);
     }
 
     private void cacheRequestedOffers(ArrayList<Offer> offers, String isbn) {
         for (Offer offer : offers) {
-            CachedOfferHistoryPersistence cachedOfferHistory = cachedOfferHistoryRepository.findByIsbnAndVendorAndMediaType(isbn, offer.getVendor(), offer.getMediaType());
-            OfferPersistence mostCurrentOffer = cachedOfferHistory.getOffers().get(cachedOfferHistory.getOffers().size() -1);
+            CachedOfferHistoryPersistence cachedOfferHistory = null;
+            try {
+                cachedOfferHistory = cachedOfferHistoryRepository.findByIsbnAndVendorAndMediaType(isbn, offer.getVendor(), offer.getMediaType());
+            } catch (Exception e){
+                System.out.println(e);
+            }
+            if (cachedOfferHistory == null) {
+                CachedOfferHistoryPersistence newCachedOfferHistory = new CachedOfferHistoryPersistence(offer.getVendor(),
+                        offer.getMediaType(),
+                        isbn, new ArrayList<>());
+                OfferPersistence newCachedOffer = new OfferPersistence(offer.getPrice(), LocalDate.now());
+                newCachedOffer.setCachedOfferHistoryPersistence(newCachedOfferHistory);
+                newCachedOfferHistory.addOffer(newCachedOffer);
 
+                cachedOfferHistoryRepository.save(newCachedOfferHistory);
+                return;
+            }
+            System.out.println("CachedHistory:" + cachedOfferHistory);
+            System.out.println("CachedHistory - Media Type:" + cachedOfferHistory.getMediaType());
+            System.out.println("CachedHistory - Media Type:" + cachedOfferHistory.getOffers());
+            OfferPersistence mostCurrentOffer = cachedOfferHistory.getOffers().get(cachedOfferHistory.getOffers().size() -1);
             if (mostCurrentOffer.getRequestDate() != LocalDate.now() || mostCurrentOffer.getPrice() != offer.getPrice()) {
                 OfferPersistence newCachedOffer = new OfferPersistence(offer.getPrice(), LocalDate.now());
+                newCachedOffer.setCachedOfferHistoryPersistence(cachedOfferHistory);
                 cachedOfferHistory.addOffer(newCachedOffer);
                 cachedOfferHistoryRepository.save(cachedOfferHistory);
             }
@@ -72,7 +109,8 @@ public class OfferService {
                     "http://localhost:9090/offer?isbn=" + isbn,
                     OfferApi1[].class);
             OfferApi1[] offerApi1s = response.getBody();
-
+            System.out.println(response.getStatusCode().isError());
+            if (response.getStatusCode().isError()) throw new Exception();
             ArrayList<Offer> offers = offerApi1tToOfferMapper(offerApi1s);
             cacheRequestedOffers(offers, isbn);
             return offers;
@@ -104,8 +142,8 @@ public class OfferService {
             ResponseEntity<OfferApi2[]> response = restTemplate.getForEntity(
                     "http://localhost:9091/offer/" + isbn,
                     OfferApi2[].class);
+            if (response.getStatusCode().isError()) throw new Exception();
             OfferApi2[] offerApi2s = response.getBody();
-
             ArrayList<Offer> offers = offerApi2tToOfferMapper(offerApi2s, isbn);
             cacheRequestedOffers(offers, isbn);
             return offers;
@@ -164,8 +202,10 @@ public class OfferService {
         RestTemplate restTemplate = new RestTemplate(getClientHttpRequestFactory());
         try {
             ResponseEntity<OfferApi3[]> response = restTemplate.getForEntity(
-                    "http://localhost:9092/offer/123-12-12345-12-1",
+                    "http://localhost:9092/offer/" + isbn,
                     OfferApi3[].class);
+            if (response.getStatusCode().isError()) throw new Exception();
+
             OfferApi3[] offerApi3s = response.getBody();
 
             ArrayList<Offer> offers = offerApi3tToOfferMapper(offerApi3s, isbn);

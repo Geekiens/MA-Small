@@ -17,16 +17,16 @@ public class OfferController {
         switch (isbn) {
             case "000-00-00000-00-1":
                 offers = createAllOffers(new BigDecimal("6.99"));
-                offers.remove(4);
+                offers.remove(3);
                 break;
             case "000-00-00000-00-2":
                 offers = createAllOffers(new BigDecimal("4.99"));
-                offers.remove(1);
+                offers.remove(0);
                 break;
             case "000-00-00000-00-3":
                 offers = createAllOffers(new BigDecimal("10.99"));
+                offers.remove(2);
                 offers.remove(3);
-                offers.remove(4);
                 break;
             default:
                 offers = createAllOffers(new BigDecimal("9.99"));

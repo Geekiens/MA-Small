@@ -41,6 +41,11 @@ public class BookPresentation {
         this.isbn = isbn;
         this.publishingYear = publishingYear;
         this.content = content;
+
+        hardcoverOffers = new ArrayList<>();
+        paperbackOffers = new ArrayList<>();
+        ebookOffers = new ArrayList<>();
+        audiobookOffers = new ArrayList<>();
     }
 
     public String getAuthor() {

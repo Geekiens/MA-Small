@@ -15,12 +15,15 @@ public class OfferMapper {
     public ArrayList<Offer> mapCachedOfferHistoryPersistenceToOfferList(List<CachedOfferHistoryPersistence> cachedOfferHistories) {
         ArrayList<Offer> offers = new ArrayList<>();
         for (CachedOfferHistoryPersistence cachedOfferHistory : cachedOfferHistories) {
+            System.out.println(cachedOfferHistory);
+            System.out.println(cachedOfferHistory.getOffers());
             offers.add(mapCachedOfferHistoryPersistenceToOffer(cachedOfferHistory));
         }
         return offers;
     }
 
     public Offer mapCachedOfferHistoryPersistenceToOffer(CachedOfferHistoryPersistence cachedOfferHistory) {
+        System.out.println( cachedOfferHistory.getOffers().size());
         OfferPersistence mostCurrentOffer = cachedOfferHistory.getOffers().get(cachedOfferHistory.getOffers().size() - 1);
         return new Offer(mostCurrentOffer.getPrice(), cachedOfferHistory.getVendor(), null, cachedOfferHistory.getMediaType());
     }

@@ -5,6 +5,7 @@ import bookReviewer.business.model.MediaType;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -22,17 +23,21 @@ public class CachedOfferHistoryPersistence {
     @Column(name="mediaType")
     private MediaType mediaType;
 
+    @Column(name="isbn")
+    private String isbn;
+
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
             mappedBy = "cachedOfferHistoryPersistence")
-    private ArrayList<OfferPersistence> offers = new ArrayList<>();
+    private List<OfferPersistence> offers = new ArrayList<>();
 
     public CachedOfferHistoryPersistence() {
     }
 
-    public CachedOfferHistoryPersistence(String vendor, MediaType mediaType, ArrayList<OfferPersistence> offers) {
+    public CachedOfferHistoryPersistence(String vendor, MediaType mediaType, String isbn, ArrayList<OfferPersistence> offers) {
         this.vendor = vendor;
         this.mediaType = mediaType;
+        this.isbn = isbn;
         this.offers = offers;
     }
 
@@ -61,11 +66,19 @@ public class CachedOfferHistoryPersistence {
         this.mediaType = mediaType;
     }
 
-    public ArrayList<OfferPersistence> getOffers() {
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+
+    public List<OfferPersistence> getOffers() {
         return offers;
     }
 
-    public void setOffers(ArrayList<OfferPersistence> offers) {
+    public void setOffers(List<OfferPersistence> offers) {
         this.offers = offers;
     }
 
