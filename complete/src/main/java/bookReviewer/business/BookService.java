@@ -39,7 +39,6 @@ public class BookService {
     }
 
     public String getIsbnById(long id) {
-        System.out.println("getISBN entered");
         Book book = getBook(id);
         if (book == null) {
             return null;

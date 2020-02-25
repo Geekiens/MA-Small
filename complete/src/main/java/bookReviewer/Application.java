@@ -14,8 +14,7 @@ public class Application {
         Rating rating = new Rating(1, "Title", "daesgfsaerg", "Max");
         ratingDao.saveRating(rating);
         List< Rating > ratings = ratingDao.getRatings();
-        System.out.println(ratings.size());
-        System.out.println(ratings.get(0).getAuthor());
+
 
  */
 

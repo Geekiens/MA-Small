@@ -52,7 +52,6 @@ public class BookController {
     @PostMapping(path= "/books", consumes = "application/json", produces = "application/json")
     public void createBook(@RequestBody Book book){
         bookService.createBook(book);
-        System.out.println("Book:" + book.getAuthor());
     }
 
     @DeleteMapping(path = "/books/{id}")

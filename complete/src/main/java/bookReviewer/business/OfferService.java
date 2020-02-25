@@ -32,16 +32,11 @@ public class OfferService {
 
 
     public ArrayList<Offer> getOffers(Long id) {
-        System.out.println("Entered getOffers");
         String isbn = bookService.getIsbnById(id);
-        System.out.println(isbn);
         ArrayList<Offer> allOffers = new ArrayList<Offer>();
-        System.out.println("Init empty List");
         allOffers.addAll(getBuchladen123Offers(isbn));
         allOffers.addAll(getBuchVerkauf24Offers(isbn));
         allOffers.addAll(getYourFavoriteBookVendorOffers(isbn));
-        System.out.println("Returning List");
-        System.out.println(allOffers);
 
         return allOffers;
     }
@@ -49,13 +44,6 @@ public class OfferService {
     private ArrayList<Offer> getCachedRequestedOffers(String isbn) {
         List<CachedOfferHistoryPersistence> cachedOfferHistory = cachedOfferHistoryRepository.findByIsbn(isbn);
         if (cachedOfferHistory == null) return new ArrayList<>();
-        System.out.println(cachedOfferHistory.size());
-        System.out.println(cachedOfferHistory);
-        System.out.println(cachedOfferHistory.get(0));
-        System.out.println(cachedOfferHistory.get(0).getVendor());
-
-
-        System.out.println("not returned for null");
         return offerMapper.mapCachedOfferHistoryPersistenceToOfferList(cachedOfferHistory);
     }
 
@@ -78,10 +66,7 @@ public class OfferService {
                 cachedOfferHistoryRepository.save(newCachedOfferHistory);
                 return;
             }
-            System.out.println("CachedHistory:" + cachedOfferHistory);
-            System.out.println("CachedHistory - Media Type:" + cachedOfferHistory.getMediaType());
-            System.out.println("CachedHistory - Media Type:" + cachedOfferHistory.getOffers());
-            OfferPersistence mostCurrentOffer = cachedOfferHistory.getOffers().get(cachedOfferHistory.getOffers().size() -1);
+              OfferPersistence mostCurrentOffer = cachedOfferHistory.getOffers().get(cachedOfferHistory.getOffers().size() -1);
             if (mostCurrentOffer.getRequestDate() != LocalDate.now() || mostCurrentOffer.getPrice() != offer.getPrice()) {
                 OfferPersistence newCachedOffer = new OfferPersistence(offer.getPrice(), LocalDate.now());
                 newCachedOffer.setCachedOfferHistoryPersistence(cachedOfferHistory);
@@ -116,7 +101,6 @@ public class OfferService {
             return offers;
 
         } catch (Exception e) {
-            System.out.println("Failed to query offers of Buchladen123.de");
             e.printStackTrace();
             return fillWithCachedOffers(Vendor.BUCHLADEN123DE.getVendorName(), isbn);
         }
@@ -191,7 +175,6 @@ public class OfferService {
                 mediaType = MediaType.AUDIOBOOK;
                 break;
             default:
-                System.out.println("No mediaType assigned - Using hardcover as default");
                 mediaType = MediaType.HARDCOVER;
                 break;
         }

@@ -15,8 +15,6 @@ public class OfferMapper {
     public ArrayList<Offer> mapCachedOfferHistoryPersistenceToOfferList(List<CachedOfferHistoryPersistence> cachedOfferHistories) {
         ArrayList<Offer> offers = new ArrayList<>();
         for (CachedOfferHistoryPersistence cachedOfferHistory : cachedOfferHistories) {
-            System.out.println(cachedOfferHistory);
-            System.out.println(cachedOfferHistory.getOffers());
             offers.add(mapCachedOfferHistoryPersistenceToOffer(cachedOfferHistory));
         }
         return offers;

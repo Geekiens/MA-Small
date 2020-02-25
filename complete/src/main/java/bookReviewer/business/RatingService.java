@@ -51,7 +51,6 @@ public class RatingService {
     }
 
     public void createRating(Long bookId, Rating rating) {
-        System.out.println(bookId);
         Book book = bookRepository.findById(bookId).orElse(null);
         rating.setBook(book);
         ratingRepository.save(rating);

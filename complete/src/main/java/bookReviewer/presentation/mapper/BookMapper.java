@@ -23,7 +23,6 @@ public class BookMapper {
                 book.getPublishingYear(),
                 book.getContent()
         );
-        System.out.println(bookDetailPresentation);
         for (Offer offer : offers) {
             System.out.println(offer);
             switch (offer.getMediaType()) {
