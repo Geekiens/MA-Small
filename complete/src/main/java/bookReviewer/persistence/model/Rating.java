@@ -32,21 +32,24 @@ public class Rating {
     @JoinColumn(name = "book_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
-    private Book ratedBook;
+    private Book book;
 
-    public Rating(int stars, String title, String author, Book ratedBook) {
+    public Rating() {
+    }
+
+    public Rating(int stars, String title, String author, String content,  Book book) {
         this.stars = stars;
         this.title = title;
         this.author = author;
-        this.ratedBook = ratedBook;
+        this.book = book;
     }
 
-    public Book getRatedBookId() {
-        return ratedBook;
+    public Book getBook() {
+        return book;
     }
 
-    public void setRatedBookId(Book ratedBook) {
-        this.ratedBook = ratedBook;
+    public void setBook(Book book) {
+        this.book = book;
     }
 
     public long getId() {
@@ -87,5 +90,17 @@ public class Rating {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    @Override
+    public String toString() {
+        return "Rating{" +
+                "id=" + id +
+                ", stars=" + stars +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", author='" + author + '\'' +
+                ", book=" + book +
+                '}';
     }
 }
