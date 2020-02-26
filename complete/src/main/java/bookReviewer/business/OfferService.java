@@ -4,16 +4,15 @@ import bookReviewer.business.Mapper.OfferMapper;
 import bookReviewer.business.model.*;
 
 import bookReviewer.persistence.model.CachedOfferHistoryPersistence;
+import bookReviewer.persistence.model.MediaType;
 import bookReviewer.persistence.model.OfferPersistence;
 import bookReviewer.persistence.repository.CachedOfferHistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 
-import javax.xml.ws.http.HTTPException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
