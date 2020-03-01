@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class RatingController {
@@ -27,8 +28,13 @@ public class RatingController {
 
     @PostMapping(path= "/books/{bookId}/ratings", consumes = "application/json", produces = "application/json")
     public void createRating(@PathVariable (value = "bookId") Long bookId,
-                             @RequestBody Rating rating){
-        ratingService.createRating(bookId, rating);
+                             @RequestBody Rating rating,
+                             @RequestHeader Map<String, String> headers){
+        String token = headers.get("authorization");
+        String[] splittedToken = token.split(" ");
+
+
+        ratingService.createRating(bookId, rating, splittedToken[1]);
     }
 
 }

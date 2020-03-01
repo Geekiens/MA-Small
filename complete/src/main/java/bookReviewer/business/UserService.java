@@ -16,23 +16,23 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    public void RegisterUser(String username, String password, String role) throws Exception {
+    public void registerUser(String username, String password, String email, Role role) throws Exception {
         byte[] salt = getSalt();
         String hashedPassword = get_SHA_1_SecurePassword(password, salt);
-        User user = new User(username, hashedPassword, salt, Role.valueOf(role));
+        User user = new User(username, hashedPassword, email, salt, role);
+        userRepository.save(user);
     }
 
     public String loginUser(String username, String password) throws Exception{
         User user = userRepository.findByUsername(username);
         if (user.getPassword().equalsIgnoreCase(get_SHA_1_SecurePassword(password, user.getSalt()))) {
-            return getToken(username, user.getRole());
+            return getToken(user);
         }
         throw new Exception();
     }
 
-    public String getToken(String username, Role role){
-        String roleString = role.getRolename();
-        return JwtProvider.createJWT("id", "issuer", "subject");
+    public String getToken(User user){
+        return JwtProvider.createJWT( user);
     }
     private static String get_SHA_1_SecurePassword(String passwordToHash, byte[] salt)
     {

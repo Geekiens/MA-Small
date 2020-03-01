@@ -24,9 +24,10 @@ public class Rating {
     @Column(name = "content")
     private String content;
 
-    @Column(name = "author")
-    private String author;
+    @Column(name = "user_id")
+    private Long userId;
 
+    private String author;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "book_id", nullable = false)
@@ -37,10 +38,10 @@ public class Rating {
     public Rating() {
     }
 
-    public Rating(int stars, String title, String author, String content,  Book book) {
+    public Rating(int stars, String title, Long userId, String content,  Book book) {
         this.stars = stars;
         this.title = title;
-        this.author = author;
+        this.userId = userId;
         this.book = book;
     }
 
@@ -84,12 +85,20 @@ public class Rating {
         this.content = content;
     }
 
+    public Long getUserId() {
+        return userId;
+    }
+
     public String getAuthor() {
         return author;
     }
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     @Override
@@ -99,7 +108,7 @@ public class Rating {
                 ", stars=" + stars +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
-                ", author='" + author + '\'' +
+                ", reviwer='" + userId + '\'' +
                 ", book=" + book +
                 '}';
     }

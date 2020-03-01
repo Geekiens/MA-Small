@@ -1,6 +1,9 @@
 package bookReviewer.persistence.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="USER")
@@ -17,6 +20,9 @@ public class User {
     @Column(name="password")
     private String password;
 
+    @Column(name="email")
+    private String email;
+
     @Column(name="salt")
     private byte[] salt;
 
@@ -26,11 +32,13 @@ public class User {
     public User() {
     }
 
-    public User(String username, String password, byte[] salt, Role role) {
+    public User(String username, String password, String email, byte[] salt, Role role) {
         this.username = username;
         this.password = password;
+        this.email = email;
         this.salt = salt;
         this.role = role;
+        lastActivity = new Date();
     }
 
     public long getId() {
@@ -55,6 +63,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Role getRole() {
