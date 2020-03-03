@@ -1,0 +1,84 @@
+package bookReviewer.presentation;
+
+import bookReviewer.business.JwtProvider;
+import bookReviewer.business.RatingService;
+import bookReviewer.persistence.model.Rating;
+import bookReviewer.persistence.model.Role;
+
+import io.jsonwebtoken.Claims;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.expression.SecurityExpressionRoot;
+import org.springframework.security.access.expression.method.MethodSecurityExpressionOperations;
+import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Component;
+
+import java.util.Date;
+import java.util.Map;
+
+public class RoleMethodSecurityExpressionRoot extends SecurityExpressionRoot implements MethodSecurityExpressionOperations {
+
+    private Object filterObject;
+    private Object returnObject;
+
+    @Autowired
+    RatingService ratingService = new RatingService();
+
+    public RoleMethodSecurityExpressionRoot(Authentication authentication) {
+        super(authentication);
+    }
+
+    public boolean hasRequiredRole(Map<String, String> headers, String minimumRequiredRole) {
+        Claims decodedToken = getClaimsFromToken(headers);
+
+        if(((long) (int) decodedToken.get("exp")) >= new Date().getTime()){
+            System.out.println("Token expired");
+            return false;
+        }
+
+        return checkRole(Role.valueOf(decodedToken.get("role").toString().toUpperCase()), Role.valueOf(minimumRequiredRole));
+    }
+
+    private Claims getClaimsFromToken(Map<String, String> headers) {
+        String token = headers.get("authorization");
+        String[] splittedToken = token.split(" ");
+        return JwtProvider.decodeJWT(splittedToken[1]);
+    }
+
+    private boolean checkRole(Role role, Role minimumRequiredRole) {
+        if (minimumRequiredRole == Role.USER) {
+            return role == Role.USER || role == Role.MODERATOR || role == Role.ADMIN;
+        }
+        if (minimumRequiredRole == Role.MODERATOR) {
+            return role == Role.ADMIN || role == Role.MODERATOR;
+        }
+        return role == Role.ADMIN;
+
+    }
+
+    @Override
+    public Object getFilterObject() {
+        return this.filterObject;
+    }
+
+    @Override
+    public Object getReturnObject() {
+        return this.returnObject;
+    }
+
+    @Override
+    public Object getThis() {
+        return this;
+    }
+
+    @Override
+    public void setFilterObject(Object obj) {
+        this.filterObject = obj;
+    }
+
+    @Override
+    public void setReturnObject(Object obj) {
+        this.returnObject = obj;
+    }
+
+}

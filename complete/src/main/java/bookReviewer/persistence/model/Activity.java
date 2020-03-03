@@ -6,6 +6,11 @@ import java.util.Date;
 @Entity
 public class Activity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private long id;
+
     @Column(name="submissionDate")
     private Date submissionDate;
 

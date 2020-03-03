@@ -1,5 +1,6 @@
 package bookReviewer.business;
 
+import bookReviewer.business.exception.ResourceNotFoundException;
 import bookReviewer.persistence.model.Role;
 import bookReviewer.persistence.model.User;
 import bookReviewer.persistence.repository.UserRepository;
@@ -24,7 +25,9 @@ public class UserService {
     }
 
     public String loginUser(String username, String password) throws Exception{
+        System.out.println("Username:" + username);
         User user = userRepository.findByUsername(username);
+        System.out.println(user.getUsername());
         if (user.getPassword().equalsIgnoreCase(get_SHA_1_SecurePassword(password, user.getSalt()))) {
             return getToken(user);
         }
@@ -53,6 +56,11 @@ public class UserService {
             e.printStackTrace();
         }
         return generatedPassword;
+    }
+
+    public User getUser (long userId) {
+        User user = userRepository.findById(userId).orElseThrow( () -> new ResourceNotFoundException("User"));
+        return  user;
     }
 
     private static byte[] getSalt() throws NoSuchAlgorithmException

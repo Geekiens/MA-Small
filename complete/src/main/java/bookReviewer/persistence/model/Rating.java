@@ -21,7 +21,7 @@ public class Rating {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "content")
+    @Column(name = "content", length=5000)
     private String content;
 
     @Column(name = "user_id")
@@ -85,7 +85,7 @@ public class Rating {
         this.content = content;
     }
 
-    public Long getUserId() {
+    public long getUserId() {
         return userId;
     }
 
@@ -97,7 +97,7 @@ public class Rating {
         this.author = author;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 

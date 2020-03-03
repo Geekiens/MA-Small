@@ -9,10 +9,12 @@ import bookReviewer.presentation.mapper.BookMapper;
 import bookReviewer.presentation.model.BookDetailPresentation;
 import bookReviewer.presentation.model.BookPresentation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class BookController {
@@ -54,8 +56,10 @@ public class BookController {
         bookService.createBook(book);
     }
 
+    @PreAuthorize("hasRequiredRole(#headers, 'MODERATOR')")
     @DeleteMapping(path = "/books/{id}")
-    public void deleteBook(@PathVariable("id") long id) {
+    public void deleteBook(@PathVariable("id") long id,
+                           @RequestHeader Map<String, String> headers) {
         bookService.deleteBook(id);
     }
 

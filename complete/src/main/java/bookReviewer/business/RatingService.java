@@ -28,6 +28,7 @@ public class RatingService {
     @Autowired
     UserRepository userRepository;
 
+
     final String emailSender = "max.master.thesis2@gmail.com";
     final String password = "supersafepassword";
 
@@ -65,6 +66,7 @@ public class RatingService {
     }
 
     public Rating getRating(long id) {
+        System.out.println("reached get rating");
         Rating rating =  ratingRepository.findById(id).orElse(null);
         return rating;
     }
@@ -129,6 +131,15 @@ public class RatingService {
                 sendEmptyRatingEmail(user, text);
             }).start();
         }
+        ratingRepository.save(rating);
+    }
+
+    public void updateRating(long bookId, Rating rating) {
+        Book book = bookRepository.findById(bookId).orElse(null);
+        rating.setBook(book);
+
+        System.out.println("rating: " + rating.toString());
+
         ratingRepository.save(rating);
     }
 

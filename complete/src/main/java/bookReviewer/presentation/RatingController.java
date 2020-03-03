@@ -1,11 +1,16 @@
 package bookReviewer.presentation;
 
 
+import bookReviewer.business.JwtProvider;
 import bookReviewer.business.RatingService;
 import bookReviewer.persistence.model.Rating;
+import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -26,6 +31,7 @@ public class RatingController {
         return ratingService.getRatingsByIdWithContent(bookId);
     }
 
+    @PreAuthorize("hasRequiredRole(#headers, 'USER')")
     @PostMapping(path= "/books/{bookId}/ratings", consumes = "application/json", produces = "application/json")
     public void createRating(@PathVariable (value = "bookId") Long bookId,
                              @RequestBody Rating rating,
@@ -36,5 +42,33 @@ public class RatingController {
 
         ratingService.createRating(bookId, rating, splittedToken[1]);
     }
+
+    @PutMapping(path="/books/{bookId}/ratings/{ratingId}", consumes = "application/json", produces = "application/json")
+    public void updateRating (@PathVariable (value="bookId") long bookId,
+                              @PathVariable (value="ratingId") long ratingId,
+                              @RequestBody Rating rating,
+                              @RequestHeader Map<String, String> headers
+                              ){
+        if (!isOwnRating(headers, ratingId)){
+            throw new AccessDeniedException("403 returned");
+        }
+
+        ratingService.updateRating(bookId, rating);
+    }
+
+    public boolean isOwnRating(Map<String, String> headers, long ratingId) {
+        System.out.println("ratingid" + ratingId);
+
+        String token = headers.get("authorization");
+        String[] splittedToken = token.split(" ");
+
+        Claims decodedToken = JwtProvider.decodeJWT(splittedToken[1]);
+
+        long userId = (long) (int) decodedToken.get("userId");
+        Rating rating = ratingService.getRating(ratingId);
+
+        return rating.getUserId() == userId;
+    }
+
 
 }

@@ -38,7 +38,6 @@ public class User {
         this.email = email;
         this.salt = salt;
         this.role = role;
-        lastActivity = new Date();
     }
 
     public long getId() {

@@ -1,5 +1,6 @@
 package bookReviewer.business;
 
+import bookReviewer.business.exception.ResourceNotFoundException;
 import bookReviewer.business.model.Offer;
 import bookReviewer.persistence.model.Book;
 import bookReviewer.persistence.repository.BookRepository;
@@ -23,18 +24,16 @@ public class BookService {
     }
 
     public Book getBook(long id) {
-        Book book =  bookRepository.findById(id).orElse(null);
-        if (book == null) {
-            return null;
-        }
-        return book;
+        return  bookRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("book not found with id " + id));
     }
 
     public void createBook(Book book) {
+
         bookRepository.save(book);
     }
 
     public void deleteBook(long id) {
+        System.out.println("Delete Book accessed");
         bookRepository.deleteById(id);
     }
 
