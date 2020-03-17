@@ -1,9 +1,9 @@
 package bookReviewer.business;
 
+import bookReviewer.business.exception.ResourceNotFoundException;
 import bookReviewer.business.model.RatingSummary;
-import bookReviewer.persistence.model.Book;
-import bookReviewer.persistence.model.Rating;
-import bookReviewer.persistence.model.User;
+import bookReviewer.persistence.model.*;
+import bookReviewer.persistence.repository.ActivityRepository;
 import bookReviewer.persistence.repository.BookRepository;
 import bookReviewer.persistence.repository.RatingRepository;
 import bookReviewer.persistence.repository.UserRepository;
@@ -14,19 +14,23 @@ import org.springframework.stereotype.Service;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
 @Service
 public class RatingService {
     @Autowired
-    RatingRepository ratingRepository;
+    private RatingRepository ratingRepository;
 
     @Autowired
-    BookRepository bookRepository;
+    private BookRepository bookRepository;
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
+
+    @Autowired
+    private ActivityRepository activityRepository;
 
 
     final String emailSender = "max.master.thesis2@gmail.com";
@@ -39,6 +43,7 @@ public class RatingService {
 
     public List<Rating> findRatingsById(Long bookId) {
         List<Rating> ratings = ratingRepository.findAllByBookId(bookId);
+
         for (int i = 0; i < ratings.size(); i++) {
             User user = userRepository.findById(ratings.get(i).getUserId()).orElse(null);
             if (user != null) {
@@ -66,9 +71,7 @@ public class RatingService {
     }
 
     public Rating getRating(long id) {
-        System.out.println("reached get rating");
-        Rating rating =  ratingRepository.findById(id).orElse(null);
-        return rating;
+        return  ratingRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("rating not found with id " + id));
     }
 
     private void sendEmptyRatingEmail(User receiver, String text) {
@@ -110,15 +113,18 @@ public class RatingService {
     }
 
     public void createRating(Long bookId, Rating rating, String token) {
-        Book book = bookRepository.findById(bookId).orElse(null);
+        Book book = bookRepository.findById(bookId).orElseThrow(() -> new ResourceNotFoundException("book not found with id " + bookId));
         Claims claims = JwtProvider.decodeJWT(token);
         long reviewer =((long) (int) claims.get("userId"));
         System.out.println(reviewer);
         rating.setBook(book);
         rating.setUserId(reviewer);
-        User user = userRepository.findById(reviewer).orElse(null);
+        User user = userRepository.findById(reviewer).orElseThrow(() -> new ResourceNotFoundException("user not found with id " + reviewer));
         System.out.println("user: " + user.getEmail());
-        if ((rating.getContent() == null || rating.getContent() == "") && user != null) {
+        Activity activity = new Activity(new Date(), ActivityType.RATING_CREATED_WITH_COMMENT, user);
+
+        if ((rating.getContent() == null || rating.getContent() == "")) {
+            activity.setActivityType(ActivityType.RATING_CREATED);
             String text;
             if (rating.getStars() < 3) {
                 text = "\nSchade, dass dir das Buch nicht gefallen hat. Was genau hat dich an dem Buch gestört?";
@@ -131,7 +137,9 @@ public class RatingService {
                 sendEmptyRatingEmail(user, text);
             }).start();
         }
+
         ratingRepository.save(rating);
+        activityRepository.save(activity);
     }
 
     public void updateRating(long bookId, Rating rating) {

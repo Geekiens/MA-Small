@@ -52,8 +52,12 @@ public class BookController {
     }
 
     @PostMapping(path= "/books", consumes = "application/json", produces = "application/json")
-    public void createBook(@RequestBody Book book){
-        bookService.createBook(book);
+    public void createBook(@RequestBody Book book, @RequestHeader Map<String, String> headers){
+        String token = headers.get("authorization");
+        String[] splittedToken = token.split(" ");
+
+
+        bookService.createBook(book, splittedToken[1]);
     }
 
     @PreAuthorize("hasRequiredRole(#headers, 'MODERATOR')")

@@ -52,7 +52,7 @@ public class OfferService {
             try {
                 cachedOfferHistory = cachedOfferHistoryRepository.findByIsbnAndVendorAndMediaType(isbn, offer.getVendor(), offer.getMediaType());
             } catch (Exception e){
-                System.out.println(e);
+                System.out.println("No cached offers found");
             }
             if (cachedOfferHistory == null) {
                 CachedOfferHistoryPersistence newCachedOfferHistory = new CachedOfferHistoryPersistence(offer.getVendor(),

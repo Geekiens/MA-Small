@@ -27,6 +27,7 @@ public class Rating {
     @Column(name = "user_id")
     private Long userId;
 
+    @Column(name = "author")
     private String author;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -42,6 +43,7 @@ public class Rating {
         this.stars = stars;
         this.title = title;
         this.userId = userId;
+        this.content = content;
         this.book = book;
     }
 
