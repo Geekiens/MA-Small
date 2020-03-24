@@ -1,5 +1,6 @@
 package bookReviewer.business;
 
+import bookReviewer.business.Util.JwtProvider;
 import bookReviewer.business.exception.ResourceNotFoundException;
 import bookReviewer.business.model.RatingSummary;
 import bookReviewer.persistence.model.*;

@@ -1,17 +1,14 @@
 package bookReviewer.presentation;
 
-import bookReviewer.business.JwtProvider;
+import bookReviewer.business.Util.JwtProvider;
 import bookReviewer.business.RatingService;
-import bookReviewer.persistence.model.Rating;
 import bookReviewer.persistence.model.Role;
 
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.expression.SecurityExpressionRoot;
 import org.springframework.security.access.expression.method.MethodSecurityExpressionOperations;
 import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.Map;

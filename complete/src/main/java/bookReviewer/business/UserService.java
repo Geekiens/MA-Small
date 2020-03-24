@@ -1,5 +1,6 @@
 package bookReviewer.business;
 
+import bookReviewer.business.Util.JwtProvider;
 import bookReviewer.business.exception.ResourceNotFoundException;
 import bookReviewer.persistence.model.Activity;
 import bookReviewer.persistence.model.Role;
@@ -13,8 +14,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.List;
-
-import static bookReviewer.persistence.model.ActivityType.BOOK_CREATED;
 
 @Service
 public class UserService {

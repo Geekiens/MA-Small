@@ -1,7 +1,7 @@
 package bookReviewer.business;
 
+import bookReviewer.business.Util.JwtProvider;
 import bookReviewer.business.exception.ResourceNotFoundException;
-import bookReviewer.business.model.Offer;
 import bookReviewer.persistence.model.Activity;
 import bookReviewer.persistence.model.ActivityType;
 import bookReviewer.persistence.model.Book;
@@ -13,7 +13,6 @@ import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 

@@ -1,15 +1,12 @@
 package bookReviewer.business;
 
+import bookReviewer.business.Util.JwtProvider;
 import bookReviewer.business.model.RatingSummary;
-import bookReviewer.persistence.model.Book;
 import bookReviewer.persistence.model.Rating;
 import bookReviewer.persistence.model.Role;
 import bookReviewer.persistence.model.User;
-import bookReviewer.persistence.repository.ActivityRepository;
-import bookReviewer.persistence.repository.BookRepository;
 import bookReviewer.persistence.repository.RatingRepository;
 import bookReviewer.persistence.repository.UserRepository;
-import io.jsonwebtoken.Claims;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,7 +14,6 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
-import org.mockito.Mockito;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.mail.Transport;
@@ -95,7 +91,7 @@ public class RatingServiceTest {
     }
 
     // @Test
-    public void whenCreateRating_thenSendMail() throws Exception{
+    /*public void whenCreateRating_thenSendMail() throws Exception{
         // given
         Rating rating = new Rating(3, "title", 2L, "content", null);
         ArrayList<Rating> ratings = new ArrayList<>();
@@ -120,4 +116,6 @@ public class RatingServiceTest {
         //Assert.assertEquals(1, returnedRatings.size());
         // Assert.assertEquals("username", returnedRatings.get(0).getAuthor());
     }
+
+     */
 }

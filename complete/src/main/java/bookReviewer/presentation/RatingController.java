@@ -1,7 +1,7 @@
 package bookReviewer.presentation;
 
 
-import bookReviewer.business.JwtProvider;
+import bookReviewer.business.Util.JwtProvider;
 import bookReviewer.business.RatingService;
 import bookReviewer.persistence.model.Rating;
 import io.jsonwebtoken.Claims;
@@ -10,7 +10,6 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
