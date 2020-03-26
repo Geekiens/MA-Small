@@ -1,9 +1,5 @@
-package bookReviewer;
+package bookReviewer.Configuaration;
 
-import bookReviewer.business.BookService;
-import bookReviewer.persistence.model.Book;
-import bookReviewer.persistence.repository.BookRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;

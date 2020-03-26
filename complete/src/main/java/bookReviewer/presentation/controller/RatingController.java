@@ -1,8 +1,8 @@
-package bookReviewer.presentation;
+package bookReviewer.presentation.controller;
 
 
-import bookReviewer.business.Util.JwtProvider;
-import bookReviewer.business.RatingService;
+import bookReviewer.business.util.JwtProvider;
+import bookReviewer.business.service.RatingService;
 import bookReviewer.persistence.model.Rating;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;

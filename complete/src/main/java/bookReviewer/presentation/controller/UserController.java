@@ -1,6 +1,6 @@
-package bookReviewer.presentation;
+package bookReviewer.presentation.controller;
 
-import bookReviewer.business.UserService;
+import bookReviewer.business.service.UserService;
 import bookReviewer.persistence.model.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

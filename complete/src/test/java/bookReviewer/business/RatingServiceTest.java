@@ -1,7 +1,8 @@
 package bookReviewer.business;
 
-import bookReviewer.business.Util.JwtProvider;
+import bookReviewer.business.util.JwtProvider;
 import bookReviewer.business.model.RatingSummary;
+import bookReviewer.business.service.RatingService;
 import bookReviewer.persistence.model.Rating;
 import bookReviewer.persistence.model.Role;
 import bookReviewer.persistence.model.User;
@@ -18,7 +19,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.mail.Transport;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 

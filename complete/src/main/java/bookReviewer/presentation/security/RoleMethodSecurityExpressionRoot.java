@@ -1,7 +1,7 @@
-package bookReviewer.presentation;
+package bookReviewer.presentation.security;
 
-import bookReviewer.business.Util.JwtProvider;
-import bookReviewer.business.RatingService;
+import bookReviewer.business.util.JwtProvider;
+import bookReviewer.business.service.RatingService;
 import bookReviewer.persistence.model.Role;
 
 import io.jsonwebtoken.Claims;

@@ -1,9 +1,8 @@
 package bookReviewer;
 
-import bookReviewer.business.UserService;
+import bookReviewer.business.service.UserService;
 import bookReviewer.persistence.model.Book;
 import bookReviewer.persistence.model.Role;
-import bookReviewer.persistence.model.User;
 import bookReviewer.persistence.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;

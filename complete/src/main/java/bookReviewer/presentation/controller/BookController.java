@@ -1,8 +1,8 @@
-package bookReviewer.presentation;
+package bookReviewer.presentation.controller;
 
-import bookReviewer.business.BookService;
-import bookReviewer.business.OfferService;
-import bookReviewer.business.RatingService;
+import bookReviewer.business.service.BookService;
+import bookReviewer.business.service.OfferService;
+import bookReviewer.business.service.RatingService;
 import bookReviewer.business.model.RatingSummary;
 import bookReviewer.persistence.model.Book;
 import bookReviewer.presentation.mapper.BookMapper;

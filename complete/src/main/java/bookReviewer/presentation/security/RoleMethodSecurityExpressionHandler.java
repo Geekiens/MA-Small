@@ -1,4 +1,4 @@
-package bookReviewer.presentation;
+package bookReviewer.presentation.security;
 
 import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;

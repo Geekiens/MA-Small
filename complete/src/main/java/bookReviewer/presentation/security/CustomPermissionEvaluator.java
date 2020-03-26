@@ -1,4 +1,4 @@
-package bookReviewer.presentation;
+package bookReviewer.presentation.security;
 
 import org.springframework.security.access.PermissionEvaluator;
 import org.springframework.security.core.Authentication;
