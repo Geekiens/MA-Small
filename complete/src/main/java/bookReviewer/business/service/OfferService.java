@@ -1,6 +1,6 @@
-package bookReviewer.business;
+package bookReviewer.business.service;
 
-import bookReviewer.business.Mapper.OfferMapper;
+import bookReviewer.business.mapper.OfferMapper;
 import bookReviewer.business.model.*;
 
 import bookReviewer.persistence.model.CachedOfferHistoryPersistence;

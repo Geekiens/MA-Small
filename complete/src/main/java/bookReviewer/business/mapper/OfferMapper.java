@@ -1,4 +1,4 @@
-package bookReviewer.business.Mapper;
+package bookReviewer.business.mapper;
 
 import bookReviewer.business.model.Offer;
 import bookReviewer.persistence.model.CachedOfferHistoryPersistence;

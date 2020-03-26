@@ -1,6 +1,6 @@
-package bookReviewer.business;
+package bookReviewer.business.service;
 
-import bookReviewer.business.Util.JwtProvider;
+import bookReviewer.business.util.JwtProvider;
 import bookReviewer.business.exception.ResourceNotFoundException;
 import bookReviewer.persistence.model.Activity;
 import bookReviewer.persistence.model.ActivityType;

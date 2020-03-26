@@ -1,4 +1,4 @@
-package bookReviewer.business.Util;
+package bookReviewer.business.util;
 
 import bookReviewer.persistence.model.User;
 import io.jsonwebtoken.SignatureAlgorithm;
