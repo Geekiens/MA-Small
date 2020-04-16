@@ -1,6 +1,6 @@
 package bookReviewer.business;
 
-import bookReviewer.business.util.JwtProvider;
+//import bookReviewer.business.util.JwtProvider;
 import bookReviewer.business.model.RatingSummary;
 import bookReviewer.business.service.RatingService;
 import bookReviewer.persistence.model.Rating;
@@ -38,8 +38,8 @@ public class RatingServiceTest {
     @Mock
     Transport transport;
 
-    @Mock
-    JwtProvider jwtProvider;
+    //@Mock
+    //JwtProvider jwtProvider;
 
     @InjectMocks
     RatingService ratingService;

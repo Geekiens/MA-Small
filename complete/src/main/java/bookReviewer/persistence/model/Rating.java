@@ -5,6 +5,9 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "RATING")
@@ -15,8 +18,10 @@ public class Rating {
     @Column(name = "id")
     private long id;
 
-    @Column(name = "stars")
-    private int stars;
+    @Column(name = "score")
+    @Min(value = 1, message = "Score should not be less than 1")
+    @Max(value = 5, message = "Score should not be greater than 5")
+    private int score;
 
     @Column(name = "title")
     private String title;
@@ -39,8 +44,8 @@ public class Rating {
     public Rating() {
     }
 
-    public Rating(int stars, String title, Long userId, String content,  Book book) {
-        this.stars = stars;
+    public Rating(int score, String title, Long userId, String content,  Book book) {
+        this.score = score;
         this.title = title;
         this.userId = userId;
         this.content = content;
@@ -63,12 +68,12 @@ public class Rating {
         this.id = id;
     }
 
-    public int getStars() {
-        return stars;
+    public int getScore() {
+        return score;
     }
 
-    public void setStars(int stars) {
-        this.stars = stars;
+    public void setScore(int score) {
+        this.score = score;
     }
 
     public String getTitle() {
@@ -107,7 +112,7 @@ public class Rating {
     public String toString() {
         return "Rating{" +
                 "id=" + id +
-                ", stars=" + stars +
+                ", score=" + score +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", reviwer='" + userId + '\'' +

@@ -1,4 +1,4 @@
-package bookReviewer.Configuaration;
+package bookReviewer;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Configuration;

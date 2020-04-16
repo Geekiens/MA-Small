@@ -10,6 +10,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
@@ -33,11 +34,10 @@ public class RatingController {
     @PreAuthorize("hasRequiredRole(#headers, 'USER')")
     @PostMapping(path= "/books/{bookId}/ratings", consumes = "application/json", produces = "application/json")
     public void createRating(@PathVariable (value = "bookId") Long bookId,
-                             @RequestBody Rating rating,
+                             @RequestBody @Valid Rating rating,
                              @RequestHeader Map<String, String> headers){
         String token = headers.get("authorization");
         String[] splittedToken = token.split(" ");
-
 
         ratingService.createRating(bookId, rating, splittedToken[1]);
     }

@@ -1,5 +1,6 @@
 package bookReviewer.business.service;
 
+import bookReviewer.business.exception.DuplicateRatingException;
 import bookReviewer.business.util.JwtProvider;
 import bookReviewer.business.exception.ResourceNotFoundException;
 import bookReviewer.business.model.RatingSummary;
@@ -59,7 +60,7 @@ public class RatingService {
         RatingSummary ratingSummary = new RatingSummary();
         int sumOfRatings = 0;
         for (Rating rating : ratings) {
-            sumOfRatings += rating.getStars();
+            sumOfRatings += rating.getScore();
             ratingSummary.addTotalVotes();
         }
         ratingSummary.setAverageRating(sumOfRatings * 1.0 / ratingSummary.getTotalVotes());
@@ -113,26 +114,32 @@ public class RatingService {
 
     }
 
+    private boolean isDuplicate(Rating rating){
+        return ratingRepository.findAllByBookIdAndUserId(rating.getBook().getId(), rating.getUserId()).size() >= 1;
+    }
+
     public void createRating(Long bookId, Rating rating, String token) {
         Book book = bookRepository.findById(bookId).orElseThrow(() -> new ResourceNotFoundException("book not found with id " + bookId));
         Claims claims = JwtProvider.decodeJWT(token);
         long reviewer =((long) (int) claims.get("userId"));
-        System.out.println(reviewer);
+
         rating.setBook(book);
         rating.setUserId(reviewer);
         User user = userRepository.findById(reviewer).orElseThrow(() -> new ResourceNotFoundException("user not found with id " + reviewer));
         System.out.println("user: " + user.getEmail());
-        Activity activity = new Activity(new Date(), ActivityType.RATING_CREATED_WITH_COMMENT, user);
+        if (isDuplicate(rating)){
+            throw new DuplicateRatingException();
+        }
 
+        Activity activity = new Activity(new Date(), ActivityType.RATING_CREATED_WITH_COMMENT, user);
         if ((rating.getContent() == null || rating.getContent() == "")) {
             activity.setActivityType(ActivityType.RATING_CREATED);
             String text;
-            if (rating.getStars() < 3) {
+            if (rating.getScore() < 3) {
                 text = "\nSchade, dass dir das Buch nicht gefallen hat. Was genau hat dich an dem Buch gestört?";
             }
             else {
                 text = "\nWas hat dir besonders gut gefallen? Kennst du vielleicht andere Bücher die Lesern dieses Buches gefallen könnten?";
-
             }
             new Thread(() -> {
                 sendEmptyRatingEmail(user, text);

@@ -1,6 +1,9 @@
 package bookReviewer.persistence.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="USER")
@@ -12,18 +15,22 @@ public class User {
     private long id;
 
     @Column(name="username")
+    @NotBlank
     private String username;
 
     @Column(name="password")
+    @NotNull
     private String password;
 
     @Column(name="email")
+    @Email
     private String email;
 
     @Column(name="salt")
     private byte[] salt;
 
     @Column(name="role")
+    @NotNull
     private Role role;
 
     public User() {

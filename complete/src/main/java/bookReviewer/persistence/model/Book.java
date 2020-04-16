@@ -1,6 +1,8 @@
 package bookReviewer.persistence.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 import java.util.Objects;
 
 @Entity
@@ -13,9 +15,11 @@ public class Book {
     private long id;
 
     @Column(name = "author")
+    @NotNull
     private String author;
 
     @Column(name = "title")
+    @NotNull
     private String title;
 
     @Column(name = "genre")
@@ -37,6 +41,7 @@ public class Book {
     private String isbn;
 
     @Column(name = "publishingYear")
+    @PositiveOrZero
     private int publishingYear;
 
     @Column(name = "content", length=5000)
