@@ -1,5 +1,6 @@
 package bookReviewer.business.service;
 
+import bookReviewer.business.exception.InvalidISBNException;
 import bookReviewer.business.util.JwtProvider;
 import bookReviewer.business.exception.ResourceNotFoundException;
 import bookReviewer.persistence.model.Activity;
@@ -40,6 +41,7 @@ public class BookService {
     }
 
     public void createBook(Book book, String token) {
+        checkISBN(book.getIsbn());
         Claims claims = JwtProvider.decodeJWT(token);
         long reviewer =((long) (int) claims.get("userId"));
         User user = userRepository.findById(reviewer).orElse(null);
@@ -59,6 +61,21 @@ public class BookService {
             return null;
         }
         return book.getIsbn();
+    }
+
+    private void checkISBN(String isbn){
+        if (isbn == null) {
+            return;
+        }
+        String pureISBN = isbn.replace("-", "");
+
+        if(!isbn.matches("[0-9]+")) {
+            throw new InvalidISBNException();
+        }
+        if (pureISBN.length() != 10 && pureISBN.length() != 13){
+            throw new InvalidISBNException();
+        }
+        return;
     }
 
 }

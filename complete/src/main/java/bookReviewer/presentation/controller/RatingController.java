@@ -41,7 +41,6 @@ public class RatingController {
 
         ratingService.createRating(bookId, rating, splittedToken[1]);
     }
-
     @PutMapping(path="/books/{bookId}/ratings/{ratingId}", consumes = "application/json", produces = "application/json")
     public void updateRating (@PathVariable (value="bookId") long bookId,
                               @PathVariable (value="ratingId") long ratingId,
@@ -49,10 +48,17 @@ public class RatingController {
                               @RequestHeader Map<String, String> headers
                               ){
         if (!isOwnRating(headers, ratingId)){
-            throw new AccessDeniedException("403 returned");
+            throw new AccessDeniedException("User doesn't match to the requested rating");
         }
 
         ratingService.updateRating(bookId, rating);
+    }
+
+    @PreAuthorize("hasRequiredRole(#headers, 'ADMIN')")
+    @DeleteMapping(path = "/ratings/{id}")
+    public void deleteBook(@PathVariable("id") long id,
+                           @RequestHeader Map<String, String> headers) {
+        ratingService.deleteRating(id);
     }
 
     public boolean isOwnRating(Map<String, String> headers, long ratingId) {
