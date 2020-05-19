@@ -9,6 +9,7 @@ import bookReviewer.presentation.mapper.BookMapper;
 import bookReviewer.presentation.model.BookDetailPresentation;
 import bookReviewer.presentation.model.BookPresentation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -53,12 +54,19 @@ public class BookController {
     }
 
     @PostMapping(path= "/books", consumes = "application/json", produces = "application/json")
-    public void createBook(@RequestBody @Valid Book book, @RequestHeader Map<String, String> headers){
+    @ResponseStatus( HttpStatus.CREATED
+    )
+    public Long createBook(@RequestBody @Valid Book book, @RequestHeader Map<String, String> headers){
         String token = headers.get("authorization");
-        String[] splittedToken = token.split(" ");
+        String cleanToken = null;
+        if (token != null){
+            String[] splittedToken = token.split(" ");
+            cleanToken = splittedToken[1];
+
+        }
 
 
-        bookService.createBook(book, splittedToken[1]);
+        return bookService.createBook(book, cleanToken);
     }
 
     @PreAuthorize("hasRequiredRole(#headers, 'MODERATOR')")

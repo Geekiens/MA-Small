@@ -40,18 +40,21 @@ public class BookService {
         return  bookRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("book not found with id " + id));
     }
 
-    public void createBook(Book book, String token) {
+    public Long createBook(Book book, String token) {
         checkISBN(book.getIsbn());
-        Claims claims = JwtProvider.decodeJWT(token);
-        long reviewer =((long) (int) claims.get("userId"));
-        User user = userRepository.findById(reviewer).orElse(null);
-        Activity activity = new Activity(new Date(), ActivityType.BOOK_CREATED, user);
-        activityRepository.save(activity);
-        bookRepository.save(book);
+        if (token != null) {
+            Claims claims = JwtProvider.decodeJWT(token);
+            long reviewer = ((long) (int) claims.get("userId"));
+            User user = userRepository.findById(reviewer).orElse(null);
+            Activity activity = new Activity(new Date(), ActivityType.BOOK_CREATED, user);
+            activityRepository.save(activity);
+        }
+
+        return bookRepository.saveAndFlush(book).getId();
     }
 
     public void deleteBook(long id) {
-        System.out.println("Delete Book accessed");
+        bookRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("book doesn't exist with id: " + id));
         bookRepository.deleteById(id);
     }
 
@@ -69,7 +72,7 @@ public class BookService {
         }
         String pureISBN = isbn.replace("-", "");
 
-        if(!isbn.matches("[0-9]+")) {
+        if(!pureISBN.matches("[0-9]+")) {
             throw new InvalidISBNException();
         }
         if (pureISBN.length() != 10 && pureISBN.length() != 13){

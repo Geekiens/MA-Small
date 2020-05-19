@@ -144,6 +144,10 @@ public class BookDetailPresentation {
     }
 
     public void setAverageRating(double averageRating) {
+        if (Double.isNaN(averageRating)){
+            this.averageRating = 0;
+            return;
+        }
         this.averageRating = averageRating;
     }
 

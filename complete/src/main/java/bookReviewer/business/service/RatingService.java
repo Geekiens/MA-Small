@@ -118,7 +118,7 @@ public class RatingService {
         return ratingRepository.findAllByBookIdAndUserId(rating.getBook().getId(), rating.getUserId()).size() >= 1;
     }
 
-    public void createRating(Long bookId, Rating rating, String token) {
+    public Long createRating(Long bookId, Rating rating, String token) {
         Book book = bookRepository.findById(bookId).orElseThrow(() -> new ResourceNotFoundException("book not found with id " + bookId));
         Claims claims = JwtProvider.decodeJWT(token);
         long reviewer =((long) (int) claims.get("userId"));
@@ -146,8 +146,9 @@ public class RatingService {
             }).start();
         }
 
-        ratingRepository.save(rating);
         activityRepository.save(activity);
+        return ratingRepository.saveAndFlush(rating).getId();
+
     }
 
     public void updateRating(long bookId, Rating rating) {

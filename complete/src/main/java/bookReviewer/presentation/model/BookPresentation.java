@@ -14,7 +14,12 @@ public class BookPresentation {
         this.id = book.getId();
         this.title = book.getTitle();
         this.author = book.getAuthor();
-        this.averageRating = ratingSummary.getAverageRating();
+        if (!Double.isNaN(ratingSummary.getAverageRating())) {
+            this.averageRating = ratingSummary.getAverageRating();
+        }
+        else {
+            this.averageRating = new Double(0);
+        }
         this.totalVotes = ratingSummary.getTotalVotes();
     }
 

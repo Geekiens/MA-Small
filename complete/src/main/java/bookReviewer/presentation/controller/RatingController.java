@@ -6,6 +6,7 @@ import bookReviewer.business.service.RatingService;
 import bookReviewer.persistence.model.Rating;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -33,13 +34,14 @@ public class RatingController {
 
     @PreAuthorize("hasRequiredRole(#headers, 'USER')")
     @PostMapping(path= "/books/{bookId}/ratings", consumes = "application/json", produces = "application/json")
-    public void createRating(@PathVariable (value = "bookId") Long bookId,
+    @ResponseStatus( HttpStatus.CREATED)
+    public Long createRating(@PathVariable (value = "bookId") Long bookId,
                              @RequestBody @Valid Rating rating,
                              @RequestHeader Map<String, String> headers){
         String token = headers.get("authorization");
         String[] splittedToken = token.split(" ");
 
-        ratingService.createRating(bookId, rating, splittedToken[1]);
+        return ratingService.createRating(bookId, rating, splittedToken[1]);
     }
     @PutMapping(path="/books/{bookId}/ratings/{ratingId}", consumes = "application/json", produces = "application/json")
     public void updateRating (@PathVariable (value="bookId") long bookId,
