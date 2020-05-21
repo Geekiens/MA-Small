@@ -1,10 +1,10 @@
 package bookReviewer.presentation.controller;
 
+import bookReviewer.business.model.BookBusiness;
 import bookReviewer.business.service.BookService;
 import bookReviewer.business.service.OfferService;
 import bookReviewer.business.service.RatingService;
 import bookReviewer.business.model.RatingSummary;
-import bookReviewer.persistence.model.Book;
 import bookReviewer.presentation.mapper.BookMapper;
 import bookReviewer.presentation.model.BookDetailPresentation;
 import bookReviewer.presentation.model.BookPresentation;
@@ -45,8 +45,8 @@ public class BookController {
     @GetMapping(path="/books", produces = "application/json")
     public List<BookPresentation> listBooks() {
         List<BookPresentation> presentationBooks = new ArrayList<>();
-        List<Book> books =  bookService.getBooks();
-        for (Book book : books) {
+        List<BookBusiness> books =  bookService.getBooks();
+        for (BookBusiness book : books) {
             BookPresentation bookPresentation = new BookPresentation(book, ratingService.getAverageRating(book.getId()));
             presentationBooks.add(bookPresentation);
         }
@@ -56,7 +56,7 @@ public class BookController {
     @PostMapping(path= "/books", consumes = "application/json", produces = "application/json")
     @ResponseStatus( HttpStatus.CREATED
     )
-    public Long createBook(@RequestBody @Valid Book book, @RequestHeader Map<String, String> headers){
+    public Long createBook(@RequestBody @Valid BookBusiness book, @RequestHeader Map<String, String> headers){
         String token = headers.get("authorization");
         String cleanToken = null;
         if (token != null){

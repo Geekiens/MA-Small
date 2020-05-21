@@ -1,9 +1,12 @@
 package bookReviewer.business.service;
 
+import bookReviewer.business.mapper.RoleMapper;
+import bookReviewer.business.mapper.UserBusinessMapper;
+import bookReviewer.business.model.Role;
+import bookReviewer.business.model.UserBusiness;
 import bookReviewer.business.util.JwtProvider;
 import bookReviewer.business.exception.ResourceNotFoundException;
 import bookReviewer.persistence.model.Activity;
-import bookReviewer.persistence.model.Role;
 import bookReviewer.persistence.model.User;
 import bookReviewer.persistence.repository.ActivityRepository;
 import bookReviewer.persistence.repository.UserRepository;
@@ -27,8 +30,8 @@ public class UserService {
     public void registerUser(String username, String password, String email, Role role) throws Exception {
         byte[] salt = getSalt();
         String hashedPassword = get_SHA_1_SecurePassword(password, salt);
-        User user = new User(username, hashedPassword, email, salt, role);
-        userRepository.save(user);
+        UserBusiness user = new UserBusiness(username, hashedPassword, email, salt, role);
+        userRepository.save(UserBusinessMapper.user(user));
     }
 
     public String loginUser(String username, String password) throws Exception{
@@ -68,7 +71,7 @@ public class UserService {
     public void checkForUserPromotions(){
         List<User> users = userRepository.findAll();
         users.forEach(user -> {
-            if (user.getRole() == Role.ADMIN || user.getRole() == Role.MODERATOR) {
+            if (RoleMapper.roleBusiness(user.getRole()) == Role.ADMIN || RoleMapper.roleBusiness(user.getRole()) == Role.MODERATOR) {
                 return;
             }
             List<Activity> activities = activityRepository.findAllByUser(user);
@@ -92,7 +95,7 @@ public class UserService {
             ).sum();
             System.out.println("Score: " + activityScore);
             if (activityScore != null && activityScore >= 50) {
-                user.setRole(Role.MODERATOR);
+                user.setRole(RoleMapper.role(Role.MODERATOR));
                 userRepository.save(user);
             }
 

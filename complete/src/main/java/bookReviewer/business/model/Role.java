@@ -1,4 +1,4 @@
-package bookReviewer.persistence.model;
+package bookReviewer.business.model;
 
 public enum Role {
     USER ("user"),
