@@ -1,9 +1,9 @@
 package bookReviewer.presentation.controller;
 
 
+import bookReviewer.business.model.RatingBusiness;
 import bookReviewer.business.util.JwtProvider;
 import bookReviewer.business.service.RatingService;
-import bookReviewer.persistence.model.Rating;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,12 +23,12 @@ public class RatingController {
 
 
     @GetMapping(path="/books/{bookId}/ratings", produces = "application/json")
-    public List<Rating> getRatingsByBookId(@PathVariable("bookId") long bookId) {
+    public List<RatingBusiness> getRatingsByBookId(@PathVariable("bookId") long bookId) {
         return ratingService.findRatingsById(bookId);
     }
 
     @GetMapping(path="/books/{bookId}/ratings/content", produces = "application/json")
-    public List<Rating> getRatingsByBookIdContent(@PathVariable("bookId") long bookId) {
+    public List<RatingBusiness> getRatingsByBookIdContent(@PathVariable("bookId") long bookId) {
         return ratingService.getRatingsByIdWithContent(bookId);
     }
 
@@ -36,7 +36,7 @@ public class RatingController {
     @PostMapping(path= "/books/{bookId}/ratings", consumes = "application/json", produces = "application/json")
     @ResponseStatus( HttpStatus.CREATED)
     public Long createRating(@PathVariable (value = "bookId") Long bookId,
-                             @RequestBody @Valid Rating rating,
+                             @RequestBody @Valid RatingBusiness rating,
                              @RequestHeader Map<String, String> headers){
         String token = headers.get("authorization");
         String[] splittedToken = token.split(" ");
@@ -46,7 +46,7 @@ public class RatingController {
     @PutMapping(path="/books/{bookId}/ratings/{ratingId}", consumes = "application/json", produces = "application/json")
     public void updateRating (@PathVariable (value="bookId") long bookId,
                               @PathVariable (value="ratingId") long ratingId,
-                              @RequestBody Rating rating,
+                              @RequestBody RatingBusiness rating,
                               @RequestHeader Map<String, String> headers
                               ){
         if (!isOwnRating(headers, ratingId)){
@@ -72,7 +72,7 @@ public class RatingController {
         Claims decodedToken = JwtProvider.decodeJWT(splittedToken[1]);
 
         long userId = (long) (int) decodedToken.get("userId");
-        Rating rating = ratingService.getRating(ratingId);
+        RatingBusiness rating = ratingService.getRating(ratingId);
 
         return rating.getUserId() == userId;
     }

@@ -1,7 +1,7 @@
 package bookReviewer.presentation.model;
 
+import bookReviewer.business.model.BookBusiness;
 import bookReviewer.business.model.RatingSummary;
-import bookReviewer.persistence.model.Book;
 
 public class BookPresentation {
     Long id;
@@ -10,7 +10,7 @@ public class BookPresentation {
     Double averageRating;
     int totalVotes;
 
-    public BookPresentation(Book book, RatingSummary ratingSummary) {
+    public BookPresentation(BookBusiness book, RatingSummary ratingSummary) {
         this.id = book.getId();
         this.title = book.getTitle();
         this.author = book.getAuthor();

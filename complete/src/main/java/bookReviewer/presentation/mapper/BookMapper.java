@@ -1,7 +1,7 @@
 package bookReviewer.presentation.mapper;
 
+import bookReviewer.business.model.BookBusiness;
 import bookReviewer.business.model.Offer;
-import bookReviewer.persistence.model.Book;
 import bookReviewer.presentation.model.BookDetailPresentation;
 
 import java.util.List;
@@ -10,7 +10,7 @@ public class BookMapper {
     public BookMapper() {
     }
 
-    public BookDetailPresentation map(Book book, List<Offer> offers) {
+    public BookDetailPresentation map(BookBusiness book, List<Offer> offers) {
 
         BookDetailPresentation bookDetailPresentation = new BookDetailPresentation(book.getAuthor(),
                 book.getTitle(),

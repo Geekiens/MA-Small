@@ -1,6 +1,8 @@
 package bookReviewer.business.service;
 
 import bookReviewer.business.exception.InvalidISBNException;
+import bookReviewer.business.mapper.BookBusinessMapper;
+import bookReviewer.business.model.BookBusiness;
 import bookReviewer.business.util.JwtProvider;
 import bookReviewer.business.exception.ResourceNotFoundException;
 import bookReviewer.persistence.model.Activity;
@@ -30,17 +32,18 @@ public class BookService {
 
     OfferService offerService = new OfferService();
 
-    public List<Book> getBooks() {
-        //Book[] ps = restTemplate.getForEntity(productsURL, Product[].class).getBody();
+    public List<BookBusiness> getBooks() {
         List<Book> books = bookRepository.findAll();
-        return books;
+
+        return BookBusinessMapper.bookBusinessList(books);
     }
 
-    public Book getBook(long id) {
-        return  bookRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("book not found with id " + id));
+    public BookBusiness getBook(long id) {
+        Book book = bookRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("book not found with id " + id));
+        return BookBusinessMapper.bookBusiness(book);
     }
 
-    public Long createBook(Book book, String token) {
+    public Long createBook(BookBusiness book, String token) {
         checkISBN(book.getIsbn());
         if (token != null) {
             Claims claims = JwtProvider.decodeJWT(token);
@@ -50,7 +53,7 @@ public class BookService {
             activityRepository.save(activity);
         }
 
-        return bookRepository.saveAndFlush(book).getId();
+        return bookRepository.saveAndFlush(BookBusinessMapper.book(book)).getId();
     }
 
     public void deleteBook(long id) {
@@ -59,7 +62,7 @@ public class BookService {
     }
 
     public String getIsbnById(long id) {
-        Book book = getBook(id);
+        BookBusiness book = getBook(id);
         if (book == null) {
             return null;
         }
