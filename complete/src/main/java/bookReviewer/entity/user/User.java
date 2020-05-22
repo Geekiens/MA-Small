@@ -1,10 +1,13 @@
 package bookReviewer.entity.user;
 
+import java.util.ArrayList;
+
 public class User {
     private long id;
     private String email;
     private Role role;
     private Credentials credentials;
+    private ArrayList<Activity> activities;
 
     public User() {
     }
