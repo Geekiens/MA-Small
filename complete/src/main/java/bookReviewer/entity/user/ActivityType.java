@@ -1,4 +1,4 @@
-package bookReviewer.entity.activity;
+package bookReviewer.entity.user;
 
 public enum ActivityType {
     BOOK_CREATED,

@@ -3,9 +3,9 @@ package bookReviewer.entity.user;
 public class Credentials {
     private String username;
     private String password;
-    private String salt;
+    private byte[] salt;
 
-    public Credentials(String username, String password, String salt) {
+    public Credentials(String username, String password, byte[] salt) {
         this.username = username;
         this.password = password;
         this.salt = salt;
@@ -30,11 +30,11 @@ public class Credentials {
         this.password = password;
     }
 
-    public String getSalt() {
+    public byte[] getSalt() {
         return salt;
     }
 
-    public void setSalt(String salt) {
+    public void setSalt(byte[] salt) {
         this.salt = salt;
     }
 
@@ -43,7 +43,7 @@ public class Credentials {
         return "Credentials{" +
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", salt='" + salt + '\'' +
+                ", salt='" + salt.toString() + '\'' +
                 '}';
     }
 }
