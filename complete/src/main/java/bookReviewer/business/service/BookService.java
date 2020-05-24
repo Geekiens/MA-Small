@@ -1,8 +1,14 @@
 package bookReviewer.business.service;
 
+import bookReviewer.business.boundary.in.useCase.command.CreateBookCommand;
+import bookReviewer.business.boundary.in.useCase.command.DeleteBookCommand;
+import bookReviewer.business.boundary.in.useCase.query.GetBookQuery;
+import bookReviewer.business.boundary.in.useCase.query.GetBooksQuery;
 import bookReviewer.business.exception.InvalidISBNException;
 import bookReviewer.business.mapper.BookBusinessMapper;
+import bookReviewer.business.mapper.BookMapper;
 import bookReviewer.business.model.BookBusiness;
+import bookReviewer.business.model.RatingSummary;
 import bookReviewer.business.util.JwtProvider;
 import bookReviewer.business.exception.ResourceNotFoundException;
 import bookReviewer.persistence.model.Activity;
@@ -14,13 +20,15 @@ import bookReviewer.persistence.repository.BookRepository;
 import bookReviewer.persistence.repository.UserRepository;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
 
 @Service
-public class BookService {
+@Qualifier("BookService")
+public class BookService implements CreateBookCommand, DeleteBookCommand, GetBookQuery, GetBooksQuery {
     @Autowired
     BookRepository bookRepository;
 
@@ -30,17 +38,31 @@ public class BookService {
     @Autowired
     ActivityRepository activityRepository;
 
+    @Autowired
+    RatingService ratingService;
+
     OfferService offerService = new OfferService();
 
-    public List<BookBusiness> getBooks() {
+    public List<bookReviewer.business.model.Book> getBooks() {
         List<Book> books = bookRepository.findAll();
-
-        return BookBusinessMapper.bookBusinessList(books);
+        List<bookReviewer.business.model.Book> booksWithRating = BookMapper.bookList(books);
+        for (bookReviewer.business.model.Book book : booksWithRating) {
+            System.out.println(book.toString());
+            RatingSummary ratingSummary = ratingService.getAverageRating(book.getId());
+            book.setAverageRating(ratingSummary.getAverageRating());
+            book.setTotalVotes(ratingSummary.getTotalVotes());
+        }
+        return booksWithRating;
     }
 
-    public BookBusiness getBook(long id) {
+    public bookReviewer.business.model.Book getBook(long id) {
         Book book = bookRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("book not found with id " + id));
-        return BookBusinessMapper.bookBusiness(book);
+        bookReviewer.business.model.Book bookWithRatings = BookMapper.book(book);
+        RatingSummary ratingSummary = ratingService.getAverageRating(book.getId());
+        bookWithRatings.setAverageRating(ratingSummary.getAverageRating());
+        bookWithRatings.setTotalVotes(ratingSummary.getTotalVotes());
+
+        return bookWithRatings;
     }
 
     public Long createBook(BookBusiness book, String token) {
@@ -62,7 +84,7 @@ public class BookService {
     }
 
     public String getIsbnById(long id) {
-        BookBusiness book = getBook(id);
+        Book book = bookRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("book not found with id " + id));
         if (book == null) {
             return null;
         }

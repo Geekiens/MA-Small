@@ -3,7 +3,7 @@ package bookReviewer;
 import bookReviewer.business.service.UserService;
 import bookReviewer.persistence.model.Book;
 import bookReviewer.persistence.model.Rating;
-import bookReviewer.persistence.model.Role;
+import bookReviewer.business.model.Role;
 import bookReviewer.persistence.repository.BookRepository;
 import bookReviewer.persistence.repository.RatingRepository;
 import bookReviewer.persistence.repository.UserRepository;

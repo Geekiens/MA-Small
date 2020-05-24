@@ -1,5 +1,6 @@
 package bookReviewer.presentation.model;
 
+import bookReviewer.business.model.Book;
 import bookReviewer.business.model.BookBusiness;
 import bookReviewer.business.model.RatingSummary;
 
@@ -10,7 +11,7 @@ public class BookPresentation {
     Double averageRating;
     int totalVotes;
 
-    public BookPresentation(BookBusiness book, RatingSummary ratingSummary) {
+    public BookPresentation(Book book, RatingSummary ratingSummary) {
         this.id = book.getId();
         this.title = book.getTitle();
         this.author = book.getAuthor();

@@ -1,5 +1,10 @@
 package bookReviewer.business.service;
 
+import bookReviewer.business.boundary.in.useCase.command.CreateRatingCommand;
+import bookReviewer.business.boundary.in.useCase.command.DeleteRatingCommand;
+import bookReviewer.business.boundary.in.useCase.command.UpdateRatingCommand;
+import bookReviewer.business.boundary.in.useCase.query.GetRatingsOfBookQuery;
+import bookReviewer.business.boundary.in.useCase.query.GetRatingsOfBookWithContentQuery;
 import bookReviewer.business.exception.DuplicateRatingException;
 import bookReviewer.business.mapper.BookBusinessMapper;
 import bookReviewer.business.mapper.RatingBusinessMapper;
@@ -14,6 +19,7 @@ import bookReviewer.persistence.repository.RatingRepository;
 import bookReviewer.persistence.repository.UserRepository;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import javax.mail.*;
@@ -24,7 +30,8 @@ import java.util.List;
 import java.util.Properties;
 
 @Service
-public class RatingService {
+@Qualifier("RatingService")
+public class RatingService implements CreateRatingCommand, DeleteRatingCommand, UpdateRatingCommand, GetRatingsOfBookQuery, GetRatingsOfBookWithContentQuery {
     @Autowired
     private RatingRepository ratingRepository;
 
@@ -41,12 +48,7 @@ public class RatingService {
     final String emailSender = "max.master.thesis2@gmail.com";
     final String password = "supersafepassword";
 
-    public List<Rating> getRatings() {
-        List<Rating> ratings = ratingRepository.findAll();
-        return ratings;
-    }
-
-    public List<RatingBusiness> findRatingsById(Long bookId) {
+    public List<RatingBusiness> getRatingsOfBook(Long bookId) {
         List<Rating> ratings = ratingRepository.findAllByBookId(bookId);
 
         for (int i = 0; i < ratings.size(); i++) {
@@ -59,8 +61,10 @@ public class RatingService {
     }
 
     public RatingSummary getAverageRating(Long bookId) {
-        List<Rating> ratings = ratingRepository.findAllByBookId(bookId);
+        System.out.println(bookId);
         RatingSummary ratingSummary = new RatingSummary();
+        List<Rating> ratings = ratingRepository.findAllByBookId(bookId);
+
         int sumOfRatings = 0;
         for (Rating rating : ratings) {
             sumOfRatings += rating.getScore();
@@ -70,7 +74,7 @@ public class RatingService {
         return  ratingSummary;
     }
 
-    public List<RatingBusiness> getRatingsByIdWithContent(Long bookId) {
+    public List<RatingBusiness> getRatingsOfBookWithContent(Long bookId) {
         List<Rating> ratings = ratingRepository.findAllByBookIdAndContentNotNull(bookId);
         return RatingBusinessMapper.ratingBusinessList(ratings);
     }

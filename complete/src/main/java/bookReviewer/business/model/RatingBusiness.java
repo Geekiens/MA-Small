@@ -1,7 +1,12 @@
 package bookReviewer.business.model;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+
 public class RatingBusiness {
     private long id;
+    @Min(value = 1, message = "Score should not be less than 1")
+    @Max(value = 5, message = "Score should not be greater than 5")
     private int score;
     private String title;
     private String content;

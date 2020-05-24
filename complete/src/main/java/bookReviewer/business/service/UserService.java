@@ -1,5 +1,8 @@
 package bookReviewer.business.service;
 
+import bookReviewer.business.boundary.in.useCase.command.CheckUserPromotionCommand;
+import bookReviewer.business.boundary.in.useCase.command.RegisterUserCommand;
+import bookReviewer.business.boundary.in.useCase.query.GetTokenByLoginQuery;
 import bookReviewer.business.mapper.RoleMapper;
 import bookReviewer.business.mapper.UserBusinessMapper;
 import bookReviewer.business.model.Role;
@@ -11,6 +14,7 @@ import bookReviewer.persistence.model.User;
 import bookReviewer.persistence.repository.ActivityRepository;
 import bookReviewer.persistence.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.security.MessageDigest;
@@ -19,7 +23,8 @@ import java.security.SecureRandom;
 import java.util.List;
 
 @Service
-public class UserService {
+@Qualifier("UserService")
+public class UserService implements CheckUserPromotionCommand, RegisterUserCommand, GetTokenByLoginQuery {
 
     @Autowired
     UserRepository userRepository;

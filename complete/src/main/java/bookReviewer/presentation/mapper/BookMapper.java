@@ -1,5 +1,6 @@
 package bookReviewer.presentation.mapper;
 
+import bookReviewer.business.model.Book;
 import bookReviewer.business.model.BookBusiness;
 import bookReviewer.business.model.Offer;
 import bookReviewer.presentation.model.BookDetailPresentation;
@@ -10,7 +11,7 @@ public class BookMapper {
     public BookMapper() {
     }
 
-    public BookDetailPresentation map(BookBusiness book, List<Offer> offers) {
+    public BookDetailPresentation map(Book book, List<Offer> offers) {
 
         BookDetailPresentation bookDetailPresentation = new BookDetailPresentation(book.getAuthor(),
                 book.getTitle(),
@@ -21,7 +22,9 @@ public class BookMapper {
                 book.getPages(),
                 book.getIsbn(),
                 book.getPublishingYear(),
-                book.getContent()
+                book.getContent(),
+                book.getTotalVotes(),
+                book.getAverageRating()
         );
         for (Offer offer : offers) {
             System.out.println(offer);

@@ -1,14 +1,10 @@
 package bookReviewer.business.model;
 
-import javax.persistence.Column;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PositiveOrZero;
+import java.util.Arrays;
 
-public class BookBusiness {
+public class Book {
     private long id;
-    @NotNull
     private String author;
-    @NotNull
     private String title;
     private String genre;
     private String[] keywords;
@@ -18,8 +14,10 @@ public class BookBusiness {
     private String isbn;
     private int publishingYear;
     private String content;
+    private Double averageRating;
+    private int totalVotes = 0;
 
-    public BookBusiness() {
+    public Book() {
     }
 
     public long getId() {
@@ -108,5 +106,40 @@ public class BookBusiness {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Double getAverageRating() {
+        return averageRating;
+    }
+
+    public void setAverageRating(Double averageRating) {
+        this.averageRating = averageRating;
+    }
+
+    public int getTotalVotes() {
+        return totalVotes;
+    }
+
+    public void setTotalVotes(int totalVotes) {
+        this.totalVotes = totalVotes;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", author='" + author + '\'' +
+                ", title='" + title + '\'' +
+                ", genre='" + genre + '\'' +
+                ", keywords=" + Arrays.toString(keywords) +
+                ", languages=" + Arrays.toString(languages) +
+                ", publisher='" + publisher + '\'' +
+                ", pages=" + pages +
+                ", isbn='" + isbn + '\'' +
+                ", publishingYear=" + publishingYear +
+                ", content='" + content + '\'' +
+                ", averageRating=" + averageRating +
+                ", totalVotes=" + totalVotes +
+                '}';
     }
 }
