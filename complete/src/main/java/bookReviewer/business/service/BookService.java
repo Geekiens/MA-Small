@@ -1,14 +1,6 @@
 package bookReviewer.business.service;
 
-import bookReviewer.business.boundary.in.useCase.command.CreateBookCommand;
-import bookReviewer.business.boundary.in.useCase.command.DeleteBookCommand;
-import bookReviewer.business.boundary.in.useCase.query.GetBookQuery;
-import bookReviewer.business.boundary.in.useCase.query.GetBooksQuery;
 import bookReviewer.business.exception.InvalidISBNException;
-import bookReviewer.business.mapper.BookBusinessMapper;
-import bookReviewer.business.mapper.BookMapper;
-import bookReviewer.business.model.BookBusiness;
-import bookReviewer.business.model.RatingSummary;
 import bookReviewer.business.util.JwtProvider;
 import bookReviewer.business.exception.ResourceNotFoundException;
 import bookReviewer.persistence.model.Activity;
@@ -20,15 +12,13 @@ import bookReviewer.persistence.repository.BookRepository;
 import bookReviewer.persistence.repository.UserRepository;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
 
 @Service
-@Qualifier("BookService")
-public class BookService implements CreateBookCommand, DeleteBookCommand, GetBookQuery, GetBooksQuery {
+public class BookService {
     @Autowired
     BookRepository bookRepository;
 
@@ -38,34 +28,19 @@ public class BookService implements CreateBookCommand, DeleteBookCommand, GetBoo
     @Autowired
     ActivityRepository activityRepository;
 
-    @Autowired
-    RatingService ratingService;
-
     OfferService offerService = new OfferService();
 
-    public List<bookReviewer.business.model.Book> getBooks() {
+    public List<Book> getBooks() {
+        //Book[] ps = restTemplate.getForEntity(productsURL, Product[].class).getBody();
         List<Book> books = bookRepository.findAll();
-        List<bookReviewer.business.model.Book> booksWithRating = BookMapper.bookList(books);
-        for (bookReviewer.business.model.Book book : booksWithRating) {
-            System.out.println(book.toString());
-            RatingSummary ratingSummary = ratingService.getAverageRating(book.getId());
-            book.setAverageRating(ratingSummary.getAverageRating());
-            book.setTotalVotes(ratingSummary.getTotalVotes());
-        }
-        return booksWithRating;
+        return books;
     }
 
-    public bookReviewer.business.model.Book getBook(long id) {
-        Book book = bookRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("book not found with id " + id));
-        bookReviewer.business.model.Book bookWithRatings = BookMapper.book(book);
-        RatingSummary ratingSummary = ratingService.getAverageRating(book.getId());
-        bookWithRatings.setAverageRating(ratingSummary.getAverageRating());
-        bookWithRatings.setTotalVotes(ratingSummary.getTotalVotes());
-
-        return bookWithRatings;
+    public Book getBook(long id) {
+        return  bookRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("book not found with id " + id));
     }
 
-    public Long createBook(BookBusiness book, String token) {
+    public Long createBook(Book book, String token) {
         checkISBN(book.getIsbn());
         if (token != null) {
             Claims claims = JwtProvider.decodeJWT(token);
@@ -75,7 +50,7 @@ public class BookService implements CreateBookCommand, DeleteBookCommand, GetBoo
             activityRepository.save(activity);
         }
 
-        return bookRepository.saveAndFlush(BookBusinessMapper.book(book)).getId();
+        return bookRepository.saveAndFlush(book).getId();
     }
 
     public void deleteBook(long id) {
@@ -84,7 +59,7 @@ public class BookService implements CreateBookCommand, DeleteBookCommand, GetBoo
     }
 
     public String getIsbnById(long id) {
-        Book book = bookRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("book not found with id " + id));
+        Book book = getBook(id);
         if (book == null) {
             return null;
         }

@@ -1,6 +1,5 @@
 package bookReviewer.business.service;
 
-import bookReviewer.business.boundary.in.useCase.query.GetOffersOfBookQuery;
 import bookReviewer.business.mapper.OfferMapper;
 import bookReviewer.business.model.*;
 
@@ -9,7 +8,6 @@ import bookReviewer.persistence.model.MediaType;
 import bookReviewer.persistence.model.OfferPersistence;
 import bookReviewer.persistence.repository.CachedOfferHistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
@@ -21,8 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@Qualifier("OfferService")
-public class OfferService implements GetOffersOfBookQuery {
+public class OfferService {
 
     @Autowired
     private BookService bookService;

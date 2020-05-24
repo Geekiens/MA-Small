@@ -33,18 +33,7 @@ public class BookDetailPresentation {
         audiobookOffers = new ArrayList<>();
     }
 
-    public BookDetailPresentation(String author,
-                                  String title,
-                                  String genre,
-                                  String[] keywords,
-                                  String[] languages,
-                                  String publisher,
-                                  int pages,
-                                  String isbn,
-                                  int publishingYear,
-                                  String content,
-                                  int totalVotes,
-                                  double averageRating) {
+    public BookDetailPresentation(String author, String title, String genre, String[] keywords, String[] languages, String publisher, int pages, String isbn, int publishingYear, String content) {
         this.author = author;
         this.title = title;
         this.genre = genre;
@@ -55,8 +44,6 @@ public class BookDetailPresentation {
         this.isbn = isbn;
         this.publishingYear = publishingYear;
         this.content = content;
-        this.totalVotes = totalVotes;
-        this.averageRating = averageRating;
 
         hardcoverOffers = new ArrayList<>();
         paperbackOffers = new ArrayList<>();

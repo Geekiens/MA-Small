@@ -1,14 +1,6 @@
 package bookReviewer.business.service;
 
-import bookReviewer.business.boundary.in.useCase.command.CreateRatingCommand;
-import bookReviewer.business.boundary.in.useCase.command.DeleteRatingCommand;
-import bookReviewer.business.boundary.in.useCase.command.UpdateRatingCommand;
-import bookReviewer.business.boundary.in.useCase.query.GetRatingsOfBookQuery;
-import bookReviewer.business.boundary.in.useCase.query.GetRatingsOfBookWithContentQuery;
 import bookReviewer.business.exception.DuplicateRatingException;
-import bookReviewer.business.mapper.BookBusinessMapper;
-import bookReviewer.business.mapper.RatingBusinessMapper;
-import bookReviewer.business.model.RatingBusiness;
 import bookReviewer.business.util.JwtProvider;
 import bookReviewer.business.exception.ResourceNotFoundException;
 import bookReviewer.business.model.RatingSummary;
@@ -19,7 +11,6 @@ import bookReviewer.persistence.repository.RatingRepository;
 import bookReviewer.persistence.repository.UserRepository;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import javax.mail.*;
@@ -30,8 +21,7 @@ import java.util.List;
 import java.util.Properties;
 
 @Service
-@Qualifier("RatingService")
-public class RatingService implements CreateRatingCommand, DeleteRatingCommand, UpdateRatingCommand, GetRatingsOfBookQuery, GetRatingsOfBookWithContentQuery {
+public class RatingService {
     @Autowired
     private RatingRepository ratingRepository;
 
@@ -48,7 +38,12 @@ public class RatingService implements CreateRatingCommand, DeleteRatingCommand, 
     final String emailSender = "max.master.thesis2@gmail.com";
     final String password = "supersafepassword";
 
-    public List<RatingBusiness> getRatingsOfBook(Long bookId) {
+    public List<Rating> getRatings() {
+        List<Rating> ratings = ratingRepository.findAll();
+        return ratings;
+    }
+
+    public List<Rating> findRatingsById(Long bookId) {
         List<Rating> ratings = ratingRepository.findAllByBookId(bookId);
 
         for (int i = 0; i < ratings.size(); i++) {
@@ -57,14 +52,12 @@ public class RatingService implements CreateRatingCommand, DeleteRatingCommand, 
                 ratings.get(i).setAuthor(user.getUsername());
             }
         }
-        return RatingBusinessMapper.ratingBusinessList(ratings);
+        return ratings;
     }
 
     public RatingSummary getAverageRating(Long bookId) {
-        System.out.println(bookId);
-        RatingSummary ratingSummary = new RatingSummary();
         List<Rating> ratings = ratingRepository.findAllByBookId(bookId);
-
+        RatingSummary ratingSummary = new RatingSummary();
         int sumOfRatings = 0;
         for (Rating rating : ratings) {
             sumOfRatings += rating.getScore();
@@ -74,14 +67,13 @@ public class RatingService implements CreateRatingCommand, DeleteRatingCommand, 
         return  ratingSummary;
     }
 
-    public List<RatingBusiness> getRatingsOfBookWithContent(Long bookId) {
+    public List<Rating> getRatingsByIdWithContent(Long bookId) {
         List<Rating> ratings = ratingRepository.findAllByBookIdAndContentNotNull(bookId);
-        return RatingBusinessMapper.ratingBusinessList(ratings);
+        return ratings;
     }
 
-    public RatingBusiness getRating(long id) {
-        Rating rating = ratingRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("rating not found with id " + id));
-        return RatingBusinessMapper.ratingBusiness(rating);
+    public Rating getRating(long id) {
+        return  ratingRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("rating not found with id " + id));
     }
 
     private void sendEmptyRatingEmail(User receiver, String text) {
@@ -122,16 +114,16 @@ public class RatingService implements CreateRatingCommand, DeleteRatingCommand, 
 
     }
 
-    private boolean isDuplicate(RatingBusiness rating){
+    private boolean isDuplicate(Rating rating){
         return ratingRepository.findAllByBookIdAndUserId(rating.getBook().getId(), rating.getUserId()).size() >= 1;
     }
 
-    public Long createRating(Long bookId, RatingBusiness rating, String token) {
+    public Long createRating(Long bookId, Rating rating, String token) {
         Book book = bookRepository.findById(bookId).orElseThrow(() -> new ResourceNotFoundException("book not found with id " + bookId));
         Claims claims = JwtProvider.decodeJWT(token);
         long reviewer =((long) (int) claims.get("userId"));
 
-        rating.setBook(BookBusinessMapper.bookBusiness(book));
+        rating.setBook(book);
         rating.setUserId(reviewer);
         User user = userRepository.findById(reviewer).orElseThrow(() -> new ResourceNotFoundException("user not found with id " + reviewer));
         System.out.println("user: " + user.getEmail());
@@ -155,17 +147,17 @@ public class RatingService implements CreateRatingCommand, DeleteRatingCommand, 
         }
 
         activityRepository.save(activity);
-        return ratingRepository.saveAndFlush(RatingBusinessMapper.rating(rating)).getId();
+        return ratingRepository.saveAndFlush(rating).getId();
 
     }
 
-    public void updateRating(long bookId, RatingBusiness rating) {
+    public void updateRating(long bookId, Rating rating) {
         Book book = bookRepository.findById(bookId).orElse(null);
-        rating.setBook(BookBusinessMapper.bookBusiness(book));
+        rating.setBook(book);
 
         System.out.println("rating: " + rating.toString());
 
-        ratingRepository.save(RatingBusinessMapper.rating(rating));
+        ratingRepository.save(rating);
     }
 
     public void deleteRating(long id) {

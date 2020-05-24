@@ -1,8 +1,7 @@
 package bookReviewer.presentation.mapper;
 
-import bookReviewer.business.model.Book;
-import bookReviewer.business.model.BookBusiness;
 import bookReviewer.business.model.Offer;
+import bookReviewer.persistence.model.Book;
 import bookReviewer.presentation.model.BookDetailPresentation;
 
 import java.util.List;
@@ -22,9 +21,7 @@ public class BookMapper {
                 book.getPages(),
                 book.getIsbn(),
                 book.getPublishingYear(),
-                book.getContent(),
-                book.getTotalVotes(),
-                book.getAverageRating()
+                book.getContent()
         );
         for (Offer offer : offers) {
             System.out.println(offer);
