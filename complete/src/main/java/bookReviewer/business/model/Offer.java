@@ -1,7 +1,5 @@
 package bookReviewer.business.model;
 
-import bookReviewer.persistence.model.MediaType;
-
 import java.math.BigDecimal;
 
 public class Offer {
