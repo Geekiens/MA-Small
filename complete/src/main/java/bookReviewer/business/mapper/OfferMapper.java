@@ -23,6 +23,9 @@ public class OfferMapper {
     public Offer mapCachedOfferHistoryPersistenceToOffer(CachedOfferHistoryPersistence cachedOfferHistory) {
         System.out.println( cachedOfferHistory.getOffers().size());
         OfferPersistence mostCurrentOffer = cachedOfferHistory.getOffers().get(cachedOfferHistory.getOffers().size() - 1);
-        return new Offer(mostCurrentOffer.getPrice(), cachedOfferHistory.getVendor(), null, cachedOfferHistory.getMediaType());
+        return new Offer(mostCurrentOffer.getPrice(),
+                cachedOfferHistory.getVendor(),
+                null,
+                MediaTypeMapper.mediaTypeBusiness(cachedOfferHistory.getMediaType()));
     }
 }
