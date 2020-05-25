@@ -1,12 +1,14 @@
-package bookReviewer.business.service;
+package bookReviewer.business.useCase.query.getOffersOfBookQuery;
 
 import bookReviewer.business.boundary.in.useCase.query.GetOffersOfBookQuery;
+import bookReviewer.business.exception.ResourceNotFoundException;
 import bookReviewer.business.mapper.OfferMapper;
 import bookReviewer.business.model.*;
-
+import bookReviewer.persistence.model.Book;
 import bookReviewer.persistence.model.CachedOfferHistoryPersistence;
 import bookReviewer.persistence.model.MediaType;
 import bookReviewer.persistence.model.OfferPersistence;
+import bookReviewer.persistence.repository.BookRepository;
 import bookReviewer.persistence.repository.CachedOfferHistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -21,11 +23,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@Qualifier("OfferService")
-public class OfferService implements GetOffersOfBookQuery {
-
+@Qualifier("GetOffersOfBookQueryImpl")
+public class GetOffersOfBookQueryImpl implements GetOffersOfBookQuery {
     @Autowired
-    private BookService bookService;
+    private BookRepository bookRepository;
 
     @Autowired
     private CachedOfferHistoryRepository cachedOfferHistoryRepository;
@@ -34,7 +35,7 @@ public class OfferService implements GetOffersOfBookQuery {
 
 
     public ArrayList<Offer> getOffers(Long id) {
-        String isbn = bookService.getIsbnById(id);
+        String isbn = getIsbnById(id);
         ArrayList<Offer> allOffers = new ArrayList<Offer>();
         allOffers.addAll(getBuchladen123Offers(isbn));
         allOffers.addAll(getBuchVerkauf24Offers(isbn));
@@ -68,7 +69,7 @@ public class OfferService implements GetOffersOfBookQuery {
                 cachedOfferHistoryRepository.save(newCachedOfferHistory);
                 return;
             }
-              OfferPersistence mostCurrentOffer = cachedOfferHistory.getOffers().get(cachedOfferHistory.getOffers().size() -1);
+            OfferPersistence mostCurrentOffer = cachedOfferHistory.getOffers().get(cachedOfferHistory.getOffers().size() -1);
             if (mostCurrentOffer.getRequestDate() != LocalDate.now() || mostCurrentOffer.getPrice() != offer.getPrice()) {
                 OfferPersistence newCachedOffer = new OfferPersistence(offer.getPrice(), LocalDate.now());
                 newCachedOffer.setCachedOfferHistoryPersistence(cachedOfferHistory);
@@ -258,7 +259,12 @@ public class OfferService implements GetOffersOfBookQuery {
         clientHttpRequestFactory.setReadTimeout(8000);
         return clientHttpRequestFactory;
     }
+
+    private String getIsbnById(long id) {
+        Book book = bookRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("book not found with id " + id));
+        if (book == null) {
+            return null;
+        }
+        return book.getIsbn();
+    }
 }
-
-
-

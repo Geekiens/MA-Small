@@ -7,13 +7,9 @@ import bookReviewer.business.boundary.in.useCase.query.GetBooksQuery;
 import bookReviewer.business.boundary.in.useCase.query.GetOffersOfBookQuery;
 import bookReviewer.business.model.Book;
 import bookReviewer.business.model.BookBusiness;
-import bookReviewer.business.service.BookService;
-import bookReviewer.business.service.OfferService;
 import bookReviewer.business.service.RatingService;
-import bookReviewer.business.model.RatingSummary;
 import bookReviewer.presentation.mapper.BookMapper;
 import bookReviewer.presentation.model.BookDetailPresentation;
-import bookReviewer.presentation.model.BookPresentation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -21,7 +17,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -29,23 +24,23 @@ import java.util.Map;
 public class BookController {
 
     @Autowired
-    @Qualifier("OfferService")
+    @Qualifier("GetOffersOfBookQueryImpl")
     GetOffersOfBookQuery getOffersOfBookQuery;
 
     @Autowired
-    @Qualifier("BookService")
+    @Qualifier("CreateBookCommandImpl")
     CreateBookCommand createBookCommand;
 
     @Autowired
-    @Qualifier("BookService")
+    @Qualifier("DeleteBookCommandImpl")
     DeleteBookCommand deleteBookCommand;
 
     @Autowired
-    @Qualifier("BookService")
+    @Qualifier("GetBookQueryImpl")
     GetBookQuery getBookQuery;
 
     @Autowired
-    @Qualifier("BookService")
+    @Qualifier("GetBooksQueryImpl")
     GetBooksQuery getBooksQuery;
 
     @Autowired

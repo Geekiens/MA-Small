@@ -2,7 +2,6 @@ package bookReviewer.presentation.controller;
 
 import bookReviewer.business.boundary.in.useCase.command.RegisterUserCommand;
 import bookReviewer.business.boundary.in.useCase.query.GetTokenByLoginQuery;
-import bookReviewer.business.service.UserService;
 import bookReviewer.business.model.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,11 +13,11 @@ import java.util.Map;
 public class UserController {
 
     @Autowired
-    @Qualifier("UserService")
+    @Qualifier("RegisterUserCommandImpl")
     RegisterUserCommand registerUserCommand;
 
     @Autowired
-    @Qualifier("UserService")
+    @Qualifier("GetTokenByLoginQuery")
     GetTokenByLoginQuery getTokenByLoginQuery;
 
 

@@ -28,11 +28,11 @@ public class RatingController {
     RatingService ratingService = new RatingService();
 
     @Autowired
-    @Qualifier("RatingService")
+    @Qualifier("CreateRatingCommandImpl")
     CreateRatingCommand createRatingCommand;
 
     @Autowired
-    @Qualifier("RatingService")
+    @Qualifier("DeleteRatingCommandImpl")
     DeleteRatingCommand deleteRatingCommand;
 
     @Autowired
@@ -40,11 +40,11 @@ public class RatingController {
     UpdateRatingCommand updateRatingCommand;
 
     @Autowired
-    @Qualifier("RatingService")
+    @Qualifier("GetRatingsOfBookQueryImpl")
     GetRatingsOfBookQuery getRatingsOfBookQuery;
 
     @Autowired
-    @Qualifier("RatingService")
+    @Qualifier("GetRatingsOfBookWithContentQueryImpl")
     GetRatingsOfBookWithContentQuery getRatingsOfBookWithContentQuery;
 
 
