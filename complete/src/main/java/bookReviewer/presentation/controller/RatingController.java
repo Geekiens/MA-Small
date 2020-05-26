@@ -1,11 +1,11 @@
 package bookReviewer.presentation.controller;
 
 
-import bookReviewer.business.boundary.in.useCase.command.CreateRatingCommand;
-import bookReviewer.business.boundary.in.useCase.command.DeleteRatingCommand;
-import bookReviewer.business.boundary.in.useCase.command.UpdateRatingCommand;
-import bookReviewer.business.boundary.in.useCase.query.GetRatingsOfBookQuery;
-import bookReviewer.business.boundary.in.useCase.query.GetRatingsOfBookWithContentQuery;
+import bookReviewer.business.boundary.in.useCase.command.CreateRatingUseCase;
+import bookReviewer.business.boundary.in.useCase.command.DeleteRatingUseCase;
+import bookReviewer.business.boundary.in.useCase.command.UpdateRatingUseCase;
+import bookReviewer.business.boundary.in.useCase.query.GetRatingsOfBookUseCase;
+import bookReviewer.business.boundary.in.useCase.query.GetRatingsOfBookWithContentUseCase;
 import bookReviewer.business.model.RatingBusiness;
 import bookReviewer.business.util.JwtProvider;
 import bookReviewer.business.service.RatingService;
@@ -28,34 +28,34 @@ public class RatingController {
     RatingService ratingService = new RatingService();
 
     @Autowired
-    @Qualifier("CreateRatingCommandImpl")
-    CreateRatingCommand createRatingCommand;
+    @Qualifier("CreateRatingService")
+    CreateRatingUseCase createRatingUseCase;
 
     @Autowired
-    @Qualifier("DeleteRatingCommandImpl")
-    DeleteRatingCommand deleteRatingCommand;
+    @Qualifier("DeleteRatingService")
+    DeleteRatingUseCase deleteRatingUseCase;
 
     @Autowired
-    @Qualifier("RatingService")
-    UpdateRatingCommand updateRatingCommand;
+    @Qualifier("UpdateRatingService")
+    UpdateRatingUseCase updateRatingUseCase;
 
     @Autowired
-    @Qualifier("GetRatingsOfBookQueryImpl")
-    GetRatingsOfBookQuery getRatingsOfBookQuery;
+    @Qualifier("GetRatingsOfBookService")
+    GetRatingsOfBookUseCase getRatingsOfBookUseCase;
 
     @Autowired
-    @Qualifier("GetRatingsOfBookWithContentQueryImpl")
-    GetRatingsOfBookWithContentQuery getRatingsOfBookWithContentQuery;
+    @Qualifier("GetRatingsOfBookWithContentService")
+    GetRatingsOfBookWithContentUseCase getRatingsOfBookWithContentUseCase;
 
 
     @GetMapping(path="/books/{bookId}/ratings", produces = "application/json")
     public List<RatingBusiness> getRatingsByBookId(@PathVariable("bookId") long bookId) {
-        return getRatingsOfBookQuery.getRatingsOfBook(bookId);
+        return getRatingsOfBookUseCase.getRatingsOfBook(bookId);
     }
 
     @GetMapping(path="/books/{bookId}/ratings/content", produces = "application/json")
     public List<RatingBusiness> getRatingsByBookIdContent(@PathVariable("bookId") long bookId) {
-        return getRatingsOfBookWithContentQuery.getRatingsOfBookWithContent(bookId);
+        return getRatingsOfBookWithContentUseCase.getRatingsOfBookWithContent(bookId);
     }
 
     @PreAuthorize("hasRequiredRole(#headers, 'USER')")
@@ -67,7 +67,7 @@ public class RatingController {
         String token = headers.get("authorization");
         String[] splittedToken = token.split(" ");
 
-        return createRatingCommand.createRating(bookId, rating, splittedToken[1]);
+        return createRatingUseCase.createRating(bookId, rating, splittedToken[1]);
     }
     @PutMapping(path="/books/{bookId}/ratings/{ratingId}", consumes = "application/json", produces = "application/json")
     public void updateRating (@PathVariable (value="bookId") long bookId,
@@ -79,14 +79,14 @@ public class RatingController {
             throw new AccessDeniedException("User doesn't match to the requested rating");
         }
 
-        updateRatingCommand.updateRating(bookId, rating);
+        updateRatingUseCase.updateRating(bookId, rating);
     }
 
     @PreAuthorize("hasRequiredRole(#headers, 'ADMIN')")
     @DeleteMapping(path = "/ratings/{id}")
     public void deleteBook(@PathVariable("id") long id,
                            @RequestHeader Map<String, String> headers) {
-        deleteRatingCommand.deleteRating(id);
+        deleteRatingUseCase.deleteRating(id);
     }
 
     public boolean isOwnRating(Map<String, String> headers, long ratingId) {

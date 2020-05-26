@@ -2,7 +2,7 @@ package bookReviewer.persistence;
 
 
 import bookReviewer.persistence.model.CachedOfferHistoryPersistence;
-import bookReviewer.persistence.model.MediaType;
+import bookReviewer.business.shared.MediaType;
 import bookReviewer.persistence.model.OfferPersistence;
 import bookReviewer.persistence.repository.CachedOfferHistoryRepository;
 import org.junit.Assert;

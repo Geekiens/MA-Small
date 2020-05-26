@@ -1,10 +1,10 @@
 package bookReviewer.presentation.controller;
 
-import bookReviewer.business.boundary.in.useCase.command.CreateBookCommand;
-import bookReviewer.business.boundary.in.useCase.command.DeleteBookCommand;
-import bookReviewer.business.boundary.in.useCase.query.GetBookQuery;
-import bookReviewer.business.boundary.in.useCase.query.GetBooksQuery;
-import bookReviewer.business.boundary.in.useCase.query.GetOffersOfBookQuery;
+import bookReviewer.business.boundary.in.useCase.command.CreateBookUseCase;
+import bookReviewer.business.boundary.in.useCase.command.DeleteBookUseCase;
+import bookReviewer.business.boundary.in.useCase.query.GetBookUseCase;
+import bookReviewer.business.boundary.in.useCase.query.GetBooksUseCase;
+import bookReviewer.business.boundary.in.useCase.query.GetOffersOfBookUseCase;
 import bookReviewer.business.model.Book;
 import bookReviewer.business.model.BookBusiness;
 import bookReviewer.business.service.RatingService;
@@ -24,24 +24,24 @@ import java.util.Map;
 public class BookController {
 
     @Autowired
-    @Qualifier("GetOffersOfBookQueryImpl")
-    GetOffersOfBookQuery getOffersOfBookQuery;
+    @Qualifier("GetOffersOfBookService")
+    GetOffersOfBookUseCase getOffersOfBookUseCase;
 
     @Autowired
-    @Qualifier("CreateBookCommandImpl")
-    CreateBookCommand createBookCommand;
+    @Qualifier("CreateBookService")
+    CreateBookUseCase createBookUseCase;
 
     @Autowired
-    @Qualifier("DeleteBookCommandImpl")
-    DeleteBookCommand deleteBookCommand;
+    @Qualifier("DeleteBookService")
+    DeleteBookUseCase deleteBookUseCase;
 
     @Autowired
-    @Qualifier("GetBookQueryImpl")
-    GetBookQuery getBookQuery;
+    @Qualifier("GetBookService")
+    GetBookUseCase getBookUseCase;
 
     @Autowired
-    @Qualifier("GetBooksQueryImpl")
-    GetBooksQuery getBooksQuery;
+    @Qualifier("GetBooksService")
+    GetBooksUseCase getBooksUseCase;
 
     @Autowired
     RatingService ratingService;
@@ -50,14 +50,14 @@ public class BookController {
 
     @GetMapping(path="/books/{id}", produces = "application/json")
     public BookDetailPresentation getBook(@PathVariable("id") long id) {
-        BookDetailPresentation bookDetailPresentation = bookMapper.map(getBookQuery.getBook(id), getOffersOfBookQuery.getOffers(id));
+        BookDetailPresentation bookDetailPresentation = bookMapper.map(getBookUseCase.getBook(id), getOffersOfBookUseCase.getOffers(id));
 
         return  bookDetailPresentation;
     }
 
     @GetMapping(path="/books", produces = "application/json")
     public List<Book> listBooks() {
-        List<Book> books =  getBooksQuery.getBooks();
+        List<Book> books =  getBooksUseCase.getBooks();
 
         return books;
     }
@@ -75,14 +75,14 @@ public class BookController {
         }
 
 
-        return createBookCommand.createBook(book, cleanToken);
+        return createBookUseCase.createBook(book, cleanToken);
     }
 
     @PreAuthorize("hasRequiredRole(#headers, 'MODERATOR')")
     @DeleteMapping(path = "/books/{id}")
     public void deleteBook(@PathVariable("id") long id,
                            @RequestHeader Map<String, String> headers) {
-        deleteBookCommand.deleteBook(id);
+        deleteBookUseCase.deleteBook(id);
     }
 
 
