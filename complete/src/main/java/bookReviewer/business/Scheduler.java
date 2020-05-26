@@ -1,7 +1,8 @@
 package bookReviewer.business;
 
-import bookReviewer.business.service.UserService;
+import bookReviewer.business.boundary.in.useCase.command.CheckUserPromotionUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -9,11 +10,12 @@ import org.springframework.stereotype.Component;
 public class Scheduler {
 
     @Autowired
-    UserService userService;
+    @Qualifier("CheckUserPromotionUseCaseImpl")
+    CheckUserPromotionUseCase checkUserPromotionUseCase;
 
     @Scheduled(fixedRate = 30000)
     public void acquireModerators() {
         System.out.println("Aquire new mods");
-        userService.checkForUserPromotions();
+        checkUserPromotionUseCase.checkForUserPromotions();
     }
 }

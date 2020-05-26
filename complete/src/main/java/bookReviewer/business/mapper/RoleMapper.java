@@ -3,7 +3,7 @@ package bookReviewer.business.mapper;
 import bookReviewer.persistence.model.Role;
 
 public class RoleMapper {
-    public static bookReviewer.persistence.model.Role role(bookReviewer.business.model.Role role) {
+    public static bookReviewer.persistence.model.Role role(bookReviewer.business.shared.Role role) {
         switch (role) {
             case ADMIN:
                 return Role.ADMIN;
@@ -17,17 +17,17 @@ public class RoleMapper {
         }
     }
 
-    public static bookReviewer.business.model.Role roleBusiness(bookReviewer.persistence.model.Role role) {
+    public static bookReviewer.business.shared.Role roleBusiness(bookReviewer.persistence.model.Role role) {
         switch (role) {
             case ADMIN:
-                return bookReviewer.business.model.Role.ADMIN;
+                return bookReviewer.business.shared.Role.ADMIN;
             case MODERATOR:
-                return bookReviewer.business.model.Role.MODERATOR;
+                return bookReviewer.business.shared.Role.MODERATOR;
             case USER:
-                return bookReviewer.business.model.Role.USER;
+                return bookReviewer.business.shared.Role.USER;
             default:
                 USER:
-                return bookReviewer.business.model.Role.USER;
+                return bookReviewer.business.shared.Role.USER;
         }
     }
 }

@@ -1,5 +1,7 @@
 package bookReviewer.persistence.model;
 
+import bookReviewer.business.shared.MediaType;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;

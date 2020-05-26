@@ -1,12 +1,12 @@
 package bookReviewer;
 
-import bookReviewer.business.service.UserService;
+import bookReviewer.business.boundary.in.useCase.command.RegisterUserUseCase;
+import bookReviewer.business.useCase.command.registerUserUseCase.RegisterUserService;
 import bookReviewer.persistence.model.Book;
 import bookReviewer.persistence.model.Rating;
-import bookReviewer.business.model.Role;
+import bookReviewer.business.shared.Role;
 import bookReviewer.persistence.repository.BookRepository;
 import bookReviewer.persistence.repository.RatingRepository;
-import bookReviewer.persistence.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -19,13 +19,12 @@ public class DataLoader implements ApplicationRunner {
 
     private RatingRepository ratingRepository;
 
-    private UserService userService;
-  //  private UserRepository userRepository;
+    private RegisterUserUseCase registerUserUseCase;
 
     @Autowired
-    public DataLoader(BookRepository bookRepository, UserService userService, RatingRepository ratingRepository) {
+    public DataLoader(BookRepository bookRepository, RegisterUserService registerUserService, RatingRepository ratingRepository) {
         this.bookRepository = bookRepository;
-        this.userService = userService;
+        this.registerUserUseCase = registerUserService;
         this.ratingRepository = ratingRepository;
     }
 
@@ -64,9 +63,9 @@ public class DataLoader implements ApplicationRunner {
             bookRepository.save(book);
 
             // Create Users
-            userService.registerUser("User", "passwort", "2f0df9b8-b645-4fc3-91c2-407d50706302@mailslurp.com", Role.USER);
-            userService.registerUser("Moderator", "passwort", "20fd08d4-5eaf-445c-a47e-7d3055009337@mailslurp.com", Role.MODERATOR);
-            userService.registerUser("Admin", "passwort", "max.master.thesis2+user@gmail.com", Role.ADMIN);
+            registerUserUseCase.registerUser("User", "passwort", "2f0df9b8-b645-4fc3-91c2-407d50706302@mailslurp.com", Role.USER);
+            registerUserUseCase.registerUser("Moderator", "passwort", "20fd08d4-5eaf-445c-a47e-7d3055009337@mailslurp.com", Role.MODERATOR);
+            registerUserUseCase.registerUser("Admin", "passwort", "max.master.thesis2+user@gmail.com", Role.ADMIN);
 
             // Create Ratings
             Book ratedBook = bookRepository.findById(1L).orElse(null);

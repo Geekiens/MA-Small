@@ -1,7 +1,6 @@
 package bookReviewer.presentation.model;
 
 import bookReviewer.business.model.Book;
-import bookReviewer.business.model.BookBusiness;
 import bookReviewer.business.model.RatingSummary;
 
 public class BookPresentation {

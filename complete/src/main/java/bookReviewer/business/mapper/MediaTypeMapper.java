@@ -1,6 +1,6 @@
 package bookReviewer.business.mapper;
 
-import bookReviewer.persistence.model.MediaType;
+import bookReviewer.business.shared.MediaType;
 
 public class MediaTypeMapper {
     public static MediaType mediaType(bookReviewer.business.model.MediaType mediaType) {
