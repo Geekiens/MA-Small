@@ -4,6 +4,6 @@ import bookReviewer.business.model.Book;
 
 import java.util.List;
 
-public interface GetBooksQuery {
+public interface GetBooksUseCase {
     List<Book> getBooks();
 }
