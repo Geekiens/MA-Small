@@ -1,4 +1,4 @@
-package bookReviewer.business.model;
+package bookReviewer.persistence.model;
 
 public enum MediaType {
     EBOOK,
