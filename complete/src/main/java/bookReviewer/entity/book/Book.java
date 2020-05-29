@@ -1,5 +1,7 @@
 package bookReviewer.entity.book;
 
+import java.util.Objects;
+
 public class Book {
     private long id;
     private BookMetaDetails bookMetaDetails;
@@ -44,11 +46,31 @@ public class Book {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        bookReviewer.entity.book.Book book = (bookReviewer.entity.book.Book) o;
+        return getId() == book.getId() &&
+                getBookMetaDetails().getAuthor().equals(book.getBookMetaDetails().getAuthor()) &&
+                getBookMetaDetails().getTitle().equals(book.getBookMetaDetails().getTitle()) &&
+                Objects.equals(getBookMetaDetails().getPublishingYear(), book.getBookMetaDetails().getPublishingYear()) &&
+                Objects.equals(getBookUserDetails().getContent(), book.getBookUserDetails().getContent());
+    }
+    @Override
     public String toString() {
         return "Book{" +
                 "id=" + id +
                 ", bookMetaDetails=" + bookMetaDetails.toString() +
                 ", bookUserDetails=" + bookUserDetails.toString() +
                 '}';
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                getId(),
+                getBookMetaDetails().getAuthor(),
+                getBookMetaDetails().getTitle(), getBookMetaDetails().getPublishingYear(),
+                getBookUserDetails().getContent());
     }
 }
