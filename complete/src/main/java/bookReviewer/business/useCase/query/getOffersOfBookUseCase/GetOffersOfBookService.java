@@ -1,15 +1,16 @@
 package bookReviewer.business.useCase.query.getOffersOfBookUseCase;
 
+import bookReviewer.adapter.out.persistence.service.FindAllOfferHistoriesByIsbnService;
+import bookReviewer.business.boundary.out.persistence.*;
 import bookReviewer.business.mapper.MediaTypeMapper;
 import bookReviewer.business.boundary.in.useCase.query.GetOffersOfBookUseCase;
 import bookReviewer.business.exception.ResourceNotFoundException;
 import bookReviewer.business.mapper.OfferMapper;
 import bookReviewer.business.model.*;
+import bookReviewer.business.shared.MediaType;
 import bookReviewer.persistence.model.Book;
 import bookReviewer.persistence.model.CachedOfferHistoryPersistence;
 import bookReviewer.persistence.model.OfferPersistence;
-import bookReviewer.persistence.repository.BookRepository;
-import bookReviewer.persistence.repository.CachedOfferHistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
@@ -26,10 +27,20 @@ import java.util.List;
 @Qualifier("GetOffersOfBookService")
 public class GetOffersOfBookService implements GetOffersOfBookUseCase {
     @Autowired
-    private BookRepository bookRepository;
+    @Qualifier("FindBookByIdService")
+    FindBookById findBookById;
 
     @Autowired
-    private CachedOfferHistoryRepository cachedOfferHistoryRepository;
+    @Qualifier("FindAllOfferHistoriesByIsbnService")
+    FindAllOfferHistoriesByIsbn findAllOfferHistoriesByIsbn;
+
+    @Autowired
+    @Qualifier("FindOfferHistoryService")
+    FindOfferHistory findOfferHistory;
+
+    @Autowired
+    @Qualifier("SaveOfferHistoryService")
+    SaveOfferHistory saveOfferHistory;
 
     private OfferMapper offerMapper = new OfferMapper();
 
@@ -45,7 +56,7 @@ public class GetOffersOfBookService implements GetOffersOfBookUseCase {
     }
 
     private ArrayList<Offer> getCachedRequestedOffers(String isbn) {
-        List<CachedOfferHistoryPersistence> cachedOfferHistory = cachedOfferHistoryRepository.findByIsbn(isbn);
+        List<CachedOfferHistoryPersistence> cachedOfferHistory = findAllOfferHistoriesByIsbn.findAllOffersByIsbn(isbn);
         if (cachedOfferHistory == null) return new ArrayList<>();
         return offerMapper.mapCachedOfferHistoryPersistenceToOfferList(cachedOfferHistory);
     }
@@ -54,7 +65,7 @@ public class GetOffersOfBookService implements GetOffersOfBookUseCase {
         for (Offer offer : offers) {
             CachedOfferHistoryPersistence cachedOfferHistory = null;
             try {
-                cachedOfferHistory = cachedOfferHistoryRepository.findByIsbnAndVendorAndMediaType(isbn,
+                cachedOfferHistory = findOfferHistory.findOfferHistory(isbn,
                         offer.getVendor(),
                         MediaTypeMapper.mediaType(offer.getMediaType()));
             } catch (Exception e){
@@ -68,7 +79,7 @@ public class GetOffersOfBookService implements GetOffersOfBookUseCase {
                 newCachedOffer.setCachedOfferHistoryPersistence(newCachedOfferHistory);
                 newCachedOfferHistory.addOffer(newCachedOffer);
 
-                cachedOfferHistoryRepository.save(newCachedOfferHistory);
+                saveOfferHistory.saveOfferHistory(newCachedOfferHistory);
                 return;
             }
             OfferPersistence mostCurrentOffer = cachedOfferHistory.getOffers().get(cachedOfferHistory.getOffers().size() -1);
@@ -76,7 +87,7 @@ public class GetOffersOfBookService implements GetOffersOfBookUseCase {
                 OfferPersistence newCachedOffer = new OfferPersistence(offer.getPrice(), LocalDate.now());
                 newCachedOffer.setCachedOfferHistoryPersistence(cachedOfferHistory);
                 cachedOfferHistory.addOffer(newCachedOffer);
-                cachedOfferHistoryRepository.save(cachedOfferHistory);
+                saveOfferHistory.saveOfferHistory(cachedOfferHistory);
             }
         }
     }
@@ -119,7 +130,7 @@ public class GetOffersOfBookService implements GetOffersOfBookUseCase {
             Offer offer = new Offer(price,
                     Vendor.BUCHLADEN123DE.getVendorName(),
                     offerApi1.getAffiliate(),
-                    bookReviewer.business.model.MediaType.valueOf(offerApi1.getMedia().toUpperCase()));
+                    bookReviewer.business.shared.MediaType.valueOf(offerApi1.getMedia().toUpperCase()));
             offers.add(offer);
         }
         return offers;
@@ -149,7 +160,7 @@ public class GetOffersOfBookService implements GetOffersOfBookUseCase {
         for (OfferApi2 offerApi2 : offerApi2s) {
             if (!offerApi2.isAvailable()) { continue; }
             BigDecimal price = offerApi2.getPrice().add(offerApi2.getShippingFee());
-            bookReviewer.business.model.MediaType mediaType = mapMediaTypeOfBuchVerkauf24(offerApi2);
+            bookReviewer.business.shared.MediaType mediaType = mapMediaTypeOfBuchVerkauf24(offerApi2);
 
             Offer offer = new Offer(price,
                     Vendor.BUCHVERKAUF24.getVendorName(),
@@ -160,21 +171,21 @@ public class GetOffersOfBookService implements GetOffersOfBookUseCase {
         return offers;
     }
 
-    private bookReviewer.business.model.MediaType mapMediaTypeOfBuchVerkauf24(OfferApi2 offerApi2) {
+    private MediaType mapMediaTypeOfBuchVerkauf24(OfferApi2 offerApi2) {
         return mapNumberToMediaType(offerApi2.getType());
     }
 
-    private bookReviewer.business.model.MediaType mapNumberToMediaType(int type) {
-        bookReviewer.business.model.MediaType mediaType;
+    private MediaType mapNumberToMediaType(int type) {
+        MediaType mediaType;
         switch (type) {
             case 0:
-                mediaType = bookReviewer.business.model.MediaType.HARDCOVER;
+                mediaType = MediaType.HARDCOVER;
                 break;
             case 1:
-                mediaType = bookReviewer.business.model.MediaType.PAPERBACK;
+                mediaType = MediaType.PAPERBACK;
                 break;
             case 2:
-                mediaType = bookReviewer.business.model.MediaType.EBOOK;
+                mediaType = MediaType.EBOOK;
                 break;
             case 3:
                 mediaType = MediaType.AUDIOBOOK;
@@ -218,7 +229,7 @@ public class GetOffersOfBookService implements GetOffersOfBookUseCase {
             if (price.doubleValue() < 20.00 && (offerApi3.getType() == 0 || offerApi3.getType() == 1)) {
                 price.add(new BigDecimal(2.00));
             }
-            bookReviewer.business.model.MediaType mediaType = mapMediaTypeOfYourFavoriteBookVendor(offerApi3);
+            MediaType mediaType = mapMediaTypeOfYourFavoriteBookVendor(offerApi3);
 
             Offer offer = new Offer(price,
                     Vendor.YOUR_FAVORITE_BOOK_VENDOR.getVendorName(),
@@ -247,7 +258,7 @@ public class GetOffersOfBookService implements GetOffersOfBookUseCase {
         }
     }
 
-    private bookReviewer.business.model.MediaType mapMediaTypeOfYourFavoriteBookVendor(OfferApi3 offerApi3) {
+    private MediaType mapMediaTypeOfYourFavoriteBookVendor(OfferApi3 offerApi3) {
         return mapNumberToMediaType(offerApi3.getType());
     }
 
@@ -263,7 +274,7 @@ public class GetOffersOfBookService implements GetOffersOfBookUseCase {
     }
 
     private String getIsbnById(long id) {
-        Book book = bookRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("book not found with id " + id));
+        Book book = findBookById.findBookById(id).orElseThrow(() -> new ResourceNotFoundException("book not found with id " + id));
         if (book == null) {
             return null;
         }

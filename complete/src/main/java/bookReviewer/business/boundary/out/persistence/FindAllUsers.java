@@ -2,8 +2,8 @@ package bookReviewer.business.boundary.out.persistence;
 
 import bookReviewer.persistence.model.User;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface FindAllUsers {
-    ArrayList<User> findAllUsers();
+    List<User> findAllUsers();
 }

@@ -1,6 +1,8 @@
 package bookReviewer.business.useCase.query.getBooksUseCase;
 
 import bookReviewer.business.boundary.in.useCase.query.GetBooksUseCase;
+import bookReviewer.business.boundary.out.persistence.FindAllBooks;
+import bookReviewer.business.boundary.out.persistence.FindAllRatingsByBookId;
 import bookReviewer.business.mapper.BookMapper;
 import bookReviewer.business.model.RatingSummary;
 import bookReviewer.persistence.model.Book;
@@ -17,13 +19,16 @@ import java.util.List;
 @Qualifier("GetBooksService")
 public class GetBooksService implements GetBooksUseCase {
     @Autowired
-    BookRepository bookRepository;
+    @Qualifier("FindAllBooksService")
+    FindAllBooks findAllBooks;
 
     @Autowired
-    RatingRepository ratingRepository;
+    @Qualifier("FindAllRatingsByBookIdService")
+    FindAllRatingsByBookId findAllRatingsByBookId;
+
 
     public List<bookReviewer.business.model.Book> getBooks() {
-        List<Book> books = bookRepository.findAll();
+        List<Book> books = findAllBooks.findAllBooks();
         List<bookReviewer.business.model.Book> booksWithRating = BookMapper.bookList(books);
         for (bookReviewer.business.model.Book book : booksWithRating) {
             System.out.println(book.toString());
@@ -35,7 +40,7 @@ public class GetBooksService implements GetBooksUseCase {
     }
     private RatingSummary getAverageRating(Long bookId) {
         RatingSummary ratingSummary = new RatingSummary();
-        List<Rating> ratings = ratingRepository.findAllByBookId(bookId);
+        List<Rating> ratings = findAllRatingsByBookId.findAllRatingsByBookId(bookId);
         int sumOfRatings = 0;
         for (Rating rating : ratings) {
             sumOfRatings += rating.getScore();

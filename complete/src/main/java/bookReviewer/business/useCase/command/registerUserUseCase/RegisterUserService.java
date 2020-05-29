@@ -1,6 +1,7 @@
 package bookReviewer.business.useCase.command.registerUserUseCase;
 
 import bookReviewer.business.boundary.in.useCase.command.RegisterUserUseCase;
+import bookReviewer.business.boundary.out.persistence.SaveUser;
 import bookReviewer.business.mapper.UserBusinessMapper;
 import bookReviewer.business.shared.Role;
 import bookReviewer.business.model.UserBusiness;
@@ -18,13 +19,14 @@ import java.security.SecureRandom;
 public class RegisterUserService implements RegisterUserUseCase {
 
     @Autowired
-    UserRepository userRepository;
+    @Qualifier("SaveUserService")
+    SaveUser saveUser;
 
     public void registerUser(String username, String password, String email, Role role) throws Exception {
         byte[] salt = getSalt();
         String hashedPassword = get_SHA_1_SecurePassword(password, salt);
         UserBusiness user = new UserBusiness(username, hashedPassword, email, salt, role);
-        userRepository.save(UserBusinessMapper.user(user));
+        saveUser.saveUser(UserBusinessMapper.user(user));
     }
 
     private static String get_SHA_1_SecurePassword(String passwordToHash, byte[] salt)

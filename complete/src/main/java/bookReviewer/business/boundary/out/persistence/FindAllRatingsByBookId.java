@@ -2,8 +2,8 @@ package bookReviewer.business.boundary.out.persistence;
 
 import bookReviewer.persistence.model.Rating;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface FindAllRatingsByBookId {
-    ArrayList<Rating> findAllRatingsByBookId(Long bookId);
+    List<Rating> findAllRatingsByBookId(Long bookId);
 }

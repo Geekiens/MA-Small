@@ -1,6 +1,7 @@
 package bookReviewer.business.useCase.command.createRatingUseCase;
 
 import bookReviewer.business.boundary.in.useCase.command.CreateRatingUseCase;
+import bookReviewer.business.boundary.out.persistence.*;
 import bookReviewer.business.exception.DuplicateRatingException;
 import bookReviewer.business.exception.ResourceNotFoundException;
 import bookReviewer.business.mapper.BookBusinessMapper;
@@ -31,29 +32,37 @@ import java.util.Properties;
 public class CreateRatingService implements CreateRatingUseCase {
 
     @Autowired
-    private RatingRepository ratingRepository;
+    @Qualifier("SaveRatingService")
+    SaveRating saveRating;
 
     @Autowired
-    private BookRepository bookRepository;
+    @Qualifier("FindAllRatingsByBookIdAndUserIdService")
+    FindAllRatingsByBookIdAndUserId findAllRatingsByBookIdAndUserId;
 
     @Autowired
-    private UserRepository userRepository;
+    @Qualifier("FindBookByIdService")
+    FindBookById findBookById;
 
     @Autowired
-    private ActivityRepository activityRepository;
+    @Qualifier("FindUserByIdService")
+    FindUserById findUserById;
+
+    @Autowired
+    @Qualifier("SaveActivityService")
+    SaveActivity saveActivity;
 
     final String emailSender = "max.master.thesis2@gmail.com";
     final String password = "supersafepassword";
 
 
     public Long createRating(Long bookId, RatingBusiness rating, String token) {
-        Book book = bookRepository.findById(bookId).orElseThrow(() -> new ResourceNotFoundException("book not found with id " + bookId));
+        Book book = findBookById.findBookById(bookId).orElseThrow(() -> new ResourceNotFoundException("book not found with id " + bookId));
         Claims claims = JwtProvider.decodeJWT(token);
         long reviewer =((long) (int) claims.get("userId"));
 
         rating.setBook(BookBusinessMapper.bookBusiness(book));
         rating.setUserId(reviewer);
-        User user = userRepository.findById(reviewer).orElseThrow(() -> new ResourceNotFoundException("user not found with id " + reviewer));
+        User user = findUserById.findUserById(reviewer).orElseThrow(() -> new ResourceNotFoundException("user not found with id " + reviewer));
         System.out.println("user: " + user.getEmail());
         if (isDuplicate(rating)){
             throw new DuplicateRatingException();
@@ -74,8 +83,8 @@ public class CreateRatingService implements CreateRatingUseCase {
             }).start();
         }
 
-        activityRepository.save(activity);
-        return ratingRepository.saveAndFlush(RatingBusinessMapper.rating(rating)).getId();
+        saveActivity.saveActivity(activity);
+        return saveRating.saveRating(RatingBusinessMapper.rating(rating));
     }
 
     private void sendEmptyRatingEmail(User receiver, String text) {
@@ -117,6 +126,6 @@ public class CreateRatingService implements CreateRatingUseCase {
     }
 
     private boolean isDuplicate(RatingBusiness rating){
-        return ratingRepository.findAllByBookIdAndUserId(rating.getBook().getId(), rating.getUserId()).size() >= 1;
+        return findAllRatingsByBookIdAndUserId.findAllRatingsByBookIdAndUserId(rating.getBook().getId(), rating.getUserId()).size() >= 1;
     }
 }

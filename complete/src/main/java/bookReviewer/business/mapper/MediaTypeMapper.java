@@ -3,7 +3,7 @@ package bookReviewer.business.mapper;
 import bookReviewer.business.shared.MediaType;
 
 public class MediaTypeMapper {
-    public static MediaType mediaType(bookReviewer.business.model.MediaType mediaType) {
+    public static MediaType mediaTypeBusiness(bookReviewer.persistence.model.MediaType mediaType) {
         switch (mediaType) {
             case HARDCOVER:
                 return MediaType.HARDCOVER;
@@ -19,16 +19,16 @@ public class MediaTypeMapper {
         }
     }
 
-    public static bookReviewer.business.model.MediaType mediaTypeBusiness(MediaType mediaType) {
+    public static bookReviewer.persistence.model.MediaType mediaType(MediaType mediaType) {
         switch (mediaType) {
             case HARDCOVER:
-                return bookReviewer.business.model.MediaType.HARDCOVER;
+                return bookReviewer.persistence.model.MediaType.HARDCOVER;
             case PAPERBACK:
-                return bookReviewer.business.model.MediaType.PAPERBACK;
+                return bookReviewer.persistence.model.MediaType.PAPERBACK;
             case EBOOK:
-                return bookReviewer.business.model.MediaType.EBOOK;
+                return bookReviewer.persistence.model.MediaType.EBOOK;
             case AUDIOBOOK:
-                return bookReviewer.business.model.MediaType.AUDIOBOOK;
+                return bookReviewer.persistence.model.MediaType.AUDIOBOOK;
             default:
                 return null;
         }
