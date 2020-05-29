@@ -1,4 +1,4 @@
-package bookReviewer.adapter.out.persistence;
+package bookReviewer.adapter.out.persistence.service;
 
 import bookReviewer.business.boundary.out.persistence.FindAllActivitiesByUser;
 import bookReviewer.persistence.model.Activity;
@@ -15,7 +15,7 @@ import java.util.List;
 public class FindAllActivitiesByUserService implements FindAllActivitiesByUser {
     @Autowired
     ActivityRepository activityRepository;
-    public List<Activity> findAllUsers(User user){
+    public List<Activity> findAllActivitiesByUser(User user){
         return activityRepository.findAllByUser(user);
     }
 }

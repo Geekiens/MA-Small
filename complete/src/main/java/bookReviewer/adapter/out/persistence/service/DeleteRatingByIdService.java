@@ -1,4 +1,4 @@
-package bookReviewer.adapter.out.persistence;
+package bookReviewer.adapter.out.persistence.service;
 
 import bookReviewer.business.boundary.out.persistence.DeleteRatingById;
 import bookReviewer.persistence.repository.RatingRepository;

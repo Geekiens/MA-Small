@@ -6,5 +6,5 @@ import bookReviewer.persistence.model.User;
 import java.util.List;
 
 public interface FindAllActivitiesByUser {
-        List<Activity> findAllUsers(User user);
+        List<Activity> findAllActivitiesByUser(User user);
 }

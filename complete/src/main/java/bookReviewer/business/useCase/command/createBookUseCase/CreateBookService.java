@@ -1,6 +1,9 @@
 package bookReviewer.business.useCase.command.createBookUseCase;
 
 import bookReviewer.business.boundary.in.useCase.command.CreateBookUseCase;
+import bookReviewer.business.boundary.out.persistence.FindUserById;
+import bookReviewer.business.boundary.out.persistence.SaveActivity;
+import bookReviewer.business.boundary.out.persistence.SaveBook;
 import bookReviewer.business.exception.InvalidISBNException;
 import bookReviewer.business.mapper.BookBusinessMapper;
 import bookReviewer.business.model.BookBusiness;
@@ -23,25 +26,28 @@ import java.util.Date;
 public class CreateBookService implements CreateBookUseCase {
 
     @Autowired
-    BookRepository bookRepository;
+    @Qualifier("SaveBookService")
+    SaveBook saveBook;
 
     @Autowired
-    ActivityRepository activityRepository;
+    @Qualifier("SaveActivityService")
+    SaveActivity saveActivity;
 
     @Autowired
-    UserRepository userRepository;
+    @Qualifier("FindUserByIdService")
+    FindUserById findUserById;
 
     public Long createBook(BookBusiness book, String token) {
         checkISBN(book.getIsbn());
         if (token != null) {
             Claims claims = JwtProvider.decodeJWT(token);
             long reviewer = ((long) (int) claims.get("userId"));
-            User user = userRepository.findById(reviewer).orElse(null);
+            User user = findUserById.findUserById(reviewer).orElse(null);
             Activity activity = new Activity(new Date(), ActivityType.BOOK_CREATED, user);
-            activityRepository.save(activity);
+            saveActivity.saveActivity(activity);
         }
 
-        return bookRepository.saveAndFlush(BookBusinessMapper.book(book)).getId();
+        return saveBook.saveBook(BookBusinessMapper.book(book));
     }
 
     private void checkISBN(String isbn){

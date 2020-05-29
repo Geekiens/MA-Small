@@ -1,6 +1,10 @@
 package bookReviewer.business.useCase.command.checkUserPromotionUseCase;
 
 import bookReviewer.business.boundary.in.useCase.command.CheckUserPromotionUseCase;
+import bookReviewer.business.boundary.out.persistence.FindAllActivitiesByUser;
+import bookReviewer.business.boundary.out.persistence.FindAllUsers;
+import bookReviewer.business.boundary.out.persistence.FindBookById;
+import bookReviewer.business.boundary.out.persistence.SaveUser;
 import bookReviewer.business.mapper.RoleMapper;
 import bookReviewer.business.shared.Role;
 import bookReviewer.persistence.model.Activity;
@@ -18,18 +22,24 @@ import java.util.List;
 public class CheckUserPromotionService implements CheckUserPromotionUseCase {
 
     @Autowired
-    UserRepository userRepository;
+    @Qualifier("FindAllUsersService")
+    FindAllUsers findAllUsers;
 
     @Autowired
-    ActivityRepository activityRepository;
+    @Qualifier("SaveUserService")
+    SaveUser saveUser;
+
+    @Autowired
+    @Qualifier("FindAllActivitiesByUserService")
+    FindAllActivitiesByUser findAllActivitiesByUser;
 
     public void checkForUserPromotions(){
-        List<User> users = userRepository.findAll();
+        List<User> users = findAllUsers.findAllUsers();
         users.forEach(user -> {
             if (RoleMapper.roleBusiness(user.getRole()) == Role.ADMIN || RoleMapper.roleBusiness(user.getRole()) == Role.MODERATOR) {
                 return;
             }
-            List<Activity> activities = activityRepository.findAllByUser(user);
+            List<Activity> activities = findAllActivitiesByUser.findAllActivitiesByUser(user);
             Integer activityScore = activities.stream().mapToInt(activity -> {
                         switch (activity.getActivityType()) {
                             case BOOK_CREATED:
@@ -51,7 +61,7 @@ public class CheckUserPromotionService implements CheckUserPromotionUseCase {
             System.out.println("Score: " + activityScore);
             if (activityScore != null && activityScore >= 50) {
                 user.setRole(RoleMapper.role(Role.MODERATOR));
-                userRepository.save(user);
+                saveUser.saveUser(user);
             }
 
         });

@@ -1,4 +1,4 @@
-package bookReviewer.adapter.out.persistence;
+package bookReviewer.adapter.out.persistence.service;
 
 import bookReviewer.business.boundary.out.persistence.SaveOfferHistory;
 import bookReviewer.persistence.model.CachedOfferHistoryPersistence;

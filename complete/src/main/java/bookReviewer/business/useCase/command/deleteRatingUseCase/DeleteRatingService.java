@@ -1,6 +1,7 @@
 package bookReviewer.business.useCase.command.deleteRatingUseCase;
 
 import bookReviewer.business.boundary.in.useCase.command.DeleteRatingUseCase;
+import bookReviewer.business.boundary.out.persistence.DeleteRatingById;
 import bookReviewer.persistence.repository.RatingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -11,9 +12,10 @@ import org.springframework.stereotype.Service;
 public class DeleteRatingService implements DeleteRatingUseCase {
 
     @Autowired
-    private RatingRepository ratingRepository;
+    @Qualifier("DeleteRatingByIdService")
+    DeleteRatingById deleteRatingById;
 
     public void deleteRating(long id) {
-        ratingRepository.deleteById(id);
+        deleteRatingById.deleteRatingById(id);
     }
 }

@@ -1,6 +1,7 @@
 package bookReviewer.business.useCase.query.getTokenByLoginUseCase;
 
 import bookReviewer.business.boundary.in.useCase.query.GetTokenByLoginUseCase;
+import bookReviewer.business.boundary.out.persistence.FindUserByUsername;
 import bookReviewer.business.util.JwtProvider;
 import bookReviewer.persistence.model.User;
 import bookReviewer.persistence.repository.UserRepository;
@@ -16,11 +17,12 @@ import java.security.NoSuchAlgorithmException;
 public class GetTokenByLoginService implements GetTokenByLoginUseCase {
 
     @Autowired
-    UserRepository userRepository;
+    @Qualifier("FindUserByUsernameService")
+    FindUserByUsername findUserByUsername;
 
     public String loginUser(String username, String password) throws Exception{
         System.out.println("Username:" + username);
-        User user = userRepository.findByUsername(username);
+        User user = findUserByUsername.findUserByUsername(username);
         System.out.println(user.getUsername());
         if (user.getPassword().equalsIgnoreCase(get_SHA_1_SecurePassword(password, user.getSalt()))) {
             return getToken(user);

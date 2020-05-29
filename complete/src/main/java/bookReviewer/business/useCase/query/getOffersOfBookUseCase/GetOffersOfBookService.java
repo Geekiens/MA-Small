@@ -1,5 +1,7 @@
 package bookReviewer.business.useCase.query.getOffersOfBookUseCase;
 
+import bookReviewer.adapter.out.persistence.service.FindAllOfferHistoriesByIsbnService;
+import bookReviewer.business.boundary.out.persistence.*;
 import bookReviewer.business.mapper.MediaTypeMapper;
 import bookReviewer.business.boundary.in.useCase.query.GetOffersOfBookUseCase;
 import bookReviewer.business.exception.ResourceNotFoundException;
@@ -9,8 +11,6 @@ import bookReviewer.business.shared.MediaType;
 import bookReviewer.persistence.model.Book;
 import bookReviewer.persistence.model.CachedOfferHistoryPersistence;
 import bookReviewer.persistence.model.OfferPersistence;
-import bookReviewer.persistence.repository.BookRepository;
-import bookReviewer.persistence.repository.CachedOfferHistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
@@ -27,10 +27,20 @@ import java.util.List;
 @Qualifier("GetOffersOfBookService")
 public class GetOffersOfBookService implements GetOffersOfBookUseCase {
     @Autowired
-    private BookRepository bookRepository;
+    @Qualifier("FindBookByIdService")
+    FindBookById findBookById;
 
     @Autowired
-    private CachedOfferHistoryRepository cachedOfferHistoryRepository;
+    @Qualifier("FindAllOfferHistoriesByIsbnService")
+    FindAllOfferHistoriesByIsbn findAllOfferHistoriesByIsbn;
+
+    @Autowired
+    @Qualifier("FindOfferHistoryService")
+    FindOfferHistory findOfferHistory;
+
+    @Autowired
+    @Qualifier("SaveOfferHistoryService")
+    SaveOfferHistory saveOfferHistory;
 
     private OfferMapper offerMapper = new OfferMapper();
 
@@ -46,7 +56,7 @@ public class GetOffersOfBookService implements GetOffersOfBookUseCase {
     }
 
     private ArrayList<Offer> getCachedRequestedOffers(String isbn) {
-        List<CachedOfferHistoryPersistence> cachedOfferHistory = cachedOfferHistoryRepository.findByIsbn(isbn);
+        List<CachedOfferHistoryPersistence> cachedOfferHistory = findAllOfferHistoriesByIsbn.findAllOffersByIsbn(isbn);
         if (cachedOfferHistory == null) return new ArrayList<>();
         return offerMapper.mapCachedOfferHistoryPersistenceToOfferList(cachedOfferHistory);
     }
@@ -55,7 +65,7 @@ public class GetOffersOfBookService implements GetOffersOfBookUseCase {
         for (Offer offer : offers) {
             CachedOfferHistoryPersistence cachedOfferHistory = null;
             try {
-                cachedOfferHistory = cachedOfferHistoryRepository.findByIsbnAndVendorAndMediaType(isbn,
+                cachedOfferHistory = findOfferHistory.findOfferHistory(isbn,
                         offer.getVendor(),
                         MediaTypeMapper.mediaType(offer.getMediaType()));
             } catch (Exception e){
@@ -69,7 +79,7 @@ public class GetOffersOfBookService implements GetOffersOfBookUseCase {
                 newCachedOffer.setCachedOfferHistoryPersistence(newCachedOfferHistory);
                 newCachedOfferHistory.addOffer(newCachedOffer);
 
-                cachedOfferHistoryRepository.save(newCachedOfferHistory);
+                saveOfferHistory.saveOfferHistory(newCachedOfferHistory);
                 return;
             }
             OfferPersistence mostCurrentOffer = cachedOfferHistory.getOffers().get(cachedOfferHistory.getOffers().size() -1);
@@ -77,7 +87,7 @@ public class GetOffersOfBookService implements GetOffersOfBookUseCase {
                 OfferPersistence newCachedOffer = new OfferPersistence(offer.getPrice(), LocalDate.now());
                 newCachedOffer.setCachedOfferHistoryPersistence(cachedOfferHistory);
                 cachedOfferHistory.addOffer(newCachedOffer);
-                cachedOfferHistoryRepository.save(cachedOfferHistory);
+                saveOfferHistory.saveOfferHistory(cachedOfferHistory);
             }
         }
     }
@@ -264,7 +274,7 @@ public class GetOffersOfBookService implements GetOffersOfBookUseCase {
     }
 
     private String getIsbnById(long id) {
-        Book book = bookRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("book not found with id " + id));
+        Book book = findBookById.findBookById(id).orElseThrow(() -> new ResourceNotFoundException("book not found with id " + id));
         if (book == null) {
             return null;
         }
