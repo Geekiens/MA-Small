@@ -1,11 +1,16 @@
 package bookReviewer.entity.user;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 
 public class User {
     private long id;
+    @Email
     private String email;
+    @NotNull
     private Role role;
+    @NotNull
     private Credentials credentials;
     private ArrayList<Activity> activities;
 

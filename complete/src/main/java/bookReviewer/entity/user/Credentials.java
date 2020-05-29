@@ -1,7 +1,12 @@
 package bookReviewer.entity.user;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 public class Credentials {
+    @NotBlank
     private String username;
+    @NotNull
     private String password;
     private byte[] salt;
 

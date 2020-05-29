@@ -1,11 +1,16 @@
 package bookReviewer.entity.book;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 import java.util.Arrays;
 
 public class BookMetaDetails {
+    @NotNull
     private String author;
+    @NotNull
     private String title;
     private int pages;
+    @PositiveOrZero
     private int publishingYear;
     private String[] languages;
     private String genre;
