@@ -1,7 +1,9 @@
 package bookReviewer.business.boundary.out.persistence;
 
+import bookReviewer.persistence.model.CachedOfferHistoryPersistence;
+
 import java.util.List;
 
 public interface FindAllOfferHistoriesByIsbn {
-    List<bookReviewer.persistence.model.CachedOfferHistoryPersistence> findAllOffersByIsbn(String isbn);
+    List<CachedOfferHistoryPersistence> findAllOffersByIsbn(String isbn);
 }
