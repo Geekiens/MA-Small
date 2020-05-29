@@ -9,7 +9,6 @@ public class RatingDetails {
     private int score;
     private String title;
     private String content;
-    private String author;
 
     public RatingDetails() {
     }
@@ -18,7 +17,6 @@ public class RatingDetails {
         this.score = score;
         this.title = title;
         this.content = content;
-        this.author = author;
     }
 
     public int getScore() {
@@ -45,21 +43,12 @@ public class RatingDetails {
         this.content = content;
     }
 
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
     @Override
     public String toString() {
         return "RatingDetails{" +
                 "score=" + score +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
-                ", author='" + author + '\'' +
                 '}';
     }
 }

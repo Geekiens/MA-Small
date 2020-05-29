@@ -1,7 +1,8 @@
 package bookReviewer.adapter.out.persistence.service;
 
+import bookReviewer.adapter.out.persistence.mapping.persistenceToEntity.UserMapper;
 import bookReviewer.business.boundary.out.persistence.FindUserById;
-import bookReviewer.persistence.model.User;
+import bookReviewer.entity.user.User;
 import bookReviewer.persistence.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,6 +17,7 @@ public class FindUserByIdService implements FindUserById {
     UserRepository userRepository;
 
     public Optional<User> findUserById(Long userId){
-        return userRepository.findById(userId);
+        Optional<User> user = Optional.of(UserMapper.map(userRepository.findById(userId).get()));
+        return user;
     }
 }

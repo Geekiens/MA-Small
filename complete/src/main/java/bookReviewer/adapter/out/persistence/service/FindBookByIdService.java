@@ -1,7 +1,8 @@
 package bookReviewer.adapter.out.persistence.service;
 
+import bookReviewer.adapter.out.persistence.mapping.persistenceToEntity.BookMapper;
 import bookReviewer.business.boundary.out.persistence.FindBookById;
-import bookReviewer.persistence.model.Book;
+import bookReviewer.entity.book.Book;
 import bookReviewer.persistence.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,6 +17,7 @@ public class FindBookByIdService implements FindBookById {
     BookRepository bookRepository;
 
     public Optional<Book> findBookById(Long bookId){
-        return bookRepository.findById(bookId);
+        Optional<Book> book = Optional.of(BookMapper.map(bookRepository.findById(bookId).orElse(null)));
+        return book;
     }
 }

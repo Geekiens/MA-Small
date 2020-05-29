@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BookMapper {
-    public static Book book(bookReviewer.persistence.model.Book bookPersistence) {
+    public static Book book(bookReviewer.business.model.BookBusiness bookPersistence) {
         Book book = new Book();
         book.setId(bookPersistence.getId());
         book.setAuthor(bookPersistence.getAuthor());
@@ -22,9 +22,9 @@ public class BookMapper {
         return book;
     }
 
-    public static ArrayList<Book> bookList(List<bookReviewer.persistence.model.Book> bookList) {
+    public static ArrayList<Book> bookList(List<bookReviewer.business.model.BookBusiness> bookList) {
         ArrayList<Book> bookArrayList = new ArrayList<>();
-        for (bookReviewer.persistence.model.Book book : bookList) {
+        for (bookReviewer.business.model.BookBusiness book : bookList) {
             bookArrayList.add(book(book));
         }
         return bookArrayList;
