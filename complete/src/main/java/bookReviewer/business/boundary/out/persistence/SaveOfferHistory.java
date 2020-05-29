@@ -1,5 +1,7 @@
 package bookReviewer.business.boundary.out.persistence;
 
+import bookReviewer.persistence.model.CachedOfferHistoryPersistence;
+
 public interface SaveOfferHistory {
-    void saveOfferHistory(bookReviewer.persistence.model.CachedOfferHistoryPersistence offerHistoryPersistence);
+    void saveOfferHistory(CachedOfferHistoryPersistence offerHistoryPersistence);
 }

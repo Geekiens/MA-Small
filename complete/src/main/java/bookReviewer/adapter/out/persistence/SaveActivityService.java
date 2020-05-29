@@ -1,21 +1,19 @@
 package bookReviewer.adapter.out.persistence;
 
-import bookReviewer.business.boundary.out.persistence.FindAllActivitiesByUser;
+import bookReviewer.business.boundary.out.persistence.SaveActivity;
 import bookReviewer.persistence.model.Activity;
-import bookReviewer.persistence.model.User;
 import bookReviewer.persistence.repository.ActivityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
-@Qualifier("FindAllActivitiesByUserService")
-public class FindAllActivitiesByUserService implements FindAllActivitiesByUser {
+@Qualifier("SaveActivityService")
+public class SaveActivityService implements SaveActivity {
     @Autowired
     ActivityRepository activityRepository;
-    public List<Activity> findAllUsers(User user){
-        return activityRepository.findAllByUser(user);
+
+    public void saveActivity(Activity activity){
+        activityRepository.save(activity);
     }
 }

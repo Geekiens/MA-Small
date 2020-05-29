@@ -1,7 +1,8 @@
 package bookReviewer.business.boundary.out.persistence;
 
-import bookReviewer.business.model.MediaType;
+import bookReviewer.persistence.model.MediaType;
+import bookReviewer.persistence.model.CachedOfferHistoryPersistence;
 
 public interface FindOfferHistory {
-    bookReviewer.persistence.model.CachedOfferHistoryPersistence findOfferHistory(String isbn, String vendor, MediaType);
+    CachedOfferHistoryPersistence findOfferHistory(String isbn, String vendor, MediaType mediaType);
 }

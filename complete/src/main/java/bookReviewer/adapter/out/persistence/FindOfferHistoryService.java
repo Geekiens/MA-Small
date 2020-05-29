@@ -1,22 +1,20 @@
 package bookReviewer.adapter.out.persistence;
 
-import bookReviewer.business.boundary.out.persistence.FindAllOfferHistoriesByIsbn;
+import bookReviewer.business.boundary.out.persistence.FindOfferHistory;
 import bookReviewer.persistence.model.CachedOfferHistoryPersistence;
+import bookReviewer.persistence.model.MediaType;
 import bookReviewer.persistence.repository.CachedOfferHistoryRepository;
-import bookReviewer.persistence.repository.OfferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
-@Qualifier("FindAllOfferHistoriesByIsbnService")
-public class FindAllOfferHistoriesByIsbnService implements FindAllOfferHistoriesByIsbn {
+@Qualifier("FindOfferHistoryService")
+public class FindOfferHistoryService implements FindOfferHistory {
     @Autowired
     CachedOfferHistoryRepository cachedOfferHistoryRepository;
 
-    public List<CachedOfferHistoryPersistence> findAllOffersByIsbn(String isbn){
-        return cachedOfferHistoryRepository.findByIsbn(isbn);
+    public CachedOfferHistoryPersistence findOfferHistory(String isbn, String vendor, MediaType mediaType){
+        return cachedOfferHistoryRepository.findByIsbnAndVendorAndMediaType(isbn, vendor, mediaType);
     }
 }
