@@ -1,7 +1,7 @@
 package bookReviewer.persistence.repository;
 
-import bookReviewer.business.shared.MediaType;
 import bookReviewer.persistence.model.CachedOfferHistoryPersistence;
+import bookReviewer.persistence.model.MediaType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

@@ -3,7 +3,7 @@ package bookReviewer.business.mapper;
 import bookReviewer.business.shared.MediaType;
 
 public class MediaTypeMapper {
-    public static MediaType mediaType(bookReviewer.persistence.model.MediaType mediaType) {
+    public static MediaType mediaTypeBusiness(bookReviewer.persistence.model.MediaType mediaType) {
         switch (mediaType) {
             case HARDCOVER:
                 return MediaType.HARDCOVER;
@@ -19,7 +19,7 @@ public class MediaTypeMapper {
         }
     }
 
-    public static bookReviewer.persistence.model.MediaType mediaTypeBusiness(MediaType mediaType) {
+    public static bookReviewer.persistence.model.MediaType mediaType(MediaType mediaType) {
         switch (mediaType) {
             case HARDCOVER:
                 return bookReviewer.persistence.model.MediaType.HARDCOVER;
