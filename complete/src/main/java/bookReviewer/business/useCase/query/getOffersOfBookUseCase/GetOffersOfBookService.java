@@ -5,6 +5,7 @@ import bookReviewer.business.boundary.in.useCase.query.GetOffersOfBookUseCase;
 import bookReviewer.business.exception.ResourceNotFoundException;
 import bookReviewer.business.mapper.OfferMapper;
 import bookReviewer.business.model.*;
+import bookReviewer.business.shared.MediaType;
 import bookReviewer.persistence.model.Book;
 import bookReviewer.persistence.model.CachedOfferHistoryPersistence;
 import bookReviewer.persistence.model.OfferPersistence;
@@ -119,7 +120,7 @@ public class GetOffersOfBookService implements GetOffersOfBookUseCase {
             Offer offer = new Offer(price,
                     Vendor.BUCHLADEN123DE.getVendorName(),
                     offerApi1.getAffiliate(),
-                    bookReviewer.business.model.MediaType.valueOf(offerApi1.getMedia().toUpperCase()));
+                    bookReviewer.business.shared.MediaType.valueOf(offerApi1.getMedia().toUpperCase()));
             offers.add(offer);
         }
         return offers;
@@ -149,7 +150,7 @@ public class GetOffersOfBookService implements GetOffersOfBookUseCase {
         for (OfferApi2 offerApi2 : offerApi2s) {
             if (!offerApi2.isAvailable()) { continue; }
             BigDecimal price = offerApi2.getPrice().add(offerApi2.getShippingFee());
-            bookReviewer.business.model.MediaType mediaType = mapMediaTypeOfBuchVerkauf24(offerApi2);
+            bookReviewer.business.shared.MediaType mediaType = mapMediaTypeOfBuchVerkauf24(offerApi2);
 
             Offer offer = new Offer(price,
                     Vendor.BUCHVERKAUF24.getVendorName(),
@@ -160,21 +161,21 @@ public class GetOffersOfBookService implements GetOffersOfBookUseCase {
         return offers;
     }
 
-    private bookReviewer.business.model.MediaType mapMediaTypeOfBuchVerkauf24(OfferApi2 offerApi2) {
+    private MediaType mapMediaTypeOfBuchVerkauf24(OfferApi2 offerApi2) {
         return mapNumberToMediaType(offerApi2.getType());
     }
 
-    private bookReviewer.business.model.MediaType mapNumberToMediaType(int type) {
-        bookReviewer.business.model.MediaType mediaType;
+    private MediaType mapNumberToMediaType(int type) {
+        MediaType mediaType;
         switch (type) {
             case 0:
-                mediaType = bookReviewer.business.model.MediaType.HARDCOVER;
+                mediaType = MediaType.HARDCOVER;
                 break;
             case 1:
-                mediaType = bookReviewer.business.model.MediaType.PAPERBACK;
+                mediaType = MediaType.PAPERBACK;
                 break;
             case 2:
-                mediaType = bookReviewer.business.model.MediaType.EBOOK;
+                mediaType = MediaType.EBOOK;
                 break;
             case 3:
                 mediaType = MediaType.AUDIOBOOK;
@@ -218,7 +219,7 @@ public class GetOffersOfBookService implements GetOffersOfBookUseCase {
             if (price.doubleValue() < 20.00 && (offerApi3.getType() == 0 || offerApi3.getType() == 1)) {
                 price.add(new BigDecimal(2.00));
             }
-            bookReviewer.business.model.MediaType mediaType = mapMediaTypeOfYourFavoriteBookVendor(offerApi3);
+            MediaType mediaType = mapMediaTypeOfYourFavoriteBookVendor(offerApi3);
 
             Offer offer = new Offer(price,
                     Vendor.YOUR_FAVORITE_BOOK_VENDOR.getVendorName(),
@@ -247,7 +248,7 @@ public class GetOffersOfBookService implements GetOffersOfBookUseCase {
         }
     }
 
-    private bookReviewer.business.model.MediaType mapMediaTypeOfYourFavoriteBookVendor(OfferApi3 offerApi3) {
+    private MediaType mapMediaTypeOfYourFavoriteBookVendor(OfferApi3 offerApi3) {
         return mapNumberToMediaType(offerApi3.getType());
     }
 
