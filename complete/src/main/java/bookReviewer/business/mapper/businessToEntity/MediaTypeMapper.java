@@ -1,18 +1,18 @@
-package bookReviewer.business.mapper.entityToBusiness;
+package bookReviewer.business.mapper.businessToEntity;
 
 import bookReviewer.entity.offerHistory.MediaType;
 
 public class MediaTypeMapper {
-    public static bookReviewer.persistence.model.MediaType map(MediaType mediaType) {
+    public static MediaType map(bookReviewer.business.shared.MediaType mediaType) {
         switch (mediaType) {
             case HARDCOVER:
-                return bookReviewer.persistence.model.MediaType.HARDCOVER;
+                return MediaType.HARDCOVER;
             case PAPERBACK:
-                return bookReviewer.persistence.model.MediaType.PAPERBACK;
+                return MediaType.PAPERBACK;
             case EBOOK:
-                return bookReviewer.persistence.model.MediaType.EBOOK;
+                return MediaType.EBOOK;
             case AUDIOBOOK:
-                return bookReviewer.persistence.model.MediaType.AUDIOBOOK;
+                return MediaType.AUDIOBOOK;
             default:
                 return null;
         }
