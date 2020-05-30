@@ -5,10 +5,8 @@ import bookReviewer.business.boundary.out.persistence.FindAllBooks;
 import bookReviewer.business.boundary.out.persistence.FindAllRatingsByBookId;
 import bookReviewer.business.mapper.BookMapper;
 import bookReviewer.business.model.RatingSummary;
-import bookReviewer.persistence.model.Book;
-import bookReviewer.persistence.model.Rating;
-import bookReviewer.persistence.repository.BookRepository;
-import bookReviewer.persistence.repository.RatingRepository;
+import bookReviewer.entity.rating.Rating;
+import bookReviewer.entity.book.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -26,10 +24,9 @@ public class GetBooksService implements GetBooksUseCase {
     @Qualifier("FindAllRatingsByBookIdService")
     FindAllRatingsByBookId findAllRatingsByBookId;
 
-
     public List<bookReviewer.business.model.Book> getBooks() {
         List<Book> books = findAllBooks.findAllBooks();
-        List<bookReviewer.business.model.Book> booksWithRating = BookMapper.bookList(books);
+        List<bookReviewer.business.model.Book> booksWithRating = BookMapper.bookList(bookReviewer.business.mapper.entityToBusiness.BookMapper.mapList(books));
         for (bookReviewer.business.model.Book book : booksWithRating) {
             System.out.println(book.toString());
             RatingSummary ratingSummary = getAverageRating(book.getId());
@@ -43,7 +40,7 @@ public class GetBooksService implements GetBooksUseCase {
         List<Rating> ratings = findAllRatingsByBookId.findAllRatingsByBookId(bookId);
         int sumOfRatings = 0;
         for (Rating rating : ratings) {
-            sumOfRatings += rating.getScore();
+            sumOfRatings += rating.getRatingDetails().getScore();
             ratingSummary.addTotalVotes();
         }
         ratingSummary.setAverageRating(sumOfRatings * 1.0 / ratingSummary.getTotalVotes());

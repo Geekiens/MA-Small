@@ -4,6 +4,9 @@ import bookReviewer.entity.book.Book;
 import bookReviewer.entity.book.BookMetaDetails;
 import bookReviewer.entity.book.BookUserDetails;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public final class BookMapper {
     public static Book map(bookReviewer.persistence.model.Book bookPersistence){
         Book book = new Book();
@@ -26,5 +29,12 @@ public final class BookMapper {
         book.setBookUserDetails(bookUserDetails);
 
         return book;
+    }
+    public static List<Book> mapList(List<bookReviewer.persistence.model.Book> booksPersistence){
+        ArrayList<Book> books = new ArrayList<>();
+        for(bookReviewer.persistence.model.Book bookPersistence : booksPersistence){
+            books.add(map(bookPersistence));
+        }
+        return books;
     }
 }

@@ -5,15 +5,13 @@ import bookReviewer.business.boundary.out.persistence.FindUserById;
 import bookReviewer.business.boundary.out.persistence.SaveActivity;
 import bookReviewer.business.boundary.out.persistence.SaveBook;
 import bookReviewer.business.exception.InvalidISBNException;
-import bookReviewer.business.mapper.BookBusinessMapper;
+import bookReviewer.business.mapper.businessToEntity.BookMapper;
 import bookReviewer.business.model.BookBusiness;
 import bookReviewer.business.util.JwtProvider;
-import bookReviewer.persistence.model.Activity;
-import bookReviewer.persistence.model.ActivityType;
-import bookReviewer.persistence.model.User;
-import bookReviewer.persistence.repository.ActivityRepository;
-import bookReviewer.persistence.repository.BookRepository;
-import bookReviewer.persistence.repository.UserRepository;
+import bookReviewer.entity.user.Activity;
+import bookReviewer.entity.user.SubmissionsDate;
+import bookReviewer.entity.user.ActivityType;
+import bookReviewer.entity.user.User;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -43,11 +41,12 @@ public class CreateBookService implements CreateBookUseCase {
             Claims claims = JwtProvider.decodeJWT(token);
             long reviewer = ((long) (int) claims.get("userId"));
             User user = findUserById.findUserById(reviewer).orElse(null);
-            Activity activity = new Activity(new Date(), ActivityType.BOOK_CREATED, user);
-            saveActivity.saveActivity(activity);
+            SubmissionsDate submissionsDate = new SubmissionsDate(new Date());
+            Activity activity = new Activity(ActivityType.BOOK_CREATED, submissionsDate);
+            saveActivity.saveActivity(activity, user.getId());
         }
 
-        return saveBook.saveBook(BookBusinessMapper.book(book));
+        return saveBook.saveBook(BookMapper.map(book));
     }
 
     private void checkISBN(String isbn){

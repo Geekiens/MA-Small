@@ -51,6 +51,10 @@ public class OfferHistroy {
         this.offers = offers;
     }
 
+    public void addOffer(Offer offer) {
+        this.offers.add(offer);
+    }
+
     public Vendor getVendor() {
         return vendor;
     }

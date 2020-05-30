@@ -7,7 +7,6 @@ import bookReviewer.business.exception.ResourceNotFoundException;
 import bookReviewer.business.mapper.BookMapper;
 import bookReviewer.business.mapper.entityToBusiness.RatingMapper;
 import bookReviewer.business.model.Book;
-import bookReviewer.business.model.BookBusiness;
 import bookReviewer.business.model.RatingBusiness;
 import bookReviewer.business.model.RatingSummary;
 import org.springframework.beans.factory.annotation.Autowired;

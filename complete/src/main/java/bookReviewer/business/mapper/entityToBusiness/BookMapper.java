@@ -2,6 +2,10 @@ package bookReviewer.business.mapper.entityToBusiness;
 
 import bookReviewer.business.model.BookBusiness;
 import bookReviewer.entity.book.Book;
+import bookReviewer.entity.rating.Rating;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public final class BookMapper {
     public static BookBusiness map(Book book){
@@ -19,5 +23,12 @@ public final class BookMapper {
         bookBusiness.setPublishingYear(book.getBookMetaDetails().getPublishingYear());
         return bookBusiness;
     }
+public static List<BookBusiness> mapList(List<Book> books){
+    List<BookBusiness> bookBusinessList = new ArrayList<>();
+    for(Book book: books){
+         bookBusinessList.add(map(book));
+    }
+    return  bookBusinessList;
+}
 
 }

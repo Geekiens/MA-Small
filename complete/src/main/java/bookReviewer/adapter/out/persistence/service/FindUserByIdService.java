@@ -17,7 +17,7 @@ public class FindUserByIdService implements FindUserById {
     UserRepository userRepository;
 
     public Optional<User> findUserById(Long userId){
-        Optional<User> user = Optional.of(UserMapper.map(userRepository.findById(userId).get()));
+        Optional<User> user = Optional.of(UserMapper.map(userRepository.findById(userId).get(), null));
         return user;
     }
 }

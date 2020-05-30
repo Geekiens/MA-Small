@@ -2,10 +2,9 @@ package bookReviewer.business.useCase.command.registerUserUseCase;
 
 import bookReviewer.business.boundary.in.useCase.command.RegisterUserUseCase;
 import bookReviewer.business.boundary.out.persistence.SaveUser;
-import bookReviewer.business.mapper.UserBusinessMapper;
+import bookReviewer.business.mapper.businessToEntity.UserMapper;
 import bookReviewer.business.shared.Role;
 import bookReviewer.business.model.UserBusiness;
-import bookReviewer.persistence.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -26,7 +25,7 @@ public class RegisterUserService implements RegisterUserUseCase {
         byte[] salt = getSalt();
         String hashedPassword = get_SHA_1_SecurePassword(password, salt);
         UserBusiness user = new UserBusiness(username, hashedPassword, email, salt, role);
-        saveUser.saveUser(UserBusinessMapper.user(user));
+        saveUser.saveUser(UserMapper.map(user, null));
     }
 
     private static String get_SHA_1_SecurePassword(String passwordToHash, byte[] salt)

@@ -3,18 +3,14 @@ package bookReviewer.business.useCase.command.checkUserPromotionUseCase;
 import bookReviewer.business.boundary.in.useCase.command.CheckUserPromotionUseCase;
 import bookReviewer.business.boundary.out.persistence.FindAllActivitiesByUser;
 import bookReviewer.business.boundary.out.persistence.FindAllUsers;
-import bookReviewer.business.boundary.out.persistence.FindBookById;
 import bookReviewer.business.boundary.out.persistence.SaveUser;
-import bookReviewer.business.mapper.RoleMapper;
-import bookReviewer.business.shared.Role;
-import bookReviewer.persistence.model.Activity;
-import bookReviewer.persistence.model.User;
-import bookReviewer.persistence.repository.ActivityRepository;
-import bookReviewer.persistence.repository.UserRepository;
+import bookReviewer.entity.user.Role;
+import bookReviewer.entity.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -36,11 +32,10 @@ public class CheckUserPromotionService implements CheckUserPromotionUseCase {
     public void checkForUserPromotions(){
         List<User> users = findAllUsers.findAllUsers();
         users.forEach(user -> {
-            if (RoleMapper.roleBusiness(user.getRole()) == Role.ADMIN || RoleMapper.roleBusiness(user.getRole()) == Role.MODERATOR) {
+            if (user.getRole() == Role.ADMIN || user.getRole() == Role.MODERATOR) {
                 return;
             }
-            List<Activity> activities = findAllActivitiesByUser.findAllActivitiesByUser(user);
-            Integer activityScore = activities.stream().mapToInt(activity -> {
+            Integer activityScore = user.getActivities().stream().mapToInt(activity -> {
                         switch (activity.getActivityType()) {
                             case BOOK_CREATED:
                                 return 10;
@@ -60,10 +55,9 @@ public class CheckUserPromotionService implements CheckUserPromotionUseCase {
             ).sum();
             System.out.println("Score: " + activityScore);
             if (activityScore != null && activityScore >= 50) {
-                user.setRole(RoleMapper.role(Role.MODERATOR));
+                user.setRole(Role.MODERATOR);
                 saveUser.saveUser(user);
             }
-
         });
     }
 }

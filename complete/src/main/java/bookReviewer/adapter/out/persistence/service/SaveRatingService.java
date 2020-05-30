@@ -1,8 +1,13 @@
 package bookReviewer.adapter.out.persistence.service;
 
+import bookReviewer.adapter.out.persistence.mapping.entityToPersistence.RatingMapper;
 import bookReviewer.business.boundary.out.persistence.SaveRating;
-import bookReviewer.persistence.model.Rating;
+import bookReviewer.entity.rating.Rating;
+import bookReviewer.persistence.model.Book;
+import bookReviewer.persistence.model.User;
+import bookReviewer.persistence.repository.BookRepository;
 import bookReviewer.persistence.repository.RatingRepository;
+import bookReviewer.persistence.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -13,7 +18,19 @@ public class SaveRatingService implements SaveRating {
     @Autowired
     RatingRepository ratingRepository;
 
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
+    BookRepository bookRepository;
+
     public Long saveRating(Rating rating){
-        return ratingRepository.saveAndFlush(rating).getId();
+        User user = userRepository.findById(rating.getUserId()).orElse(null);
+        String author = null;
+        if (user != null){
+            author = user.getUsername();
+        }
+        Book book = bookRepository.findById(rating.getBookId()).orElse(null);
+        return ratingRepository.saveAndFlush(RatingMapper.map(rating, book, author)).getId();
     }
 }

@@ -3,8 +3,7 @@ package bookReviewer.business.useCase.query.getTokenByLoginUseCase;
 import bookReviewer.business.boundary.in.useCase.query.GetTokenByLoginUseCase;
 import bookReviewer.business.boundary.out.persistence.FindUserByUsername;
 import bookReviewer.business.util.JwtProvider;
-import bookReviewer.persistence.model.User;
-import bookReviewer.persistence.repository.UserRepository;
+import bookReviewer.entity.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -23,15 +22,15 @@ public class GetTokenByLoginService implements GetTokenByLoginUseCase {
     public String loginUser(String username, String password) throws Exception{
         System.out.println("Username:" + username);
         User user = findUserByUsername.findUserByUsername(username);
-        System.out.println(user.getUsername());
-        if (user.getPassword().equalsIgnoreCase(get_SHA_1_SecurePassword(password, user.getSalt()))) {
+        System.out.println(user.getCredentials().getUsername());
+        if (user.getCredentials().getPassword().equalsIgnoreCase(get_SHA_1_SecurePassword(password, user.getCredentials().getSalt()))) {
             return getToken(user);
         }
         throw new Exception();
     }
 
     public String getToken(User user){
-        return JwtProvider.createJWT( user);
+        return JwtProvider.createJWT(user);
     }
 
     private static String get_SHA_1_SecurePassword(String passwordToHash, byte[] salt)

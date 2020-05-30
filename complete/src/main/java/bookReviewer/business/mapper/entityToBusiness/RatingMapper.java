@@ -2,6 +2,7 @@ package bookReviewer.business.mapper.entityToBusiness;
 
 import bookReviewer.business.boundary.out.persistence.FindBookById;
 import bookReviewer.business.boundary.out.persistence.FindUserById;
+import bookReviewer.business.model.Book;
 import bookReviewer.business.model.BookBusiness;
 import bookReviewer.business.model.RatingBusiness;
 import bookReviewer.entity.rating.Rating;
@@ -23,7 +24,6 @@ public class RatingMapper {
 
     public RatingBusiness map(Rating rating){
         RatingBusiness ratingBusiness = new RatingBusiness();
-        // TODO: Book und Author fehlen noch
         ratingBusiness.setContent(rating.getRatingDetails().getContent());
         ratingBusiness.setId(rating.getId());
         ratingBusiness.setScore(rating.getRatingDetails().getScore());
