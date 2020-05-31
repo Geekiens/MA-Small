@@ -1,7 +1,7 @@
 package bookReviewer.business.boundary.out.persistence;
 
-import bookReviewer.persistence.model.Activity;
-import bookReviewer.persistence.model.User;
+import bookReviewer.entity.user.Activity;
+import bookReviewer.entity.user.User;
 
 import java.util.List;
 

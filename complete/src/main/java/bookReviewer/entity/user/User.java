@@ -2,7 +2,7 @@ package bookReviewer.entity.user;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
+import java.util.List;
 
 public class User {
     private long id;
@@ -12,7 +12,7 @@ public class User {
     private Role role;
     @NotNull
     private Credentials credentials;
-    private ArrayList<Activity> activities;
+    private List<Activity> activities;
 
     public User() {
     }
@@ -23,11 +23,14 @@ public class User {
         this.credentials = credentials;
     }
 
-    public User(long id, String email, Role role, Credentials credentials) {
+    public User(long id, String email, Role role, Credentials credentials, List<Activity> activityList) {
         this.id = id;
         this.email = email;
         this.role = role;
         this.credentials = credentials;
+        this.activities = activityList;
+
+
     }
 
     public long getId() {
@@ -60,6 +63,14 @@ public class User {
 
     public void setCredentials(Credentials credentials) {
         this.credentials = credentials;
+    }
+
+    public List<Activity> getActivities() {
+        return activities;
+    }
+
+    public void setActivities(List<Activity> activities) {
+        this.activities = activities;
     }
 
     @Override

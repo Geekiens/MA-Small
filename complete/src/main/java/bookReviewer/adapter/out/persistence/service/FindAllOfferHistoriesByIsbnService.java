@@ -1,7 +1,8 @@
 package bookReviewer.adapter.out.persistence.service;
 
+import bookReviewer.adapter.out.persistence.mapping.persistenceToEntity.OfferHistoryMapper;
 import bookReviewer.business.boundary.out.persistence.FindAllOfferHistoriesByIsbn;
-import bookReviewer.persistence.model.CachedOfferHistoryPersistence;
+import bookReviewer.entity.offerHistory.OfferHistroy;
 import bookReviewer.persistence.repository.CachedOfferHistoryRepository;
 import bookReviewer.persistence.repository.OfferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ public class FindAllOfferHistoriesByIsbnService implements FindAllOfferHistories
     @Autowired
     CachedOfferHistoryRepository cachedOfferHistoryRepository;
 
-    public List<CachedOfferHistoryPersistence> findAllOffersByIsbn(String isbn){
-        return cachedOfferHistoryRepository.findByIsbn(isbn);
+    public List<OfferHistroy> findAllOffersByIsbn(String isbn){
+        return OfferHistoryMapper.mapList(cachedOfferHistoryRepository.findByIsbn(isbn));
     }
 }

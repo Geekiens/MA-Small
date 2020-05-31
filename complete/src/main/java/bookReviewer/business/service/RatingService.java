@@ -1,10 +1,9 @@
 package bookReviewer.business.service;
 
-import bookReviewer.business.mapper.RatingBusinessMapper;
-import bookReviewer.business.model.RatingBusiness;
+import bookReviewer.business.boundary.out.persistence.FindRatingById;
 import bookReviewer.business.exception.ResourceNotFoundException;
-import bookReviewer.persistence.model.*;
-import bookReviewer.persistence.repository.RatingRepository;
+import bookReviewer.business.mapper.entityToBusiness.RatingMapper;
+import bookReviewer.business.model.RatingBusiness;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,10 +13,14 @@ import org.springframework.stereotype.Service;
 @Qualifier("RatingService")
 public class RatingService  {
     @Autowired
-    RatingRepository ratingRepository;
+    @Qualifier("FindRatingByIdService")
+    FindRatingById findRatingById;
 
+    RatingMapper ratingMapper;
     public RatingBusiness getRating(long id) {
-        Rating rating = ratingRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("rating not found with id " + id));
-        return RatingBusinessMapper.ratingBusiness(rating);
+        if(!findRatingById.findRatingById(id).isPresent()) {
+            throw new ResourceNotFoundException("rating not found with id " + id);
+        }
+        return ratingMapper.map(findRatingById.findRatingById(id).orElse(null));
     }
 }

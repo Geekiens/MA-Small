@@ -4,18 +4,17 @@ import bookReviewer.business.boundary.in.useCase.command.CreateRatingUseCase;
 import bookReviewer.business.boundary.out.persistence.*;
 import bookReviewer.business.exception.DuplicateRatingException;
 import bookReviewer.business.exception.ResourceNotFoundException;
-import bookReviewer.business.mapper.BookBusinessMapper;
-import bookReviewer.business.mapper.RatingBusinessMapper;
+import bookReviewer.business.mapper.businessToEntity.RatingMapper;
+import bookReviewer.business.mapper.entityToBusiness.BookMapper;
+import bookReviewer.business.mapper.entityToBusiness.UserMapper;
+import bookReviewer.business.model.BookBusiness;
 import bookReviewer.business.model.RatingBusiness;
+import bookReviewer.business.model.UserBusiness;
 import bookReviewer.business.util.JwtProvider;
-import bookReviewer.persistence.model.Activity;
-import bookReviewer.persistence.model.ActivityType;
-import bookReviewer.persistence.model.Book;
-import bookReviewer.persistence.model.User;
-import bookReviewer.persistence.repository.ActivityRepository;
-import bookReviewer.persistence.repository.BookRepository;
-import bookReviewer.persistence.repository.RatingRepository;
-import bookReviewer.persistence.repository.UserRepository;
+import bookReviewer.entity.user.SubmissionsDate;
+import bookReviewer.entity.user.Activity;
+import bookReviewer.entity.user.ActivityType;
+
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -56,19 +55,20 @@ public class CreateRatingService implements CreateRatingUseCase {
 
 
     public Long createRating(Long bookId, RatingBusiness rating, String token) {
-        Book book = findBookById.findBookById(bookId).orElseThrow(() -> new ResourceNotFoundException("book not found with id " + bookId));
+        BookBusiness book = BookMapper.map(findBookById.findBookById(bookId).orElseThrow(() -> new ResourceNotFoundException("book not found with id " + bookId)));
         Claims claims = JwtProvider.decodeJWT(token);
         long reviewer =((long) (int) claims.get("userId"));
 
-        rating.setBook(BookBusinessMapper.bookBusiness(book));
+        rating.setBook(book);
         rating.setUserId(reviewer);
-        User user = findUserById.findUserById(reviewer).orElseThrow(() -> new ResourceNotFoundException("user not found with id " + reviewer));
+        UserBusiness user = UserMapper.map(findUserById.findUserById(reviewer).orElseThrow(() -> new ResourceNotFoundException("user not found with id " + reviewer)));
         System.out.println("user: " + user.getEmail());
         if (isDuplicate(rating)){
             throw new DuplicateRatingException();
         }
 
-        Activity activity = new Activity(new Date(), ActivityType.RATING_CREATED_WITH_COMMENT, user);
+        SubmissionsDate submissionsDate = new SubmissionsDate(new Date());
+        Activity activity = new Activity(ActivityType.RATING_CREATED_WITH_COMMENT, submissionsDate);
         if ((rating.getContent() == null || rating.getContent() == "")) {
             activity.setActivityType(ActivityType.RATING_CREATED);
             String text;
@@ -83,11 +83,11 @@ public class CreateRatingService implements CreateRatingUseCase {
             }).start();
         }
 
-        saveActivity.saveActivity(activity);
-        return saveRating.saveRating(RatingBusinessMapper.rating(rating));
+        saveActivity.saveActivity(activity, user.getId());
+        return saveRating.saveRating(RatingMapper.map(rating));
     }
 
-    private void sendEmptyRatingEmail(User receiver, String text) {
+    private void sendEmptyRatingEmail(UserBusiness receiver, String text) {
         Properties properties = new Properties();
         properties.put("mail.smtp.host", "smtp.gmail.com");
         properties.put("mail.smtp.port", "587");

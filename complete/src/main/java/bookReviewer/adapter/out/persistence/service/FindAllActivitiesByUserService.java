@@ -1,8 +1,10 @@
 package bookReviewer.adapter.out.persistence.service;
 
+import bookReviewer.adapter.out.persistence.mapping.entityToPersistence.UserMapper;
+import bookReviewer.adapter.out.persistence.mapping.persistenceToEntity.ActivityMapper;
 import bookReviewer.business.boundary.out.persistence.FindAllActivitiesByUser;
-import bookReviewer.persistence.model.Activity;
-import bookReviewer.persistence.model.User;
+import bookReviewer.entity.user.Activity;
+import bookReviewer.entity.user.User;
 import bookReviewer.persistence.repository.ActivityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,6 +18,6 @@ public class FindAllActivitiesByUserService implements FindAllActivitiesByUser {
     @Autowired
     ActivityRepository activityRepository;
     public List<Activity> findAllActivitiesByUser(User user){
-        return activityRepository.findAllByUser(user);
+        return ActivityMapper.mapList(activityRepository.findAllByUser(UserMapper.map(user)));
     }
 }

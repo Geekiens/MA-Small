@@ -8,13 +8,13 @@ public class Activity {
     public Activity() {
     }
 
-    public Activity(long id, ActivityType activityType, SubmissionsDate submissionsDate, long userId) {
+    public Activity(long id, ActivityType activityType, SubmissionsDate submissionsDate) {
         this.id = id;
         this.activityType = activityType;
         this.submissionsDate = submissionsDate;
     }
 
-    public Activity(ActivityType activityType, SubmissionsDate submissionsDate, long userId) {
+    public Activity(ActivityType activityType, SubmissionsDate submissionsDate) {
         this.activityType = activityType;
         this.submissionsDate = submissionsDate;
     }

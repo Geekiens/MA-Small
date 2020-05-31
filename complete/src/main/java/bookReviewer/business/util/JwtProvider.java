@@ -1,6 +1,6 @@
 package bookReviewer.business.util;
 
-import bookReviewer.persistence.model.User;
+import bookReviewer.entity.user.User;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 import javax.xml.bind.DatatypeConverter;
@@ -32,7 +32,7 @@ public class JwtProvider {
 
         JwtBuilder builder = Jwts.builder()
                 .setIssuedAt(now)
-                .claim("username", user.getUsername())
+                .claim("username", user.getCredentials().getUsername())
                 .claim("role", user.getRole().getRolename())
                 .claim("userId", user.getId())
                 .signWith(signatureAlgorithm, signingKey);

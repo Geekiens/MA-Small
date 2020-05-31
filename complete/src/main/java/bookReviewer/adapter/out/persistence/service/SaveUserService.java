@@ -1,7 +1,8 @@
 package bookReviewer.adapter.out.persistence.service;
 
+import bookReviewer.adapter.out.persistence.mapping.entityToPersistence.UserMapper;
 import bookReviewer.business.boundary.out.persistence.SaveUser;
-import bookReviewer.persistence.model.User;
+import bookReviewer.entity.user.User;
 import bookReviewer.persistence.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,6 +15,6 @@ public class SaveUserService implements SaveUser {
     UserRepository userRepository;
 
     public Long saveUser(User user){
-        return userRepository.saveAndFlush(user).getId();
+        return userRepository.saveAndFlush(UserMapper.map(user)).getId();
     }
 }

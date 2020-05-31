@@ -1,7 +1,8 @@
 package bookReviewer.adapter.out.persistence.service;
 
+import bookReviewer.adapter.out.persistence.mapping.persistenceToEntity.RatingMapper;
 import bookReviewer.business.boundary.out.persistence.FindAllRatingsByBookId;
-import bookReviewer.persistence.model.Rating;
+import bookReviewer.entity.rating.Rating;
 import bookReviewer.persistence.repository.RatingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,6 +17,6 @@ public class FindAllRatingsByBookIdService implements FindAllRatingsByBookId {
     RatingRepository ratingRepository;
 
     public List<Rating> findAllRatingsByBookId(Long bookId){
-        return ratingRepository.findAllByBookId(bookId);
+        return RatingMapper.mapList(ratingRepository.findAllByBookId(bookId));
     }
 }

@@ -4,14 +4,16 @@ import java.util.Objects;
 
 public class Book {
     private long id;
+    private String isbn;
     private BookMetaDetails bookMetaDetails;
     private  BookUserDetails bookUserDetails;
 
     public Book() {
     }
 
-    public Book(long id, BookMetaDetails bookMetaDetails, BookUserDetails bookUserDetails) {
+    public Book(long id, String isbn, BookMetaDetails bookMetaDetails, BookUserDetails bookUserDetails) {
         this.id = id;
+        this.isbn = isbn;
         this.bookMetaDetails = bookMetaDetails;
         this.bookUserDetails = bookUserDetails;
     }
@@ -27,6 +29,14 @@ public class Book {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
     }
 
     public BookMetaDetails getBookMetaDetails() {
@@ -53,13 +63,13 @@ public class Book {
         return getId() == book.getId() &&
                 getBookMetaDetails().getAuthor().equals(book.getBookMetaDetails().getAuthor()) &&
                 getBookMetaDetails().getTitle().equals(book.getBookMetaDetails().getTitle()) &&
-                Objects.equals(getBookMetaDetails().getPublishingYear(), book.getBookMetaDetails().getPublishingYear()) &&
-                Objects.equals(getBookUserDetails().getContent(), book.getBookUserDetails().getContent());
+                Objects.equals(getBookMetaDetails().getPublishingYear(), book.getBookMetaDetails().getPublishingYear());
     }
     @Override
     public String toString() {
         return "Book{" +
                 "id=" + id +
+                "isbn=" + isbn +
                 ", bookMetaDetails=" + bookMetaDetails.toString() +
                 ", bookUserDetails=" + bookUserDetails.toString() +
                 '}';

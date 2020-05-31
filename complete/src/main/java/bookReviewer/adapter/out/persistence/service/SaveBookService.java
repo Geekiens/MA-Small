@@ -1,7 +1,8 @@
 package bookReviewer.adapter.out.persistence.service;
 
+import bookReviewer.adapter.out.persistence.mapping.entityToPersistence.BookMapper;
 import bookReviewer.business.boundary.out.persistence.SaveBook;
-import bookReviewer.persistence.model.Book;
+import bookReviewer.entity.book.Book;
 import bookReviewer.persistence.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,6 +15,6 @@ public class SaveBookService implements SaveBook {
     BookRepository bookRepository;
 
     public Long saveBook(Book book){
-        return bookRepository.saveAndFlush(book).getId();
+        return bookRepository.saveAndFlush(BookMapper.map(book)).getId();
     }
 }

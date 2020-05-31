@@ -1,7 +1,7 @@
 package bookReviewer.business.boundary.out.persistence;
 
-import bookReviewer.persistence.model.Activity;
+import bookReviewer.entity.user.Activity;
 
 public interface SaveActivity {
-    void saveActivity(Activity activity);
+    void saveActivity(Activity activity, Long userId);
 }

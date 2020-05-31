@@ -1,6 +1,6 @@
 package bookReviewer.business.boundary.out.persistence;
 
-import bookReviewer.persistence.model.Book;
+import bookReviewer.entity.book.Book;
 
 import java.util.Optional;
 
