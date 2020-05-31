@@ -20,9 +20,9 @@ public class DeleteBookService implements DeleteBookUseCase {
     @Qualifier("DeleteBookByIdService")
     DeleteBookById deleteBookById;
 
-    public void deleteBook(long id) {
-        findBookById.findBookById(id).orElseThrow(() -> new ResourceNotFoundException("book doesn't exist with id: " + id));
-        deleteBookById.deleteBookById(id);
+    public void deleteBook(DeleteBookCommand deleteBookCommand) {
+        findBookById.findBookById(deleteBookCommand.getBookId()).orElseThrow(() -> new ResourceNotFoundException("book doesn't exist with id: " + deleteBookCommand.getBookId()));
+        deleteBookById.deleteBookById(deleteBookCommand.getBookId());
     }
 
 }

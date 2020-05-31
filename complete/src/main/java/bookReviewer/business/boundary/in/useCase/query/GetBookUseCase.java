@@ -1,7 +1,7 @@
 package bookReviewer.business.boundary.in.useCase.query;
 
-import bookReviewer.business.model.Book;
+import bookReviewer.business.useCase.query.getBookUseCase.GetBookOutput;
 
 public interface GetBookUseCase {
-    Book getBook(long id);
+    GetBookOutput getBook(long id);
 }

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -24,16 +25,15 @@ public class GetBooksService implements GetBooksUseCase {
     @Qualifier("FindAllRatingsByBookIdService")
     FindAllRatingsByBookId findAllRatingsByBookId;
 
-    public List<bookReviewer.business.model.Book> getBooks() {
+    public List<GetBooksOutput> getBooks() {
         List<Book> books = findAllBooks.findAllBooks();
-        List<bookReviewer.business.model.Book> booksWithRating = BookMapper.bookList(bookReviewer.business.mapper.entityToBusiness.BookMapper.mapList(books));
-        for (bookReviewer.business.model.Book book : booksWithRating) {
-            System.out.println(book.toString());
+        List<GetBooksOutput> getBooksOutputList = new ArrayList<>();
+        for (Book book : books) {
             RatingSummary ratingSummary = getAverageRating(book.getId());
-            book.setAverageRating(ratingSummary.getAverageRating());
-            book.setTotalVotes(ratingSummary.getTotalVotes());
+            getBooksOutputList.add(BooksOutputMapper.map(book, ratingSummary));
+
         }
-        return booksWithRating;
+        return getBooksOutputList;
     }
     private RatingSummary getAverageRating(Long bookId) {
         RatingSummary ratingSummary = new RatingSummary();

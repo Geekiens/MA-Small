@@ -1,18 +1,14 @@
-package bookReviewer.presentation.mapper;
+package bookReviewer.adapter.web.book;
 
-import bookReviewer.business.model.Book;
+import bookReviewer.business.useCase.query.getBookUseCase.GetBookOutput;
 import bookReviewer.business.useCase.query.getOffersOfBookUseCase.Offer;
-import bookReviewer.presentation.model.BookDetailPresentation;
 
 import java.util.List;
 
-public class BookMapper {
-    public BookMapper() {
-    }
+public final class BookWithOffersMapper {
 
-    public BookDetailPresentation map(Book book, List<Offer> offers) {
-
-        BookDetailPresentation bookDetailPresentation = new BookDetailPresentation(book.getAuthor(),
+    public static BookWithOffers map(GetBookOutput book, List<Offer> offers) {
+        BookWithOffers bookWithOffers = new BookWithOffers(book.getAuthor(),
                 book.getTitle(),
                 book.getGenre(),
                 book.getKeywords(),
@@ -26,22 +22,21 @@ public class BookMapper {
                 book.getAverageRating()
         );
         for (Offer offer : offers) {
-            System.out.println(offer);
             switch (offer.getMediaType()) {
                 case HARDCOVER:
-                    bookDetailPresentation.addHardcoverOffer(offer);
+                    bookWithOffers.addHardcoverOffer(offer);
                     break;
                 case PAPERBACK:
-                    bookDetailPresentation.addPaperbackOffer(offer);
+                    bookWithOffers.addPaperbackOffer(offer);
                     break;
                 case EBOOK:
-                    bookDetailPresentation.addEbookOffer(offer);
+                    bookWithOffers.addEbookOffer(offer);
                     break;
                 case AUDIOBOOK:
-                    bookDetailPresentation.addAudiobookOffer(offer);
+                    bookWithOffers.addAudiobookOffer(offer);
                     break;
             }
         }
-        return bookDetailPresentation;
+        return bookWithOffers;
     }
 }

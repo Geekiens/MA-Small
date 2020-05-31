@@ -1,8 +1,8 @@
-package bookReviewer.business.useCase.query.getBooksUseCase;
+package bookReviewer.adapter.web.book;
 
 import java.util.Arrays;
 
-public class GetBooksOutput {
+public class BookWithRatingInformation {
     public long id;
     public String author;
     public String title;
@@ -17,7 +17,7 @@ public class GetBooksOutput {
     public Double averageRating;
     public int totalVotes = 0;
 
-    public GetBooksOutput() {
+    public BookWithRatingInformation() {
     }
 
     public long getId() {

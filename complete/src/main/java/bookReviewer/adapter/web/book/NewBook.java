@@ -1,10 +1,11 @@
-package bookReviewer.business.useCase.query.getBockUseCase;
+package bookReviewer.adapter.web.book;
 
-import java.util.Arrays;
+import javax.validation.constraints.NotNull;
 
-public class GetBookOutput {
-    private long id;
+public class NewBook {
+    @NotNull
     private String author;
+    @NotNull
     private String title;
     private String genre;
     private String[] keywords;
@@ -14,18 +15,8 @@ public class GetBookOutput {
     private String isbn;
     private int publishingYear;
     private String content;
-    private Double averageRating;
-    private int totalVotes = 0;
 
-    public GetBookOutput() {
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
+    public NewBook() {
     }
 
     public String getAuthor() {
@@ -106,40 +97,5 @@ public class GetBookOutput {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public Double getAverageRating() {
-        return averageRating;
-    }
-
-    public void setAverageRating(Double averageRating) {
-        this.averageRating = averageRating;
-    }
-
-    public int getTotalVotes() {
-        return totalVotes;
-    }
-
-    public void setTotalVotes(int totalVotes) {
-        this.totalVotes = totalVotes;
-    }
-
-    @Override
-    public String toString() {
-        return "Book{" +
-                "id=" + id +
-                ", author='" + author + '\'' +
-                ", title='" + title + '\'' +
-                ", genre='" + genre + '\'' +
-                ", keywords=" + Arrays.toString(keywords) +
-                ", languages=" + Arrays.toString(languages) +
-                ", publisher='" + publisher + '\'' +
-                ", pages=" + pages +
-                ", isbn='" + isbn + '\'' +
-                ", publishingYear=" + publishingYear +
-                ", content='" + content + '\'' +
-                ", averageRating=" + averageRating +
-                ", totalVotes=" + totalVotes +
-                '}';
     }
 }

@@ -1,12 +1,10 @@
-package bookReviewer.business.useCase.query.getBockUseCase;
+package bookReviewer.business.useCase.query.getBookUseCase;
 
 import bookReviewer.business.boundary.in.useCase.query.GetBookUseCase;
 import bookReviewer.business.boundary.out.persistence.FindAllRatingsByBookId;
 import bookReviewer.business.boundary.out.persistence.FindBookById;
 import bookReviewer.business.exception.ResourceNotFoundException;
-import bookReviewer.business.mapper.BookMapper;
 import bookReviewer.business.mapper.entityToBusiness.RatingMapper;
-import bookReviewer.business.model.Book;
 import bookReviewer.business.model.RatingBusiness;
 import bookReviewer.business.shared.model.RatingSummary;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,14 +28,10 @@ public class GetBookService implements GetBookUseCase {
     @Autowired
     RatingMapper ratingMapper;
 
-    public Book getBook(long id) {
+    public GetBookOutput getBook(long id) {
         bookReviewer.entity.book.Book book = findBookById.findBookById(id).orElseThrow(() -> new ResourceNotFoundException("book not found with id " + id));
-        bookReviewer.business.model.Book bookWithRatings = BookMapper.book(bookReviewer.business.mapper.entityToBusiness.BookMapper.map(book));
         RatingSummary ratingSummary = getAverageRating(book.getId());
-        bookWithRatings.setAverageRating(ratingSummary.getAverageRating());
-        bookWithRatings.setTotalVotes(ratingSummary.getTotalVotes());
-
-        return bookWithRatings;
+        return BookOutputMapper.map(book, ratingSummary);
     }
 
     private RatingSummary getAverageRating(Long bookId) {
