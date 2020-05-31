@@ -3,7 +3,6 @@ package bookReviewer.business.useCase.command.createBookUseCase;
 public class CreateBookCommand {
     private Long userId;
     private Book book;
-
     public CreateBookCommand() {
     }
 
@@ -27,4 +26,5 @@ public class CreateBookCommand {
     public void setBook(Book book) {
         this.book = book;
     }
+
 }

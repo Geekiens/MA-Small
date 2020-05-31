@@ -1,8 +1,7 @@
 package bookReviewer.presentation.mapper;
 
 import bookReviewer.business.model.Book;
-import bookReviewer.business.model.BookBusiness;
-import bookReviewer.business.model.Offer;
+import bookReviewer.business.useCase.query.getOffersOfBookUseCase.Offer;
 import bookReviewer.presentation.model.BookDetailPresentation;
 
 import java.util.List;

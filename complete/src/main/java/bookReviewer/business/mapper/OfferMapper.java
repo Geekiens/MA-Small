@@ -1,6 +1,6 @@
 package bookReviewer.business.mapper;
 
-import bookReviewer.business.model.Offer;
+import bookReviewer.business.useCase.query.getOffersOfBookUseCase.Offer;
 import bookReviewer.entity.offerHistory.OfferHistroy;
 
 import java.util.ArrayList;

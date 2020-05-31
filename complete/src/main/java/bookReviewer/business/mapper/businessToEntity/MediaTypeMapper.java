@@ -3,7 +3,7 @@ package bookReviewer.business.mapper.businessToEntity;
 import bookReviewer.entity.offerHistory.MediaType;
 
 public class MediaTypeMapper {
-    public static MediaType map(bookReviewer.business.shared.MediaType mediaType) {
+    public static MediaType map(bookReviewer.business.shared.model.MediaType mediaType) {
         switch (mediaType) {
             case HARDCOVER:
                 return MediaType.HARDCOVER;

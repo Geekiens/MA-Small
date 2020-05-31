@@ -1,10 +1,10 @@
 package bookReviewer.business.useCase.query.getTokenByLoginUseCase;
 
-import bookReviewer.business.shared.Role;
+import bookReviewer.business.shared.model.Role;
 
 public class LoginOutput {
-    Long userId;
-    Role role;
+    private Long userId;
+    private Role role;
 
     public LoginOutput() {
     }

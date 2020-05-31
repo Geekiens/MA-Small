@@ -1,6 +1,6 @@
 package bookReviewer.business.model;
 
-import bookReviewer.business.shared.Role;
+import bookReviewer.business.shared.model.Role;
 
 public class UserBusiness {
     private long id;

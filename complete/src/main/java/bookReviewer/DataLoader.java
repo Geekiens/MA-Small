@@ -4,7 +4,7 @@ import bookReviewer.business.boundary.in.useCase.command.RegisterUserUseCase;
 import bookReviewer.business.useCase.command.registerUserUseCase.RegisterUserService;
 import bookReviewer.persistence.model.Book;
 import bookReviewer.persistence.model.Rating;
-import bookReviewer.business.shared.Role;
+import bookReviewer.business.shared.model.Role;
 import bookReviewer.persistence.repository.BookRepository;
 import bookReviewer.persistence.repository.RatingRepository;
 import org.springframework.beans.factory.annotation.Autowired;

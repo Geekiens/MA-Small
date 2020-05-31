@@ -14,7 +14,6 @@ public class Rating {
     private String content;
     private Long userId;
     private String author;
-    private BookBusiness book;
 
     public Rating() {
     }
@@ -67,11 +66,4 @@ public class Rating {
         this.author = author;
     }
 
-    public BookBusiness getBook() {
-        return book;
-    }
-
-    public void setBook(BookBusiness book) {
-        this.book = book;
-    }
 }

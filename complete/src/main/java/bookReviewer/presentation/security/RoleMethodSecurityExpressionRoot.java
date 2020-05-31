@@ -2,7 +2,7 @@ package bookReviewer.presentation.security;
 
 import bookReviewer.business.util.JwtProvider;
 import bookReviewer.business.service.RatingService;
-import bookReviewer.business.shared.Role;
+import bookReviewer.business.shared.model.Role;
 
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -14,7 +14,7 @@ public class GetRatingsOutput {
     private String content;
     private Long userId;
     private String author;
-    private BookBusiness book;
+    private Long bookId;
 
     public GetRatingsOutput() {
     }
@@ -67,11 +67,11 @@ public class GetRatingsOutput {
         this.author = author;
     }
 
-    public BookBusiness getBook() {
-        return book;
+    public Long getBookId() {
+        return bookId;
     }
 
-    public void setBook(BookBusiness book) {
-        this.book = book;
+    public void setBookId(Long bookId) {
+        this.bookId = bookId;
     }
 }

@@ -1,6 +1,6 @@
 package bookReviewer.presentation.model;
 
-import bookReviewer.business.model.Offer;
+import bookReviewer.business.useCase.query.getOffersOfBookUseCase.Offer;
 
 import java.util.ArrayList;
 import java.util.List;
