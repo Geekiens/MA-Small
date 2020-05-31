@@ -9,6 +9,7 @@ public final class RatingMapper {
         ratingPersistence.setContent(rating.getRatingDetails().getContent());
         ratingPersistence.setId(rating.getId());
         ratingPersistence.setScore(rating.getRatingDetails().getScore());
+        ratingPersistence.setTitle(rating.getRatingDetails().getTitle());
         ratingPersistence.setUserId(rating.getUserId());
         ratingPersistence.setBook(book);
         ratingPersistence.setAuthor(author);
