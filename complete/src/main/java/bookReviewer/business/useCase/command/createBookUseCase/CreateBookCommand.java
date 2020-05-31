@@ -3,14 +3,12 @@ package bookReviewer.business.useCase.command.createBookUseCase;
 public class CreateBookCommand {
     private Long userId;
     private Book book;
-    private String token;
     public CreateBookCommand() {
     }
 
-    public CreateBookCommand(Long userId, Book book, String token) {
+    public CreateBookCommand(Long userId, Book book) {
         this.userId = userId;
         this.book = book;
-        this.token = token;
     }
 
     public Long getUserId() {
@@ -29,11 +27,4 @@ public class CreateBookCommand {
         this.book = book;
     }
 
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
 }
