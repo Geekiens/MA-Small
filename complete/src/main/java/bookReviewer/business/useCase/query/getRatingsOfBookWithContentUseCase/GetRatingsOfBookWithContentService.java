@@ -18,6 +18,7 @@ public class GetRatingsOfBookWithContentService implements GetRatingsOfBookWithC
     @Qualifier("FindAllRatingsByBookIdWithContentService")
     FindAllRatingsByBookIdWithContent findAllRatingsByBookIdWithContent;
 
+    @Autowired
     RatingMapper ratingMapper;
 
     public List<RatingBusiness> getRatingsOfBookWithContent(Long bookId) {

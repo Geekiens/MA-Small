@@ -1,6 +1,7 @@
 package bookReviewer.business.service;
 
 import bookReviewer.business.boundary.out.persistence.FindRatingById;
+import bookReviewer.business.exception.ResourceNotFoundException;
 import bookReviewer.business.mapper.entityToBusiness.RatingMapper;
 import bookReviewer.business.model.RatingBusiness;
 
@@ -17,8 +18,9 @@ public class RatingService  {
 
     RatingMapper ratingMapper;
     public RatingBusiness getRating(long id) {
-        // ratingRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("rating not found with id " + id
-        RatingBusiness rating = ratingMapper.map(findRatingById.findRatingById(id).orElse(null));
-        return rating;
+        if(!findRatingById.findRatingById(id).isPresent()) {
+            throw new ResourceNotFoundException("rating not found with id " + id);
+        }
+        return ratingMapper.map(findRatingById.findRatingById(id).orElse(null));
     }
 }

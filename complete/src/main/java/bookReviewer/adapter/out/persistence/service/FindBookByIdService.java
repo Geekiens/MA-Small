@@ -17,7 +17,8 @@ public class FindBookByIdService implements FindBookById {
     BookRepository bookRepository;
 
     public Optional<Book> findBookById(Long bookId){
-        Optional<Book> book = Optional.of(BookMapper.map(bookRepository.findById(bookId).orElse(null)));
-        return book;
+        return bookRepository.findById(bookId).isPresent()
+                ? Optional.of(BookMapper.map(bookRepository.findById(bookId).get()))
+                : Optional.empty();
     }
 }

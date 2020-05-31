@@ -1,5 +1,6 @@
 package bookReviewer.adapter.out.persistence.service;
 
+import bookReviewer.adapter.out.persistence.mapping.persistenceToEntity.OfferHistoryMapper;
 import bookReviewer.business.boundary.out.persistence.FindAllOfferHistoriesByIsbn;
 import bookReviewer.entity.offerHistory.OfferHistroy;
 import bookReviewer.persistence.repository.CachedOfferHistoryRepository;
@@ -17,6 +18,6 @@ public class FindAllOfferHistoriesByIsbnService implements FindAllOfferHistories
     CachedOfferHistoryRepository cachedOfferHistoryRepository;
 
     public List<OfferHistroy> findAllOffersByIsbn(String isbn){
-        return cachedOfferHistoryRepository.findByIsbn(isbn);
+        return OfferHistoryMapper.mapList(cachedOfferHistoryRepository.findByIsbn(isbn));
     }
 }

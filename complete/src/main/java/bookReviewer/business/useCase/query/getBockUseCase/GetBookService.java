@@ -27,6 +27,7 @@ public class GetBookService implements GetBookUseCase {
     @Qualifier("FindAllRatingsByBookIdService")
     FindAllRatingsByBookId findAllRatingsByBookId;
 
+    @Autowired
     RatingMapper ratingMapper;
 
     public Book getBook(long id) {

@@ -63,7 +63,7 @@ public class Book {
         return getId() == book.getId() &&
                 getBookMetaDetails().getAuthor().equals(book.getBookMetaDetails().getAuthor()) &&
                 getBookMetaDetails().getTitle().equals(book.getBookMetaDetails().getTitle()) &&
-                Objects.equals(getBookMetaDetails().getPublishingYear(), book.getBookMetaDetails().getPublishingYear()) &&
+                Objects.equals(getBookMetaDetails().getPublishingYear(), book.getBookMetaDetails().getPublishingYear());
     }
     @Override
     public String toString() {

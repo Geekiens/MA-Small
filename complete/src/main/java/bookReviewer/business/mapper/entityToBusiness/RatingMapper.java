@@ -9,10 +9,12 @@ import bookReviewer.entity.rating.Rating;
 import bookReviewer.entity.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class RatingMapper {
     @Autowired
     @Qualifier("FindBookByIdService")
@@ -25,6 +27,7 @@ public class RatingMapper {
     public RatingBusiness map(Rating rating){
         RatingBusiness ratingBusiness = new RatingBusiness();
         ratingBusiness.setContent(rating.getRatingDetails().getContent());
+        ratingBusiness.setTitle(rating.getRatingDetails().getTitle());
         ratingBusiness.setId(rating.getId());
         ratingBusiness.setScore(rating.getRatingDetails().getScore());
         ratingBusiness.setUserId(rating.getUserId());
