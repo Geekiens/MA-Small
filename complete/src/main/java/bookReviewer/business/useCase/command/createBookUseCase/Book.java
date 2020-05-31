@@ -3,7 +3,6 @@ package bookReviewer.business.useCase.command.createBookUseCase;
 import javax.validation.constraints.NotNull;
 
 public class Book {
-    private long id;
     @NotNull
     private String author;
     @NotNull
@@ -18,14 +17,6 @@ public class Book {
     private String content;
 
     public Book() {
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getAuthor() {

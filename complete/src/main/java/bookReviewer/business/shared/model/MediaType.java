@@ -1,4 +1,4 @@
-package bookReviewer.business.shared;
+package bookReviewer.business.shared.model;
 
 public enum MediaType {
     EBOOK,

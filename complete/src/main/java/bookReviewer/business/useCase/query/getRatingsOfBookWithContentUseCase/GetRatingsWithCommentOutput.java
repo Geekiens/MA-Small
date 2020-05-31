@@ -4,6 +4,7 @@ import bookReviewer.business.model.BookBusiness;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 public class GetRatingsWithCommentOutput {
     private long id;
@@ -11,10 +12,11 @@ public class GetRatingsWithCommentOutput {
     @Max(value = 5, message = "Score should not be greater than 5")
     private int score;
     private String title;
+    @NotNull
     private String content;
     private Long userId;
     private String author;
-    private BookBusiness book;
+    private Long bookId;
 
     public GetRatingsWithCommentOutput() {
     }
@@ -67,11 +69,11 @@ public class GetRatingsWithCommentOutput {
         this.author = author;
     }
 
-    public BookBusiness getBook() {
-        return book;
+    public Long getBookId() {
+        return bookId;
     }
 
-    public void setBook(BookBusiness book) {
-        this.book = book;
+    public void setBookId(Long bookId) {
+        this.bookId = bookId;
     }
 }

@@ -7,7 +7,7 @@ import bookReviewer.business.mapper.OfferMapper;
 import bookReviewer.business.mapper.businessToEntity.MediaTypeMapper;
 import bookReviewer.business.mapper.entityToBusiness.BookMapper;
 import bookReviewer.business.model.*;
-import bookReviewer.business.shared.MediaType;
+import bookReviewer.business.shared.model.MediaType;
 import bookReviewer.entity.offerHistory.OfferHistroy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,7 +16,6 @@ import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -133,7 +132,7 @@ public class GetOffersOfBookService implements GetOffersOfBookUseCase {
             Offer offer = new Offer(price,
                     Vendor.BUCHLADEN123DE.getVendorName(),
                     offerApi1.getAffiliate(),
-                    bookReviewer.business.shared.MediaType.valueOf(offerApi1.getMedia().toUpperCase()));
+                    MediaType.valueOf(offerApi1.getMedia().toUpperCase()));
             offers.add(offer);
         }
         return offers;
@@ -163,7 +162,7 @@ public class GetOffersOfBookService implements GetOffersOfBookUseCase {
         for (OfferApi2 offerApi2 : offerApi2s) {
             if (!offerApi2.isAvailable()) { continue; }
             BigDecimal price = offerApi2.getPrice().add(offerApi2.getShippingFee());
-            bookReviewer.business.shared.MediaType mediaType = mapMediaTypeOfBuchVerkauf24(offerApi2);
+            MediaType mediaType = mapMediaTypeOfBuchVerkauf24(offerApi2);
 
             Offer offer = new Offer(price,
                     Vendor.BUCHVERKAUF24.getVendorName(),

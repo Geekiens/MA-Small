@@ -1,7 +1,7 @@
 package bookReviewer.presentation.model;
 
 import bookReviewer.business.model.Book;
-import bookReviewer.business.model.RatingSummary;
+import bookReviewer.business.shared.model.RatingSummary;
 
 public class BookPresentation {
     Long id;

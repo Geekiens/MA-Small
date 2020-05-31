@@ -8,7 +8,7 @@ import bookReviewer.business.mapper.BookMapper;
 import bookReviewer.business.mapper.entityToBusiness.RatingMapper;
 import bookReviewer.business.model.Book;
 import bookReviewer.business.model.RatingBusiness;
-import bookReviewer.business.model.RatingSummary;
+import bookReviewer.business.shared.model.RatingSummary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;

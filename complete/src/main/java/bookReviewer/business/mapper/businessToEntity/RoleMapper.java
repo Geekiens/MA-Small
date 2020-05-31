@@ -1,7 +1,9 @@
 package bookReviewer.business.mapper.businessToEntity;
 
+import bookReviewer.business.shared.model.Role;
+
 public final class RoleMapper {
-    public static bookReviewer.entity.user.Role map(bookReviewer.business.shared.Role role) {
+    public static bookReviewer.entity.user.Role map(Role role) {
         switch (role) {
             case ADMIN:
                 return bookReviewer.entity.user.Role.ADMIN;

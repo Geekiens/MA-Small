@@ -1,6 +1,6 @@
-package bookReviewer.business.model;
+package bookReviewer.business.useCase.query.getOffersOfBookUseCase;
 
-import bookReviewer.business.shared.MediaType;
+import bookReviewer.business.shared.model.MediaType;
 
 import java.math.BigDecimal;
 

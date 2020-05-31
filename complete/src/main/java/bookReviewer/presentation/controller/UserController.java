@@ -2,7 +2,7 @@ package bookReviewer.presentation.controller;
 
 import bookReviewer.business.boundary.in.useCase.command.RegisterUserUseCase;
 import bookReviewer.business.boundary.in.useCase.query.GetTokenByLoginUseCase;
-import bookReviewer.business.shared.Role;
+import bookReviewer.business.shared.model.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;

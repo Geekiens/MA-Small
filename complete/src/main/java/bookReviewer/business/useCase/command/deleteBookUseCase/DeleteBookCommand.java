@@ -1,6 +1,6 @@
 package bookReviewer.business.useCase.command.deleteBookUseCase;
 
-import bookReviewer.business.shared.Role;
+import bookReviewer.business.shared.model.Role;
 
 public class DeleteBookCommand {
     Long bookId;

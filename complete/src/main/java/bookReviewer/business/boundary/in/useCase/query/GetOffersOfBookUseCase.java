@@ -1,6 +1,6 @@
 package bookReviewer.business.boundary.in.useCase.query;
 
-import bookReviewer.business.model.Offer;
+import bookReviewer.business.useCase.query.getOffersOfBookUseCase.Offer;
 
 import java.util.List;
 

@@ -3,7 +3,7 @@ package bookReviewer.business.useCase.command.registerUserUseCase;
 import bookReviewer.business.boundary.in.useCase.command.RegisterUserUseCase;
 import bookReviewer.business.boundary.out.persistence.SaveUser;
 import bookReviewer.business.mapper.businessToEntity.UserMapper;
-import bookReviewer.business.shared.Role;
+import bookReviewer.business.shared.model.Role;
 import bookReviewer.business.model.UserBusiness;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

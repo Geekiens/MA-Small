@@ -1,4 +1,4 @@
-package bookReviewer.business.model;
+package bookReviewer.business.shared.model;
 
 public class RatingSummary {
     Double averageRating;
