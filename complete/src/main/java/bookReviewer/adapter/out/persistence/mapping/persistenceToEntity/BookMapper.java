@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class BookMapper {
-    public static Book map(bookReviewer.persistence.model.Book bookPersistence){
+    public static Book map(bookReviewer.adapter.out.persistence.model.Book bookPersistence){
         Book book = new Book();
         BookMetaDetails bookMetaDetails = new BookMetaDetails();
         bookMetaDetails.setAuthor(bookPersistence.getAuthor());
@@ -30,9 +30,9 @@ public final class BookMapper {
 
         return book;
     }
-    public static List<Book> mapList(List<bookReviewer.persistence.model.Book> booksPersistence){
+    public static List<Book> mapList(List<bookReviewer.adapter.out.persistence.model.Book> booksPersistence){
         ArrayList<Book> books = new ArrayList<>();
-        for(bookReviewer.persistence.model.Book bookPersistence : booksPersistence){
+        for(bookReviewer.adapter.out.persistence.model.Book bookPersistence : booksPersistence){
             books.add(map(bookPersistence));
         }
         return books;

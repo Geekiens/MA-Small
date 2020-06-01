@@ -1,6 +1,6 @@
-package bookReviewer.persistence.repository;
+package bookReviewer.adapter.out.persistence.repository;
 
-import bookReviewer.persistence.model.Rating;
+import bookReviewer.adapter.out.persistence.model.Rating;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

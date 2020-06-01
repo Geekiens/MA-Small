@@ -1,8 +1,8 @@
 package bookReviewer.persistence;
 
-import bookReviewer.persistence.model.Book;
-import bookReviewer.persistence.model.Rating;
-import bookReviewer.persistence.repository.RatingRepository;
+import bookReviewer.adapter.out.persistence.model.Book;
+import bookReviewer.adapter.out.persistence.model.Rating;
+import bookReviewer.adapter.out.persistence.repository.RatingRepository;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

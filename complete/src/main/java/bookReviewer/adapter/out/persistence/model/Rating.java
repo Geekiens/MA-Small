@@ -1,4 +1,4 @@
-package bookReviewer.persistence.model;
+package bookReviewer.adapter.out.persistence.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.OnDelete;
@@ -7,7 +7,6 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "RATING")
@@ -19,8 +18,6 @@ public class Rating {
     private long id;
 
     @Column(name = "score")
-    @Min(value = 1, message = "Score should not be less than 1")
-    @Max(value = 5, message = "Score should not be greater than 5")
     private int score;
 
     @Column(name = "title")
@@ -31,9 +28,6 @@ public class Rating {
 
     @Column(name = "user_id")
     private Long userId;
-
-    @Column(name = "author")
-    private String author;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "book_id", nullable = false)
@@ -96,27 +90,8 @@ public class Rating {
         return userId;
     }
 
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
 
     public void setUserId(long userId) {
         this.userId = userId;
-    }
-
-    @Override
-    public String toString() {
-        return "Rating{" +
-                "id=" + id +
-                ", score=" + score +
-                ", title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                ", reviwer='" + userId + '\'' +
-                ", book=" + book +
-                '}';
     }
 }

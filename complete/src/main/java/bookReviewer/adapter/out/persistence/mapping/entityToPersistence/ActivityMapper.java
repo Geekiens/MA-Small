@@ -1,7 +1,7 @@
 package bookReviewer.adapter.out.persistence.mapping.entityToPersistence;
 
-import bookReviewer.persistence.model.Activity;
-import bookReviewer.persistence.model.User;
+import bookReviewer.adapter.out.persistence.model.Activity;
+import bookReviewer.adapter.out.persistence.model.User;
 
 public final class ActivityMapper {
     public static Activity map(bookReviewer.entity.user.Activity activity, User user){

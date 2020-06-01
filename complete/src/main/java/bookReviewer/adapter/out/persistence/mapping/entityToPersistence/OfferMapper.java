@@ -1,25 +1,23 @@
 package bookReviewer.adapter.out.persistence.mapping.entityToPersistence;
 
-import bookReviewer.entity.offerHistory.Offer;
-import bookReviewer.entity.offerHistory.OfferHistroy;
-import bookReviewer.persistence.model.CachedOfferHistoryPersistence;
-import bookReviewer.persistence.model.OfferPersistence;
+import bookReviewer.adapter.out.persistence.model.CachedOfferHistory;
+import bookReviewer.adapter.out.persistence.model.Offer;
 
 import java.util.ArrayList;
 
 public final class OfferMapper {
-    public static OfferPersistence map(Offer offer, CachedOfferHistoryPersistence cachedOfferHistoryPersistence){
-        OfferPersistence offerPersistence = new OfferPersistence();
+    public static Offer map(bookReviewer.entity.offerHistory.Offer offer, CachedOfferHistory cachedOfferHistory){
+        Offer offerPersistence = new Offer();
         offerPersistence.setPrice(offer.getPrice());
         offerPersistence.setRequestDate(offer.getRequestDate());
-        offerPersistence.setCachedOfferHistoryPersistence(cachedOfferHistoryPersistence);
+        offerPersistence.setCachedOfferHistory(cachedOfferHistory);
         return offerPersistence;
     }
 
-    public static ArrayList<OfferPersistence> mapList(ArrayList<Offer> offers, CachedOfferHistoryPersistence cachedOfferHistoryPersistence){
-        ArrayList<OfferPersistence> offerPersistences = new ArrayList<>();
-        for (Offer offer : offers){
-            offerPersistences.add(map(offer, cachedOfferHistoryPersistence));
+    public static ArrayList<Offer> mapList(ArrayList<bookReviewer.entity.offerHistory.Offer> offers, CachedOfferHistory cachedOfferHistory){
+        ArrayList<Offer> offerPersistences = new ArrayList<>();
+        for (bookReviewer.entity.offerHistory.Offer offer : offers){
+            offerPersistences.add(map(offer, cachedOfferHistory));
         }
         return offerPersistences;
     }

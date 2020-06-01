@@ -1,4 +1,4 @@
-package bookReviewer.persistence.model;
+package bookReviewer.adapter.out.persistence.model;
 
 import javax.persistence.*;
 
@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name="OFFER")
-public class OfferPersistence {
+public class Offer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,7 +16,7 @@ public class OfferPersistence {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cachedOfferHistoryPersistence_id", nullable = false)
-    private CachedOfferHistoryPersistence cachedOfferHistoryPersistence;
+    private CachedOfferHistory cachedOfferHistory;
 
     @Column(name="price")
     private BigDecimal price;
@@ -25,18 +25,7 @@ public class OfferPersistence {
     private LocalDate requestDate;
 
 
-    public OfferPersistence() {
-    }
-
-    public OfferPersistence(BigDecimal price, LocalDate requestDate) {
-        this.price = price;
-        this.requestDate = requestDate;
-    }
-
-    public OfferPersistence(CachedOfferHistoryPersistence cachedOfferHistoryPersistence, BigDecimal price, LocalDate requestDate) {
-        this.cachedOfferHistoryPersistence = cachedOfferHistoryPersistence;
-        this.price = price;
-        this.requestDate = requestDate;
+    public Offer() {
     }
 
     public long getId() {
@@ -47,12 +36,12 @@ public class OfferPersistence {
         this.id = id;
     }
 
-    public CachedOfferHistoryPersistence getCachedOfferHistoryPersistence() {
-        return cachedOfferHistoryPersistence;
+    public CachedOfferHistory getCachedOfferHistory() {
+        return cachedOfferHistory;
     }
 
-    public void setCachedOfferHistoryPersistence(CachedOfferHistoryPersistence cachedOfferHistoryPersistence) {
-        this.cachedOfferHistoryPersistence = cachedOfferHistoryPersistence;
+    public void setCachedOfferHistory(CachedOfferHistory cachedOfferHistory) {
+        this.cachedOfferHistory = cachedOfferHistory;
     }
 
     public BigDecimal getPrice() {

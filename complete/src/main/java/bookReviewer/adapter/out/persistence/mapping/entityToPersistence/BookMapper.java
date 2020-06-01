@@ -1,6 +1,6 @@
 package bookReviewer.adapter.out.persistence.mapping.entityToPersistence;
 
-import bookReviewer.persistence.model.Book;
+import bookReviewer.adapter.out.persistence.model.Book;
 
 public final class BookMapper {
     public static Book map(bookReviewer.entity.book.Book book){

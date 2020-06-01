@@ -1,4 +1,4 @@
-package bookReviewer.persistence.model;
+package bookReviewer.adapter.out.persistence.model;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -7,7 +7,7 @@ import java.util.List;
 
 @Entity
 @Table(name="CACHED_OFFER_HISTORY")
-public class CachedOfferHistoryPersistence {
+public class CachedOfferHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -25,12 +25,12 @@ public class CachedOfferHistoryPersistence {
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
             mappedBy = "cachedOfferHistoryPersistence")
-    private List<OfferPersistence> offers = new ArrayList<>();
+    private List<Offer> offers = new ArrayList<>();
 
-    public CachedOfferHistoryPersistence() {
+    public CachedOfferHistory() {
     }
 
-    public CachedOfferHistoryPersistence(String vendor, MediaType mediaType, String isbn, ArrayList<OfferPersistence> offers) {
+    public CachedOfferHistory(String vendor, MediaType mediaType, String isbn, ArrayList<Offer> offers) {
         this.vendor = vendor;
         this.mediaType = mediaType;
         this.isbn = isbn;
@@ -70,15 +70,15 @@ public class CachedOfferHistoryPersistence {
         this.isbn = isbn;
     }
 
-    public List<OfferPersistence> getOffers() {
+    public List<Offer> getOffers() {
         return offers;
     }
 
-    public void setOffers(List<OfferPersistence> offers) {
+    public void setOffers(List<Offer> offers) {
         this.offers = offers;
     }
 
-    public void addOffer(OfferPersistence offer) {
+    public void addOffer(Offer offer) {
         this.offers.add(offer);
     }
 }

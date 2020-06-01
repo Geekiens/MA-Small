@@ -1,4 +1,4 @@
-package bookReviewer.persistence.model;
+package bookReviewer.adapter.out.persistence.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -15,11 +15,9 @@ public class Book {
     private long id;
 
     @Column(name = "author")
-    @NotNull
     private String author;
 
     @Column(name = "title")
-    @NotNull
     private String title;
 
     @Column(name = "genre")
@@ -41,26 +39,12 @@ public class Book {
     private String isbn;
 
     @Column(name = "publishingYear")
-    @PositiveOrZero
     private int publishingYear;
 
     @Column(name = "content", length=5000)
     private String content;
 
     public Book() {}
-
-    public Book(String author, String title) {
-        this.author = author;
-        this.title = title;
-    }
-
-    public Book(String author, String title, String isbn, int publishingYear, String content) {
-        this.author = author;
-        this.title = title;
-        this.isbn = isbn;
-        this.publishingYear = publishingYear;
-        this.content = content;
-    }
 
     public long getId() {
         return id;
@@ -150,21 +134,5 @@ public class Book {
         this.content = content;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Book book = (Book) o;
-        return getId() == book.getId() &&
-                getAuthor().equals(book.getAuthor()) &&
-                getTitle().equals(book.getTitle()) &&
-                Objects.equals(getPublishingYear(), book.getPublishingYear()) &&
-                Objects.equals(getContent(), book.getContent());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getAuthor(), getTitle(), getPublishingYear(), getContent());
-    }
 }
 

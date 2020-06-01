@@ -1,4 +1,4 @@
-package bookReviewer.persistence.model;
+package bookReviewer.adapter.out.persistence.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -15,11 +15,9 @@ public class User {
     private long id;
 
     @Column(name="username")
-    @NotBlank
     private String username;
 
     @Column(name="password")
-    @NotNull
     private String password;
 
     @Column(name="email")
@@ -30,7 +28,6 @@ public class User {
     private byte[] salt;
 
     @Column(name="role")
-    @NotNull
     private Role role;
 
     public User() {

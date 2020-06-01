@@ -5,7 +5,7 @@ import bookReviewer.adapter.out.persistence.mapping.persistenceToEntity.Activity
 import bookReviewer.business.boundary.out.persistence.FindAllActivitiesByUser;
 import bookReviewer.entity.user.Activity;
 import bookReviewer.entity.user.User;
-import bookReviewer.persistence.repository.ActivityRepository;
+import bookReviewer.adapter.out.persistence.repository.ActivityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;

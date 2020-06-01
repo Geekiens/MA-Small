@@ -1,6 +1,6 @@
 package bookReviewer.adapter.out.persistence.mapping.entityToPersistence;
 
-import bookReviewer.persistence.model.User;
+import bookReviewer.adapter.out.persistence.model.User;
 
 public class UserMapper {
     public static User map(bookReviewer.entity.user.User user){

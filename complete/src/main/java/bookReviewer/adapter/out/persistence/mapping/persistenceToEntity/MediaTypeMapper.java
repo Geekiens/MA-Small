@@ -3,7 +3,7 @@ package bookReviewer.adapter.out.persistence.mapping.persistenceToEntity;
 import bookReviewer.entity.offerHistory.MediaType;
 
 public final class MediaTypeMapper {
-    public static MediaType map(bookReviewer.persistence.model.MediaType mediaType) {
+    public static MediaType map(bookReviewer.adapter.out.persistence.model.MediaType mediaType) {
         switch (mediaType) {
             case HARDCOVER:
                 return MediaType.HARDCOVER;

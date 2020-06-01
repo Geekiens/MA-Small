@@ -3,12 +3,11 @@ package bookReviewer.adapter.out.persistence.mapping.persistenceToEntity;
 import bookReviewer.entity.rating.Rating;
 import bookReviewer.entity.rating.RatingDetails;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 public final class RatingMapper {
-    public static Rating map(bookReviewer.persistence.model.Rating ratingPersistence){
+    public static Rating map(bookReviewer.adapter.out.persistence.model.Rating ratingPersistence){
         Rating rating = new Rating();
         rating.setId(ratingPersistence.getId());
 
@@ -24,9 +23,9 @@ public final class RatingMapper {
         return rating;
     }
 
-    public static List<Rating> mapList(List<bookReviewer.persistence.model.Rating> ratingList){
+    public static List<Rating> mapList(List<bookReviewer.adapter.out.persistence.model.Rating> ratingList){
         ArrayList<Rating> ratings = new ArrayList<>();
-        for(bookReviewer.persistence.model.Rating rating: ratingList){
+        for(bookReviewer.adapter.out.persistence.model.Rating rating: ratingList){
             ratings.add(map(rating));
         }
         return ratings;
