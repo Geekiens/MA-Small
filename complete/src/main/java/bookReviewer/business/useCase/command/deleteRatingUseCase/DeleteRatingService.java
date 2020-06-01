@@ -2,6 +2,9 @@ package bookReviewer.business.useCase.command.deleteRatingUseCase;
 
 import bookReviewer.business.boundary.in.useCase.command.DeleteRatingUseCase;
 import bookReviewer.business.boundary.out.persistence.DeleteRatingById;
+import bookReviewer.business.mapper.businessToEntity.RoleMapper;
+import bookReviewer.business.shared.authorizer.CheckRole;
+import bookReviewer.entity.user.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -15,6 +18,7 @@ public class DeleteRatingService implements DeleteRatingUseCase {
     DeleteRatingById deleteRatingById;
 
     public void deleteRating(DeleteRatingCommand deleteRatingCommand) {
+        CheckRole.checkHasMinimumRequiredRole(RoleMapper.map(deleteRatingCommand.getRole()), Role.ADMIN);
         deleteRatingById.deleteRatingById(deleteRatingCommand.getRatingId());
     }
 }

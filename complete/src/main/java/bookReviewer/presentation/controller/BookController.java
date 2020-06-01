@@ -4,12 +4,11 @@ import bookReviewer.adapter.in.web.book.BookAdapter;
 import bookReviewer.adapter.in.web.book.BookWithOffers;
 import bookReviewer.adapter.in.web.book.BookWithRatingInformation;
 import bookReviewer.adapter.in.web.book.NewBook;
-import bookReviewer.presentation.TokenFormatter;
+import bookReviewer.presentation.controller.util.TokenFormatter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -42,12 +41,9 @@ public class BookController {
         return bookAdapter.createBook(book, cleanToken);
     }
 
-    @PreAuthorize("hasRequiredRole(#headers, 'MODERATOR')")
     @DeleteMapping(path = "/books/{id}")
     public void deleteBook(@PathVariable("id") long id, @RequestHeader Map<String, String> headers) {
         String cleanToken = TokenFormatter.format(headers.get("authorization"));
         bookAdapter.deleteBook(id, cleanToken);
     }
-
-
 }

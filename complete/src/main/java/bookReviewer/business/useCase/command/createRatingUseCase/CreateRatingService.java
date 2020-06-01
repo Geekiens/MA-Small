@@ -5,11 +5,14 @@ import bookReviewer.business.boundary.out.persistence.*;
 import bookReviewer.business.exception.DuplicateRatingException;
 import bookReviewer.business.exception.ResourceNotFoundException;
 import bookReviewer.business.mapper.businessToEntity.RatingMapper;
+import bookReviewer.business.mapper.businessToEntity.RoleMapper;
 import bookReviewer.business.mapper.entityToBusiness.BookMapper;
 import bookReviewer.business.mapper.entityToBusiness.UserMapper;
 import bookReviewer.business.model.BookBusiness;
 import bookReviewer.business.model.UserBusiness;
+import bookReviewer.business.shared.authorizer.CheckRole;
 import bookReviewer.entity.rating.Rating;
+import bookReviewer.entity.user.Role;
 import bookReviewer.entity.user.SubmissionsDate;
 import bookReviewer.entity.user.Activity;
 import bookReviewer.entity.user.ActivityType;
@@ -53,12 +56,14 @@ public class CreateRatingService implements CreateRatingUseCase {
 
 
     public Long createRating(CreateRatingCommand createRatingCommand) {
+
         BookBusiness book = BookMapper.map(findBookById.findBookById(createRatingCommand.getBookId()).orElseThrow(() -> new ResourceNotFoundException("book not found with id " + createRatingCommand.getBookId())));
         long reviewer = createRatingCommand.getUserId();
         Rating rating = RatingEntityMapper.map(createRatingCommand.getRating());
         rating.setBookId(book.getId());
         rating.setUserId(reviewer);
         UserBusiness user = UserMapper.map(findUserById.findUserById(reviewer).orElseThrow(() -> new ResourceNotFoundException("user not found with id " + reviewer)));
+        CheckRole.checkHasMinimumRequiredRole(RoleMapper.map(user.getRole()), Role.USER);
         System.out.println("user: " + user.getEmail());
         if (isDuplicate(rating)){
             throw new DuplicateRatingException();

@@ -2,8 +2,11 @@ package bookReviewer.business.useCase.command.updateRatingUseCase;
 
 import bookReviewer.business.boundary.in.useCase.command.UpdateRatingUseCase;
 import bookReviewer.business.boundary.out.persistence.FindBookById;
+import bookReviewer.business.boundary.out.persistence.FindRatingById;
 import bookReviewer.business.boundary.out.persistence.SaveRating;
 
+import bookReviewer.business.exception.ForbiddenResourceException;
+import bookReviewer.business.exception.ResourceNotFoundException;
 import bookReviewer.business.mapper.entityToBusiness.BookMapper;
 import bookReviewer.business.model.BookBusiness;
 import bookReviewer.entity.rating.Rating;
@@ -23,11 +26,23 @@ public class UpdateRatingService implements UpdateRatingUseCase {
     @Qualifier("FindBookByIdService")
     FindBookById findBookById;
 
+    @Autowired
+    @Qualifier("FindRatingByIdService")
+    FindRatingById findRatingById;
+
     public void updateRating(UpdateRatingCommand updateRatingCommand) {
         BookBusiness book = BookMapper.map(findBookById.findBookById(updateRatingCommand.getBookId()).orElse(null));
         Rating rating = RatingEntityMapper.map(updateRatingCommand.getRating());
+        isOwnRating(rating.getId(), updateRatingCommand.getUserId());
         rating.setBookId(book.getId());
         System.out.println("rating: " + rating.toString());
         saveRating.saveRating(rating);
+    }
+
+    private void isOwnRating(Long ratingId, Long userId){
+        Rating rating = findRatingById.findRatingById(ratingId).orElseThrow(() -> new ResourceNotFoundException("Rating does not exist. Create it first"));
+        if (rating.getUserId() != userId){
+            throw new ForbiddenResourceException();
+        }
     }
 }
