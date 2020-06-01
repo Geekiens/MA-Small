@@ -1,4 +1,4 @@
-package bookReviewer.business.mapper.businessToEntity;
+package bookReviewer.business.shared.mapper.businessToEntity;
 
 import bookReviewer.entity.offerHistory.MediaType;
 

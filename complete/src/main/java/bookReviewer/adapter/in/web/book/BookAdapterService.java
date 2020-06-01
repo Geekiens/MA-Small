@@ -10,7 +10,7 @@ import bookReviewer.business.boundary.in.useCase.query.GetOffersOfBookUseCase;
 import bookReviewer.business.useCase.command.deleteBookUseCase.DeleteBookCommand;
 import bookReviewer.business.useCase.query.getBookUseCase.GetBookOutput;
 import bookReviewer.business.useCase.query.getBooksUseCase.GetBooksOutput;
-import bookReviewer.business.useCase.query.getOffersOfBookUseCase.Offer;
+import bookReviewer.business.useCase.query.getOffersOfBookUseCase.OfferOutput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -55,7 +55,7 @@ public class BookAdapterService implements BookAdapter{
 
     public BookWithOffers getBook(Long bookId){
         GetBookOutput book = getBookUseCase.getBook(bookId);
-        List<Offer> offers = getOffersOfBookUseCase.getOffers(bookId);
+        List<OfferOutput> offers = getOffersOfBookUseCase.getOffers(bookId);
         return BookWithOffersMapper.map(book, offers);
     }
 
