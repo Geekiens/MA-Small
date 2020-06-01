@@ -2,8 +2,8 @@ package bookReviewer.business.useCase.command.deleteRatingUseCase;
 
 import bookReviewer.business.boundary.in.useCase.command.DeleteRatingUseCase;
 import bookReviewer.business.boundary.out.persistence.DeleteRatingById;
-import bookReviewer.business.shared.authorizer.CheckRole;
 import bookReviewer.business.shared.mapper.businessToEntity.RoleMapper;
+import bookReviewer.business.shared.authorizer.CheckRole;
 import bookReviewer.entity.user.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
