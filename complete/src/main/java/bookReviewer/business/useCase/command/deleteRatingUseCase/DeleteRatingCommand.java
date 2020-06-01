@@ -5,13 +5,9 @@ import bookReviewer.business.shared.model.Role;
 public class DeleteRatingCommand {
     Long ratingId;
     Role role;
+    Long userId;
 
     public DeleteRatingCommand() {
-    }
-
-    public DeleteRatingCommand(Long ratingId, Role role) {
-        this.ratingId = ratingId;
-        this.role = role;
     }
 
     public Long getRatingId() {
@@ -28,5 +24,13 @@ public class DeleteRatingCommand {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

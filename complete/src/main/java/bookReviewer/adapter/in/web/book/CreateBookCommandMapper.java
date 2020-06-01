@@ -1,6 +1,6 @@
-package bookReviewer.adapter.web.book;
+package bookReviewer.adapter.in.web.book;
 
-import bookReviewer.adapter.web.util.TokenDecoder;
+import bookReviewer.adapter.in.web.util.TokenDecoder;
 import bookReviewer.business.useCase.command.createBookUseCase.Book;
 import bookReviewer.business.useCase.command.createBookUseCase.CreateBookCommand;
 

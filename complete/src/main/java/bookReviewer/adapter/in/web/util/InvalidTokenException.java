@@ -1,4 +1,4 @@
-package bookReviewer.adapter.web.util;
+package bookReviewer.adapter.in.web.util;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

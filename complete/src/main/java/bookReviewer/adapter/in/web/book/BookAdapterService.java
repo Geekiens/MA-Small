@@ -1,7 +1,7 @@
-package bookReviewer.adapter.web.book;
+package bookReviewer.adapter.in.web.book;
 
-import bookReviewer.adapter.web.util.MapWithReflection;
-import bookReviewer.adapter.web.util.TokenDecoder;
+import bookReviewer.adapter.in.web.util.MapWithReflection;
+import bookReviewer.adapter.in.web.util.TokenDecoder;
 import bookReviewer.business.boundary.in.useCase.command.CreateBookUseCase;
 import bookReviewer.business.boundary.in.useCase.command.DeleteBookUseCase;
 import bookReviewer.business.boundary.in.useCase.query.GetBookUseCase;

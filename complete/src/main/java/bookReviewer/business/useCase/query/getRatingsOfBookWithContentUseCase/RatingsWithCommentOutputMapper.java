@@ -3,7 +3,7 @@ package bookReviewer.business.useCase.query.getRatingsOfBookWithContentUseCase;
 import bookReviewer.entity.rating.Rating;
 
 public class RatingsWithCommentOutputMapper {
-    public GetRatingsWithCommentOutput map(Rating rating, String author){
+    public static GetRatingsWithCommentOutput map(Rating rating, String author){
         GetRatingsWithCommentOutput getRatingsOutput = new GetRatingsWithCommentOutput();
         getRatingsOutput.setContent(rating.getRatingDetails().getContent());
         getRatingsOutput.setTitle(rating.getRatingDetails().getTitle());

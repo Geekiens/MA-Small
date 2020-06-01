@@ -1,4 +1,4 @@
-package bookReviewer.adapter.web.book;
+package bookReviewer.adapter.in.web.book;
 
 import javax.validation.constraints.NotNull;
 

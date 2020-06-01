@@ -3,8 +3,10 @@ package bookReviewer.business.useCase.query.getRatingsOfBookUseCase;
 import bookReviewer.business.model.RatingBusiness;
 import bookReviewer.entity.rating.Rating;
 
-public class RatingsOutputMapper {
-    public GetRatingsOutput map(Rating rating, String author){
+import java.util.List;
+
+public final class RatingsOutputMapper {
+    public static GetRatingsOutput map(Rating rating, String author){
         GetRatingsOutput getRatingsOutput = new GetRatingsOutput();
         getRatingsOutput.setContent(rating.getRatingDetails().getContent());
         getRatingsOutput.setTitle(rating.getRatingDetails().getTitle());

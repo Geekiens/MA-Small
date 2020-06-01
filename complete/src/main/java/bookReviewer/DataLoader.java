@@ -1,6 +1,7 @@
 package bookReviewer;
 
 import bookReviewer.business.boundary.in.useCase.command.RegisterUserUseCase;
+import bookReviewer.business.useCase.command.registerUserUseCase.RegisterUserCommand;
 import bookReviewer.business.useCase.command.registerUserUseCase.RegisterUserService;
 import bookReviewer.persistence.model.Book;
 import bookReviewer.persistence.model.Rating;
@@ -63,9 +64,24 @@ public class DataLoader implements ApplicationRunner {
             bookRepository.save(book);
 
             // Create Users
-            registerUserUseCase.registerUser("User", "passwort", "2f0df9b8-b645-4fc3-91c2-407d50706302@mailslurp.com", Role.USER);
-            registerUserUseCase.registerUser("Moderator", "passwort", "20fd08d4-5eaf-445c-a47e-7d3055009337@mailslurp.com", Role.MODERATOR);
-            registerUserUseCase.registerUser("Admin", "passwort", "max.master.thesis2+user@gmail.com", Role.ADMIN);
+            RegisterUserCommand registerUserCommand = new RegisterUserCommand(
+                    "User",
+                    "passwort",
+                    "2f0df9b8-b645-4fc3-91c2-407d50706302@mailslurp.com",
+                    Role.USER);
+            registerUserUseCase.registerUser(registerUserCommand);
+            registerUserCommand = new RegisterUserCommand(
+                    "Moderator",
+                    "passwort",
+                    "20fd08d4-5eaf-445c-a47e-7d3055009337@mailslurp.com",
+                    Role.MODERATOR);
+            registerUserUseCase.registerUser(registerUserCommand);
+            registerUserCommand = new RegisterUserCommand(
+                    "Admin",
+                    "passwort",
+                    "max.master.thesis2+user@gmail.com",
+                    Role.ADMIN);
+            registerUserUseCase.registerUser(registerUserCommand);
 
             // Create Ratings
             Book ratedBook = bookRepository.findById(1L).orElse(null);

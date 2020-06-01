@@ -1,4 +1,4 @@
-package bookReviewer.adapter.web.util;
+package bookReviewer.adapter.in.web.util;
 
 import bookReviewer.business.shared.model.Role;
 import bookReviewer.business.util.JwtProvider;

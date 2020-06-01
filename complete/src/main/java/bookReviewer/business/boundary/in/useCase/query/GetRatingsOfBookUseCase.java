@@ -1,9 +1,9 @@
 package bookReviewer.business.boundary.in.useCase.query;
 
-import bookReviewer.business.model.RatingBusiness;
+import bookReviewer.business.useCase.query.getRatingsOfBookUseCase.GetRatingsOutput;
 
 import java.util.List;
 
 public interface GetRatingsOfBookUseCase {
-    List<RatingBusiness> getRatingsOfBook(Long bookId);
+    List<GetRatingsOutput> getRatingsOfBook(Long bookId);
 }

@@ -1,9 +1,9 @@
 package bookReviewer.presentation.controller;
 
-import bookReviewer.adapter.web.book.BookAdapter;
-import bookReviewer.adapter.web.book.BookWithOffers;
-import bookReviewer.adapter.web.book.BookWithRatingInformation;
-import bookReviewer.adapter.web.book.NewBook;
+import bookReviewer.adapter.in.web.book.BookAdapter;
+import bookReviewer.adapter.in.web.book.BookWithOffers;
+import bookReviewer.adapter.in.web.book.BookWithRatingInformation;
+import bookReviewer.adapter.in.web.book.NewBook;
 import bookReviewer.presentation.TokenFormatter;
 
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,9 +1,8 @@
-package bookReviewer.adapter.web.util;
+package bookReviewer.adapter.in.web.util;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 

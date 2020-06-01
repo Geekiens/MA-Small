@@ -1,5 +1,6 @@
 package bookReviewer.presentation.controller;
 
+import bookReviewer.adapter.in.web.user.UserAdapter;
 import bookReviewer.business.boundary.in.useCase.command.RegisterUserUseCase;
 import bookReviewer.business.boundary.in.useCase.query.GetTokenByLoginUseCase;
 import bookReviewer.business.shared.model.Role;
@@ -13,22 +14,17 @@ import java.util.Map;
 public class UserController {
 
     @Autowired
-    @Qualifier("RegisterUserService")
-    RegisterUserUseCase registerUserUseCase;
-
-    @Autowired
-    @Qualifier("GetTokenByLoginService")
-    GetTokenByLoginUseCase getTokenByLoginUseCase;
-
+    @Qualifier("UserAdapterService")
+    UserAdapter userAdapter;
 
     @PostMapping(path="/login", produces = "application/json")
     public String login(@RequestBody Map<String, String> credentials) throws Exception {
-        return getTokenByLoginUseCase.loginUser(credentials.get("username"), credentials.get("password"));
+        return userAdapter.loginUser(credentials.get("username"), credentials.get("password"));
     }
 
     @PostMapping(path="/register*", produces = "application/json")
     public void register(@RequestBody Map<String, String> credentials) throws Exception {
-        registerUserUseCase.registerUser(credentials.get("username"), credentials.get("password"), credentials.get("email"), Role.USER);
+        userAdapter.registerUser(credentials.get("username"), credentials.get("password"), credentials.get("email"));
     }
 
     @ExceptionHandler(Exception.class)
@@ -37,6 +33,4 @@ public class UserController {
         e.printStackTrace();
         System.err.println(e);
     }
-
-
 }

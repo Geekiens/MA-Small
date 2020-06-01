@@ -1,4 +1,4 @@
-package bookReviewer.adapter.web.book;
+package bookReviewer.adapter.in.web.book;
 
 import bookReviewer.business.useCase.query.getBookUseCase.GetBookOutput;
 import bookReviewer.business.useCase.query.getOffersOfBookUseCase.Offer;

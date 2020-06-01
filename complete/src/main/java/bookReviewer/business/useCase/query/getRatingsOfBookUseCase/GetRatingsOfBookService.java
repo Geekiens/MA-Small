@@ -5,12 +5,14 @@ import bookReviewer.business.boundary.out.persistence.FindAllRatingsByBookId;
 import bookReviewer.business.boundary.out.persistence.FindUserById;
 import bookReviewer.business.mapper.entityToBusiness.RatingMapper;
 import bookReviewer.business.mapper.entityToBusiness.UserMapper;
-import bookReviewer.business.model.RatingBusiness;
 import bookReviewer.business.model.UserBusiness;
+import bookReviewer.entity.rating.Rating;
+import bookReviewer.entity.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -28,15 +30,14 @@ public class GetRatingsOfBookService implements GetRatingsOfBookUseCase {
     @Autowired
     RatingMapper ratingMapper;
 
-    public List<RatingBusiness> getRatingsOfBook(Long bookId) {
-        List<RatingBusiness> ratings = ratingMapper.mapList(findAllRatingsByBookId.findAllRatingsByBookId(bookId));
-
-        for (int i = 0; i < ratings.size(); i++) {
-            UserBusiness user = UserMapper.map(findUserById.findUserById(ratings.get(i).getUserId()).orElse(null));
-            if (user != null) {
-                ratings.get(i).setAuthor(user.getUsername());
-            }
+    public List<GetRatingsOutput> getRatingsOfBook(Long bookId) {
+        List<Rating> ratings = findAllRatingsByBookId.findAllRatingsByBookId(bookId);
+        List<GetRatingsOutput> outputRatings = new ArrayList<>();
+        for (Rating rating : ratings) {
+            User user = findUserById.findUserById(rating.getUserId()).orElse(null);
+            GetRatingsOutput outputRating = RatingsOutputMapper.map(rating, user.getCredentials().getUsername());
+            outputRatings.add(outputRating);
         }
-        return ratings;
+        return outputRatings;
     }
 }
