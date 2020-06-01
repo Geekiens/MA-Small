@@ -34,7 +34,7 @@ public class CheckUserPromotionService implements CheckUserPromotionUseCase {
             if (user.getRole() == Role.ADMIN || user.getRole() == Role.MODERATOR) {
                 return;
             }
-            Integer activityScore = user.getActivities().stream().mapToInt(activity -> {
+            int activityScore = user.getActivities().stream().mapToInt(activity -> {
                         switch (activity.getActivityType()) {
                             case BOOK_CREATED:
                                 return 10;
@@ -53,7 +53,7 @@ public class CheckUserPromotionService implements CheckUserPromotionUseCase {
                     }
             ).sum();
             System.out.println("Score: " + activityScore);
-            if (activityScore != null && activityScore >= 50) {
+            if (activityScore >= 50) {
                 user.setRole(Role.MODERATOR);
                 saveUser.saveUser(user);
             }
