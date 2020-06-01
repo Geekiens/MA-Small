@@ -6,7 +6,7 @@ import bookReviewer.entity.offerHistory.OfferHistroy;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class OfferMapper {
+public final class OfferOutputMapper {
 
     public static ArrayList<OfferOutput> mapList(List<OfferHistroy> cachedOfferHistories) {
         ArrayList<OfferOutput> offers = new ArrayList<>();

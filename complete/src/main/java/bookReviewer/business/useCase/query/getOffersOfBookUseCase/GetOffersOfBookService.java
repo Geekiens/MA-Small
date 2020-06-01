@@ -1,5 +1,8 @@
 package bookReviewer.business.useCase.query.getOffersOfBookUseCase;
 
+import bookReviewer.business.boundary.out.externalSystems.ReceiveOffersOfBuchVerkauf24;
+import bookReviewer.business.boundary.out.externalSystems.ReceiveOffersOfBuchladen123;
+import bookReviewer.business.boundary.out.externalSystems.ReceiveOffersOfYourFavoriteBookVendor;
 import bookReviewer.business.boundary.out.persistence.*;
 import bookReviewer.business.boundary.in.useCase.query.GetOffersOfBookUseCase;
 import bookReviewer.business.exception.ResourceNotFoundException;
@@ -33,6 +36,18 @@ public class GetOffersOfBookService implements GetOffersOfBookUseCase {
     @Qualifier("SaveOfferHistoryService")
     SaveOfferHistory saveOfferHistory;
 
+    @Autowired
+    @Qualifier("ReceiveOffersOfBuchladen123Service")
+    ReceiveOffersOfBuchladen123 ReceiveOffersOfBuchladen123;
+
+    @Autowired
+    @Qualifier("ReceiveOffersOfBuchVerkauf24Service")
+    ReceiveOffersOfBuchVerkauf24 receiveOffersOfBuchVerkauf24;
+
+    @Autowired
+    @Qualifier("ReceiveOffersOfYourFavoriteBookVendorService")
+    ReceiveOffersOfYourFavoriteBookVendor receiveOffersOfYourFavoriteBookVendor;
+
     public ArrayList<OfferOutput> getOffers(Long bookId) {
         String isbn = getIsbnById(bookId);
         ArrayList<OfferOutput> allOffers = new ArrayList<>();
@@ -47,7 +62,7 @@ public class GetOffersOfBookService implements GetOffersOfBookUseCase {
     private ArrayList<OfferOutput> getCachedRequestedOffers(String isbn) {
         List<OfferHistroy> cachedOfferHistory = findAllOfferHistoriesByIsbn.findAllOffersByIsbn(isbn);
         if (cachedOfferHistory == null) return new ArrayList<>();
-        return OfferMapper.mapList(cachedOfferHistory);
+        return OfferOutputMapper.mapList(cachedOfferHistory);
     }
 
     private void cacheRequestedOffers(ArrayList<OfferOutput> offers, String isbn, Long bookId) {
@@ -63,7 +78,6 @@ public class GetOffersOfBookService implements GetOffersOfBookUseCase {
             if (cachedOfferHistory == null) {
                 bookReviewer.entity.offerHistory.Vendor vendor = new bookReviewer.entity.offerHistory.Vendor();
                 vendor.setVendor(offer.getVendor());
-                // long bookId, ArrayList<Offer> offers, Vendor vendor, MediaType mediaType
                 OfferHistroy newCachedOfferHistory = new OfferHistroy(
                         bookId,
                         new ArrayList<>(),
@@ -97,7 +111,7 @@ public class GetOffersOfBookService implements GetOffersOfBookUseCase {
 
     private ArrayList<OfferOutput> getBuchladen123Offers(String isbn, Long bookId) {
         try{
-            ArrayList<OfferOutput> offers = GetOffersFromVendors.getOffersFromBuchladen123(isbn);
+            ArrayList<OfferOutput> offers = ReceiveOffersOfBuchladen123.receiveOffers(isbn);
             cacheRequestedOffers(offers, isbn, bookId);
             return offers;
         } catch (Exception e) {
@@ -108,7 +122,7 @@ public class GetOffersOfBookService implements GetOffersOfBookUseCase {
 
     private ArrayList<OfferOutput> getBuchVerkauf24Offers(String isbn, Long bookId) {
         try {
-            ArrayList<OfferOutput> offers = GetOffersFromVendors.getOffersFromBuchVerkauf24(isbn);
+            ArrayList<OfferOutput> offers = receiveOffersOfBuchVerkauf24.receiveOffers(isbn);
             cacheRequestedOffers(offers, isbn, bookId);
             return offers;
         } catch (Exception e) {
@@ -121,7 +135,7 @@ public class GetOffersOfBookService implements GetOffersOfBookUseCase {
 
     private ArrayList<OfferOutput> getYourFavoriteBookVendorOffers(String isbn, Long bookId) {
         try {
-            ArrayList<OfferOutput> offers = GetOffersFromVendors.getOffersFromYourFavoriteBookVendor(isbn);
+            ArrayList<OfferOutput> offers = receiveOffersOfYourFavoriteBookVendor.receiveOffers(isbn);
             cacheRequestedOffers(offers, isbn, bookId);
             return offers;
         } catch (Exception e) {
