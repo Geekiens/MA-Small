@@ -1,4 +1,4 @@
-package bookReviewer.presentation;
+package bookReviewer.presentation.controller.util;
 
 public final class TokenFormatter {
     public static String format(String token){

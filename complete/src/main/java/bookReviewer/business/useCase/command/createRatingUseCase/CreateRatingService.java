@@ -4,8 +4,11 @@ import bookReviewer.business.boundary.in.useCase.command.CreateRatingUseCase;
 import bookReviewer.business.boundary.out.persistence.*;
 import bookReviewer.business.exception.DuplicateRatingException;
 import bookReviewer.business.exception.ResourceNotFoundException;
+import bookReviewer.business.mapper.businessToEntity.RoleMapper;
+import bookReviewer.business.shared.authorizer.CheckRole;
 import bookReviewer.entity.book.Book;
 import bookReviewer.entity.rating.Rating;
+import bookReviewer.entity.user.Role;
 import bookReviewer.entity.user.SubmissionsDate;
 import bookReviewer.entity.user.Activity;
 import bookReviewer.entity.user.ActivityType;
@@ -56,6 +59,7 @@ public class CreateRatingService implements CreateRatingUseCase {
         rating.setBookId(book.getId());
         rating.setUserId(reviewer);
         User user = findUserById.findUserById(reviewer).orElseThrow(() -> new ResourceNotFoundException("user not found with id " + reviewer));
+        CheckRole.checkHasMinimumRequiredRole(RoleMapper.map(user.getRole()), Role.USER);
         System.out.println("user: " + user.getEmail());
         if (isDuplicate(rating)){
             throw new DuplicateRatingException();
