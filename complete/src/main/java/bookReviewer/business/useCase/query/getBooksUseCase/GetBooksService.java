@@ -3,7 +3,6 @@ package bookReviewer.business.useCase.query.getBooksUseCase;
 import bookReviewer.business.boundary.in.useCase.query.GetBooksUseCase;
 import bookReviewer.business.boundary.out.persistence.FindAllBooks;
 import bookReviewer.business.boundary.out.persistence.FindAllRatingsByBookId;
-import bookReviewer.business.mapper.BookMapper;
 import bookReviewer.business.shared.model.RatingSummary;
 import bookReviewer.entity.rating.Rating;
 import bookReviewer.entity.book.Book;

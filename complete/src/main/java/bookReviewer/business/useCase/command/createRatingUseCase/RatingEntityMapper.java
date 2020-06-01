@@ -1,6 +1,5 @@
 package bookReviewer.business.useCase.command.createRatingUseCase;
 
-import bookReviewer.business.model.RatingBusiness;
 import bookReviewer.entity.rating.Rating;
 import bookReviewer.entity.rating.RatingDetails;
 

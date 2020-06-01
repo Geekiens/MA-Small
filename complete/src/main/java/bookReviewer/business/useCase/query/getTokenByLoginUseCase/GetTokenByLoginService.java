@@ -2,8 +2,7 @@ package bookReviewer.business.useCase.query.getTokenByLoginUseCase;
 
 import bookReviewer.business.boundary.in.useCase.query.GetTokenByLoginUseCase;
 import bookReviewer.business.boundary.out.persistence.FindUserByUsername;
-import bookReviewer.business.mapper.entityToBusiness.RoleMapper;
-import bookReviewer.business.util.JwtProvider;
+import bookReviewer.business.shared.mapper.entityToBusiness.RoleMapper;
 import bookReviewer.entity.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

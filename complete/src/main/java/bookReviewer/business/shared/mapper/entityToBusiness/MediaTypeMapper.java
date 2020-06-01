@@ -1,4 +1,4 @@
-package bookReviewer.business.mapper;
+package bookReviewer.business.shared.mapper.entityToBusiness;
 
 import bookReviewer.business.shared.model.MediaType;
 

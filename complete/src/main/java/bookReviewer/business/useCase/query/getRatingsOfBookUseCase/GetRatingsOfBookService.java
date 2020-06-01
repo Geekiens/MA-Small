@@ -3,9 +3,6 @@ package bookReviewer.business.useCase.query.getRatingsOfBookUseCase;
 import bookReviewer.business.boundary.in.useCase.query.GetRatingsOfBookUseCase;
 import bookReviewer.business.boundary.out.persistence.FindAllRatingsByBookId;
 import bookReviewer.business.boundary.out.persistence.FindUserById;
-import bookReviewer.business.mapper.entityToBusiness.RatingMapper;
-import bookReviewer.business.mapper.entityToBusiness.UserMapper;
-import bookReviewer.business.model.UserBusiness;
 import bookReviewer.entity.rating.Rating;
 import bookReviewer.entity.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +24,6 @@ public class GetRatingsOfBookService implements GetRatingsOfBookUseCase {
     @Qualifier("FindUserByIdService")
     FindUserById findUserById;
 
-    @Autowired
-    RatingMapper ratingMapper;
 
     public List<GetRatingsOutput> getRatingsOfBook(Long bookId) {
         List<Rating> ratings = findAllRatingsByBookId.findAllRatingsByBookId(bookId);

@@ -5,9 +5,8 @@ import bookReviewer.business.boundary.in.useCase.query.GetOffersOfBookUseCase;
 import bookReviewer.business.exception.ResourceNotFoundException;
 import bookReviewer.business.mapper.OfferMapper;
 import bookReviewer.business.mapper.businessToEntity.MediaTypeMapper;
-import bookReviewer.business.mapper.entityToBusiness.BookMapper;
-import bookReviewer.business.model.*;
 import bookReviewer.business.shared.model.MediaType;
+import bookReviewer.entity.book.Book;
 import bookReviewer.entity.offerHistory.OfferHistroy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -250,12 +249,10 @@ public class GetOffersOfBookService implements GetOffersOfBookUseCase {
             CurrencyExchange currencyExchange = restTemplate.getForObject(
                     "http://localhost:9080/latest?base=USD ",
                     CurrencyExchange.class);
-            // TODO: safe currency rate in db
             return currencyExchange.getRates().getEUR();
         } catch (Exception e) {
             System.out.println("Failed to query exchange rate");
             e.printStackTrace();
-            // TODO: get cached exchange rate from db
             return exchangeRate;
         }
     }
@@ -276,7 +273,7 @@ public class GetOffersOfBookService implements GetOffersOfBookUseCase {
     }
 
     private String getIsbnById(long id) {
-        BookBusiness book = BookMapper.map(findBookById.findBookById(id).orElseThrow(() -> new ResourceNotFoundException("book not found with id " + id)));
+        Book book = findBookById.findBookById(id).orElseThrow(() -> new ResourceNotFoundException("book not found with id " + id));
         if (book == null) {
             return null;
         }

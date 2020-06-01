@@ -1,5 +1,6 @@
 package bookReviewer.business.mapper;
 
+import bookReviewer.business.shared.mapper.entityToBusiness.MediaTypeMapper;
 import bookReviewer.business.useCase.query.getOffersOfBookUseCase.Offer;
 import bookReviewer.entity.offerHistory.OfferHistroy;
 

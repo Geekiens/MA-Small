@@ -1,6 +1,7 @@
 package bookReviewer.business.mapper.entityToBusiness;
 
 import bookReviewer.business.model.UserBusiness;
+import bookReviewer.business.shared.mapper.entityToBusiness.RoleMapper;
 import bookReviewer.entity.user.User;
 
 import java.util.ArrayList;

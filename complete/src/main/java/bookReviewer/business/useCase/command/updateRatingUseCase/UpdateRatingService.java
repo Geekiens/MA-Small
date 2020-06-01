@@ -4,8 +4,7 @@ import bookReviewer.business.boundary.in.useCase.command.UpdateRatingUseCase;
 import bookReviewer.business.boundary.out.persistence.FindBookById;
 import bookReviewer.business.boundary.out.persistence.SaveRating;
 
-import bookReviewer.business.mapper.entityToBusiness.BookMapper;
-import bookReviewer.business.model.BookBusiness;
+import bookReviewer.entity.book.Book;
 import bookReviewer.entity.rating.Rating;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -24,7 +23,7 @@ public class UpdateRatingService implements UpdateRatingUseCase {
     FindBookById findBookById;
 
     public void updateRating(UpdateRatingCommand updateRatingCommand) {
-        BookBusiness book = BookMapper.map(findBookById.findBookById(updateRatingCommand.getBookId()).orElse(null));
+        Book book = findBookById.findBookById(updateRatingCommand.getBookId()).orElse(null);
         Rating rating = RatingEntityMapper.map(updateRatingCommand.getRating());
         rating.setBookId(book.getId());
         System.out.println("rating: " + rating.toString());

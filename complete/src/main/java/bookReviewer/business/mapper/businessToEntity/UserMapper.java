@@ -1,6 +1,7 @@
 package bookReviewer.business.mapper.businessToEntity;
 
 import bookReviewer.business.model.UserBusiness;
+import bookReviewer.business.shared.mapper.businessToEntity.RoleMapper;
 import bookReviewer.entity.user.Activity;
 import bookReviewer.entity.user.Credentials;
 import bookReviewer.entity.user.User;

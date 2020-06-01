@@ -1,8 +1,6 @@
-package bookReviewer.business.model;
+package bookReviewer.business.useCase.query.getOffersOfBookUseCase;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import java.math.BigDecimal;
 
 @JsonIgnoreProperties
 public class CurrencyExchange {

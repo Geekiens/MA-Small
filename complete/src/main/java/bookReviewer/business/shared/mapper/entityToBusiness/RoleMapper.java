@@ -1,4 +1,4 @@
-package bookReviewer.business.mapper.entityToBusiness;
+package bookReviewer.business.shared.mapper.entityToBusiness;
 
 import bookReviewer.business.shared.model.Role;
 

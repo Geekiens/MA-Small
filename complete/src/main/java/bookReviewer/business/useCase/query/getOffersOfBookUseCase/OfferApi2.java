@@ -1,4 +1,4 @@
-package bookReviewer.business.model;
+package bookReviewer.business.useCase.query.getOffersOfBookUseCase;
 
 import java.math.BigDecimal;
 
