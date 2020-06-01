@@ -3,8 +3,7 @@ package bookReviewer.business.useCase.query.getBooksUseCase;
 import bookReviewer.business.boundary.in.useCase.query.GetBooksUseCase;
 import bookReviewer.business.boundary.out.persistence.FindAllBooks;
 import bookReviewer.business.boundary.out.persistence.FindAllRatingsByBookId;
-import bookReviewer.business.shared.model.RatingSummary;
-import bookReviewer.entity.rating.Rating;
+import bookReviewer.entity.rating.AverageRatingCalculatorService;
 import bookReviewer.entity.book.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -28,21 +27,11 @@ public class GetBooksService implements GetBooksUseCase {
         List<Book> books = findAllBooks.findAllBooks();
         List<GetBooksOutput> getBooksOutputList = new ArrayList<>();
         for (Book book : books) {
-            RatingSummary ratingSummary = getAverageRating(book.getId());
-            getBooksOutputList.add(BooksOutputMapper.map(book, ratingSummary));
+            AverageRatingCalculatorService averageRatings = new AverageRatingCalculatorService(
+                    findAllRatingsByBookId.findAllRatingsByBookId(book.getId()));
+            getBooksOutputList.add(BooksOutputMapper.map(book, averageRatings.getAverageRating(), averageRatings.getTotalVotes()));
 
         }
         return getBooksOutputList;
-    }
-    private RatingSummary getAverageRating(Long bookId) {
-        RatingSummary ratingSummary = new RatingSummary();
-        List<Rating> ratings = findAllRatingsByBookId.findAllRatingsByBookId(bookId);
-        int sumOfRatings = 0;
-        for (Rating rating : ratings) {
-            sumOfRatings += rating.getRatingDetails().getScore();
-            ratingSummary.addTotalVotes();
-        }
-        ratingSummary.setAverageRating(sumOfRatings * 1.0 / ratingSummary.getTotalVotes());
-        return  ratingSummary;
     }
 }

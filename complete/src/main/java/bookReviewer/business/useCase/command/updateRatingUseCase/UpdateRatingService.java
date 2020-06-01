@@ -6,8 +6,8 @@ import bookReviewer.business.boundary.out.persistence.FindRatingById;
 import bookReviewer.business.boundary.out.persistence.SaveRating;
 
 import bookReviewer.entity.book.Book;
-import bookReviewer.business.exception.ForbiddenResourceException;
-import bookReviewer.business.exception.ResourceNotFoundException;
+import bookReviewer.business.shared.exception.ForbiddenResourceException;
+import bookReviewer.business.shared.exception.ResourceNotFoundException;
 import bookReviewer.entity.rating.Rating;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

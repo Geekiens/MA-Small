@@ -4,7 +4,7 @@ import bookReviewer.business.boundary.in.useCase.command.CreateBookUseCase;
 import bookReviewer.business.boundary.out.persistence.FindUserById;
 import bookReviewer.business.boundary.out.persistence.SaveActivity;
 import bookReviewer.business.boundary.out.persistence.SaveBook;
-import bookReviewer.business.exception.InvalidISBNException;
+import bookReviewer.business.shared.exception.InvalidISBNException;
 import bookReviewer.entity.book.Book;
 import bookReviewer.entity.user.Activity;
 import bookReviewer.entity.user.SubmissionsDate;
@@ -34,7 +34,9 @@ public class CreateBookService implements CreateBookUseCase {
 
     public Long createBook(CreateBookCommand createBookCommand) {
         Book book = BookEntityMapper.map(createBookCommand.getBook());
-        checkISBN(book.getIsbn());
+        if (book.isIsbnInvalid()){
+            throw new InvalidISBNException();
+        }
         if (createBookCommand.getUserId() != null){
             User user = findUserById.findUserById(createBookCommand.getUserId()).orElse(null);
             SubmissionsDate submissionsDate = new SubmissionsDate(new Date());
@@ -43,20 +45,4 @@ public class CreateBookService implements CreateBookUseCase {
         }
         return saveBook.saveBook(book);
     }
-
-    private void checkISBN(String isbn){
-        if (isbn == null) {
-            return;
-        }
-        String pureISBN = isbn.replace("-", "");
-
-        if(!pureISBN.matches("[0-9]+")) {
-            throw new InvalidISBNException();
-        }
-        if (pureISBN.length() != 10 && pureISBN.length() != 13){
-            throw new InvalidISBNException();
-        }
-        return;
-    }
-
 }

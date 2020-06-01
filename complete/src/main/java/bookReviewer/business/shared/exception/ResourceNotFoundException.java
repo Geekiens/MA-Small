@@ -1,4 +1,4 @@
-package bookReviewer.business.exception;
+package bookReviewer.business.shared.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

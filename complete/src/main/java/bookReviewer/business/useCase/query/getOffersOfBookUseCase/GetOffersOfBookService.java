@@ -5,7 +5,7 @@ import bookReviewer.business.boundary.out.externalSystems.ReceiveOffersOfBuchlad
 import bookReviewer.business.boundary.out.externalSystems.ReceiveOffersOfYourFavoriteBookVendor;
 import bookReviewer.business.boundary.out.persistence.*;
 import bookReviewer.business.boundary.in.useCase.query.GetOffersOfBookUseCase;
-import bookReviewer.business.exception.ResourceNotFoundException;
+import bookReviewer.business.shared.exception.ResourceNotFoundException;
 import bookReviewer.business.shared.mapper.businessToEntity.MediaTypeMapper;
 import bookReviewer.entity.book.Book;
 import bookReviewer.entity.offerHistory.OfferHistroy;

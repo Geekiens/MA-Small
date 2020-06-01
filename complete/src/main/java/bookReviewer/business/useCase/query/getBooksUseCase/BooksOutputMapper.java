@@ -1,13 +1,9 @@
 package bookReviewer.business.useCase.query.getBooksUseCase;
 
-import bookReviewer.business.shared.model.RatingSummary;
 import bookReviewer.entity.book.Book;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class BooksOutputMapper {
-    public static GetBooksOutput map(Book book, RatingSummary ratingSummary){
+    public static GetBooksOutput map(Book book, Double average, int total){
         GetBooksOutput getBooksOutput = new GetBooksOutput();
         getBooksOutput.setTitle(book.getBookMetaDetails().getTitle());
         getBooksOutput.setAuthor(book.getBookMetaDetails().getAuthor());
@@ -21,8 +17,8 @@ public class BooksOutputMapper {
         getBooksOutput.setPublisher(book.getBookMetaDetails().getPublisher());
         getBooksOutput.setPublishingYear(book.getBookMetaDetails().getPublishingYear());
 
-        getBooksOutput.setAverageRating(ratingSummary.getAverageRating());
-        getBooksOutput.setTotalVotes(ratingSummary.getTotalVotes());
+        getBooksOutput.setAverageRating(average);
+        getBooksOutput.setTotalVotes(total);
         return getBooksOutput;
     }
 

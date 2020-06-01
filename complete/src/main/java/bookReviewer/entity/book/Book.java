@@ -22,6 +22,22 @@ public class Book {
         this.bookMetaDetails = bookMetaDetails;
         this.bookUserDetails = bookUserDetails;
     }
+    public boolean isIsbnInvalid(){
+        if (isbn == null) {
+            return false;
+        }
+        String pureISBN = isbn.replace("-", "");
+
+        if(!pureISBN.matches("[0-9]+")) {
+            return true;
+        }
+        if (pureISBN.length() != 10 && pureISBN.length() != 13){
+            return true;
+        }
+        return false;
+    }
+
+
 
     public long getId() {
         return id;

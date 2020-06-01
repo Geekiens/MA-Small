@@ -34,26 +34,9 @@ public class CheckUserPromotionService implements CheckUserPromotionUseCase {
             if (user.getRole() == Role.ADMIN || user.getRole() == Role.MODERATOR) {
                 return;
             }
-            Integer activityScore = user.getActivities().stream().mapToInt(activity -> {
-                        switch (activity.getActivityType()) {
-                            case BOOK_CREATED:
-                                return 10;
-                            case RATING_CREATED:
-                                return 3;
-                            case RATING_CREATED_WITH_COMMENT:
-                                return 5;
-                            case BOOK_DELETED_BY_ADMIN:
-                                return -15;
-                            case RATING_DELETED_BY_ADMIN:
-                                return -20;
-                            case RATING_DELETED_BY_MODERATOR:
-                                return -10;
-                            default: return 0;
-                        }
-                    }
-            ).sum();
+            int activityScore = user.calculateActivityPoints();
             System.out.println("Score: " + activityScore);
-            if (activityScore != null && activityScore >= 50) {
+            if (activityScore >= 50) {
                 user.setRole(Role.MODERATOR);
                 saveUser.saveUser(user);
             }
