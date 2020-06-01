@@ -8,6 +8,7 @@ import bookReviewer.business.exception.InvalidISBNException;
 import bookReviewer.business.mapper.businessToEntity.BookMapper;
 import bookReviewer.business.model.BookBusiness;
 import bookReviewer.business.util.JwtProvider;
+import bookReviewer.entity.book.Book;
 import bookReviewer.entity.user.Activity;
 import bookReviewer.entity.user.SubmissionsDate;
 import bookReviewer.entity.user.ActivityType;
@@ -35,18 +36,16 @@ public class CreateBookService implements CreateBookUseCase {
     @Qualifier("FindUserByIdService")
     FindUserById findUserById;
 
-    public Long createBook(BookBusiness book, String token) {
+    public Long createBook(CreateBookCommand createBookCommand) {
+        Book book = BookEntityMapper.map(createBookCommand.getBook());
         checkISBN(book.getIsbn());
-        if (token != null) {
-            Claims claims = JwtProvider.decodeJWT(token);
-            long reviewer = ((long) (int) claims.get("userId"));
-            User user = findUserById.findUserById(reviewer).orElse(null);
+        if (createBookCommand.getUserId() != null){
+            User user = findUserById.findUserById(createBookCommand.getUserId()).orElse(null);
             SubmissionsDate submissionsDate = new SubmissionsDate(new Date());
             Activity activity = new Activity(ActivityType.BOOK_CREATED, submissionsDate);
             saveActivity.saveActivity(activity, user.getId());
         }
-
-        return saveBook.saveBook(BookMapper.map(book));
+        return saveBook.saveBook(book);
     }
 
     private void checkISBN(String isbn){

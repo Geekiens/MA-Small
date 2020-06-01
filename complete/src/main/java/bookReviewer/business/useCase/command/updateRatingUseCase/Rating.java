@@ -12,8 +12,6 @@ public class Rating {
     private int score;
     private String title;
     private String content;
-    private Long userId;
-    private String author;
 
     public Rating() {
     }
@@ -48,22 +46,6 @@ public class Rating {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
     }
 
 }

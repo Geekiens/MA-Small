@@ -14,7 +14,7 @@ public class DeleteRatingService implements DeleteRatingUseCase {
     @Qualifier("DeleteRatingByIdService")
     DeleteRatingById deleteRatingById;
 
-    public void deleteRating(long id) {
-        deleteRatingById.deleteRatingById(id);
+    public void deleteRating(DeleteRatingCommand deleteRatingCommand) {
+        deleteRatingById.deleteRatingById(deleteRatingCommand.getRatingId());
     }
 }

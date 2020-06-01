@@ -1,7 +1,7 @@
 package bookReviewer.business.boundary.in.useCase.command;
 
-import bookReviewer.business.shared.model.Role;
+import bookReviewer.business.useCase.command.registerUserUseCase.RegisterUserCommand;
 
 public interface RegisterUserUseCase {
-    void registerUser(String username, String password, String email, Role role) throws Exception;
+    void registerUser(RegisterUserCommand registerUserCommand) throws Exception;
 }

@@ -8,14 +8,12 @@ import bookReviewer.business.mapper.businessToEntity.RatingMapper;
 import bookReviewer.business.mapper.entityToBusiness.BookMapper;
 import bookReviewer.business.mapper.entityToBusiness.UserMapper;
 import bookReviewer.business.model.BookBusiness;
-import bookReviewer.business.model.RatingBusiness;
 import bookReviewer.business.model.UserBusiness;
-import bookReviewer.business.util.JwtProvider;
+import bookReviewer.entity.rating.Rating;
 import bookReviewer.entity.user.SubmissionsDate;
 import bookReviewer.entity.user.Activity;
 import bookReviewer.entity.user.ActivityType;
 
-import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -54,12 +52,11 @@ public class CreateRatingService implements CreateRatingUseCase {
     final String password = "supersafepassword";
 
 
-    public Long createRating(Long bookId, RatingBusiness rating, String token) {
-        BookBusiness book = BookMapper.map(findBookById.findBookById(bookId).orElseThrow(() -> new ResourceNotFoundException("book not found with id " + bookId)));
-        Claims claims = JwtProvider.decodeJWT(token);
-        long reviewer =((long) (int) claims.get("userId"));
-
-        rating.setBook(book);
+    public Long createRating(CreateRatingCommand createRatingCommand) {
+        BookBusiness book = BookMapper.map(findBookById.findBookById(createRatingCommand.getBookId()).orElseThrow(() -> new ResourceNotFoundException("book not found with id " + createRatingCommand.getBookId())));
+        long reviewer = createRatingCommand.getUserId();
+        Rating rating = RatingEntityMapper.map(createRatingCommand.getRating());
+        rating.setBookId(book.getId());
         rating.setUserId(reviewer);
         UserBusiness user = UserMapper.map(findUserById.findUserById(reviewer).orElseThrow(() -> new ResourceNotFoundException("user not found with id " + reviewer)));
         System.out.println("user: " + user.getEmail());
@@ -69,10 +66,10 @@ public class CreateRatingService implements CreateRatingUseCase {
 
         SubmissionsDate submissionsDate = new SubmissionsDate(new Date());
         Activity activity = new Activity(ActivityType.RATING_CREATED_WITH_COMMENT, submissionsDate);
-        if ((rating.getContent() == null || rating.getContent() == "")) {
+        if ((rating.getRatingDetails().getContent() == null || rating.getRatingDetails().getContent() == "")) {
             activity.setActivityType(ActivityType.RATING_CREATED);
             String text;
-            if (rating.getScore() < 3) {
+            if (rating.getRatingDetails().getScore() < 3) {
                 text = "\nSchade, dass dir das Buch nicht gefallen hat. Was genau hat dich an dem Buch gestört?";
             }
             else {
@@ -84,7 +81,7 @@ public class CreateRatingService implements CreateRatingUseCase {
         }
 
         saveActivity.saveActivity(activity, user.getId());
-        return saveRating.saveRating(RatingMapper.map(rating));
+        return saveRating.saveRating(rating);
     }
 
     private void sendEmptyRatingEmail(UserBusiness receiver, String text) {
@@ -125,7 +122,7 @@ public class CreateRatingService implements CreateRatingUseCase {
 
     }
 
-    private boolean isDuplicate(RatingBusiness rating){
-        return findAllRatingsByBookIdAndUserId.findAllRatingsByBookIdAndUserId(rating.getBook().getId(), rating.getUserId()).size() >= 1;
+    private boolean isDuplicate(Rating rating){
+        return findAllRatingsByBookIdAndUserId.findAllRatingsByBookIdAndUserId(rating.getBookId(), rating.getUserId()).size() >= 1;
     }
 }

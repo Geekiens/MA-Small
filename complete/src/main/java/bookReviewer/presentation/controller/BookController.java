@@ -1,15 +1,11 @@
 package bookReviewer.presentation.controller;
 
-import bookReviewer.business.boundary.in.useCase.command.CreateBookUseCase;
-import bookReviewer.business.boundary.in.useCase.command.DeleteBookUseCase;
-import bookReviewer.business.boundary.in.useCase.query.GetBookUseCase;
-import bookReviewer.business.boundary.in.useCase.query.GetBooksUseCase;
-import bookReviewer.business.boundary.in.useCase.query.GetOffersOfBookUseCase;
-import bookReviewer.business.model.Book;
-import bookReviewer.business.model.BookBusiness;
-import bookReviewer.business.service.RatingService;
-import bookReviewer.presentation.mapper.BookMapper;
-import bookReviewer.presentation.model.BookDetailPresentation;
+import bookReviewer.adapter.in.web.book.BookAdapter;
+import bookReviewer.adapter.in.web.book.BookWithOffers;
+import bookReviewer.adapter.in.web.book.BookWithRatingInformation;
+import bookReviewer.adapter.in.web.book.NewBook;
+import bookReviewer.presentation.TokenFormatter;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -24,65 +20,33 @@ import java.util.Map;
 public class BookController {
 
     @Autowired
-    @Qualifier("GetOffersOfBookService")
-    GetOffersOfBookUseCase getOffersOfBookUseCase;
+    @Qualifier("BookAdapterService")
+    BookAdapter bookAdapter;
 
-    @Autowired
-    @Qualifier("CreateBookService")
-    CreateBookUseCase createBookUseCase;
-
-    @Autowired
-    @Qualifier("DeleteBookService")
-    DeleteBookUseCase deleteBookUseCase;
-
-    @Autowired
-    @Qualifier("GetBookService")
-    GetBookUseCase getBookUseCase;
-
-    @Autowired
-    @Qualifier("GetBooksService")
-    GetBooksUseCase getBooksUseCase;
-
-    @Autowired
-    RatingService ratingService;
-
-    BookMapper bookMapper = new BookMapper();
 
     @GetMapping(path="/books/{id}", produces = "application/json")
-    public BookDetailPresentation getBook(@PathVariable("id") long id) {
-        BookDetailPresentation bookDetailPresentation = bookMapper.map(getBookUseCase.getBook(id), getOffersOfBookUseCase.getOffers(id));
-
-        return  bookDetailPresentation;
+    public BookWithOffers getBook(@PathVariable("id") long id) {
+        return  bookAdapter.getBook(id);
     }
 
     @GetMapping(path="/books", produces = "application/json")
-    public List<Book> listBooks() {
-        List<Book> books =  getBooksUseCase.getBooks();
-
-        return books;
+    public List<BookWithRatingInformation> listBooks() {
+        return bookAdapter.getBooks();
     }
 
     @PostMapping(path= "/books", consumes = "application/json", produces = "application/json")
     @ResponseStatus( HttpStatus.CREATED
     )
-    public Long createBook(@RequestBody @Valid BookBusiness book, @RequestHeader Map<String, String> headers){
-        String token = headers.get("authorization");
-        String cleanToken = null;
-        if (token != null){
-            String[] splittedToken = token.split(" ");
-            cleanToken = splittedToken[1];
-
-        }
-
-
-        return createBookUseCase.createBook(book, cleanToken);
+    public Long createBook(@RequestBody @Valid NewBook book, @RequestHeader Map<String, String> headers){
+        String cleanToken = TokenFormatter.format(headers.get("authorization"));
+        return bookAdapter.createBook(book, cleanToken);
     }
 
     @PreAuthorize("hasRequiredRole(#headers, 'MODERATOR')")
     @DeleteMapping(path = "/books/{id}")
-    public void deleteBook(@PathVariable("id") long id,
-                           @RequestHeader Map<String, String> headers) {
-        deleteBookUseCase.deleteBook(id);
+    public void deleteBook(@PathVariable("id") long id, @RequestHeader Map<String, String> headers) {
+        String cleanToken = TokenFormatter.format(headers.get("authorization"));
+        bookAdapter.deleteBook(id, cleanToken);
     }
 
 

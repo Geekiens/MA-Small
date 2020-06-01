@@ -1,4 +1,4 @@
-package bookReviewer.business.useCase.query.getBockUseCase;
+package bookReviewer.business.useCase.query.getBookUseCase;
 
 import bookReviewer.business.shared.model.RatingSummary;
 import bookReviewer.entity.book.Book;

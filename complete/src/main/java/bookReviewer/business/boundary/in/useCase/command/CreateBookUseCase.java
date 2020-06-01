@@ -1,7 +1,7 @@
 package bookReviewer.business.boundary.in.useCase.command;
 
-import bookReviewer.business.model.BookBusiness;
+import bookReviewer.business.useCase.command.createBookUseCase.CreateBookCommand;
 
 public interface CreateBookUseCase {
-    Long createBook(BookBusiness book, String token);
+    Long createBook(CreateBookCommand createBookCommand);
 }

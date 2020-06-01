@@ -1,9 +1,9 @@
 package bookReviewer.business.useCase.command.createRatingUseCase;
 
 public class CreateRatingCommand {
-    Long bookId;
-    Long userId;
-    Rating rating;
+    private Long bookId;
+    private Long userId;
+    private Rating rating;
 
     public CreateRatingCommand() {
     }

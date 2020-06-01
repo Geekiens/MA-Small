@@ -21,10 +21,15 @@ public class RegisterUserService implements RegisterUserUseCase {
     @Qualifier("SaveUserService")
     SaveUser saveUser;
 
-    public void registerUser(String username, String password, String email, Role role) throws Exception {
+    public void registerUser(RegisterUserCommand registerUserCommand) throws Exception {
         byte[] salt = getSalt();
-        String hashedPassword = get_SHA_1_SecurePassword(password, salt);
-        UserBusiness user = new UserBusiness(username, hashedPassword, email, salt, role);
+        String hashedPassword = get_SHA_1_SecurePassword(registerUserCommand.getPassword(), salt);
+        UserBusiness user = new UserBusiness(
+                registerUserCommand.getUsername(),
+                hashedPassword,
+                registerUserCommand.getEmail(),
+                salt,
+                registerUserCommand.getRole());
         saveUser.saveUser(UserMapper.map(user, null));
     }
 

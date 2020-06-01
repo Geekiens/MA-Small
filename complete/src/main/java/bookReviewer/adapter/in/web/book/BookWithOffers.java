@@ -1,11 +1,11 @@
-package bookReviewer.presentation.model;
+package bookReviewer.adapter.in.web.book;
 
 import bookReviewer.business.useCase.query.getOffersOfBookUseCase.Offer;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookDetailPresentation {
+public class BookWithOffers {
 
     private String author;
     private String title;
@@ -26,25 +26,25 @@ public class BookDetailPresentation {
     private List<Offer> ebookOffers;
     private List<Offer> audiobookOffers;
 
-    public BookDetailPresentation() {
+    public BookWithOffers() {
         hardcoverOffers = new ArrayList<>();
         paperbackOffers = new ArrayList<>();
         ebookOffers = new ArrayList<>();
         audiobookOffers = new ArrayList<>();
     }
 
-    public BookDetailPresentation(String author,
-                                  String title,
-                                  String genre,
-                                  String[] keywords,
-                                  String[] languages,
-                                  String publisher,
-                                  int pages,
-                                  String isbn,
-                                  int publishingYear,
-                                  String content,
-                                  int totalVotes,
-                                  double averageRating) {
+    public BookWithOffers(String author,
+                          String title,
+                          String genre,
+                          String[] keywords,
+                          String[] languages,
+                          String publisher,
+                          int pages,
+                          String isbn,
+                          int publishingYear,
+                          String content,
+                          int totalVotes,
+                          double averageRating) {
         this.author = author;
         this.title = title;
         this.genre = genre;

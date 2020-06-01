@@ -3,6 +3,9 @@ package bookReviewer.business.useCase.query.getBooksUseCase;
 import bookReviewer.business.shared.model.RatingSummary;
 import bookReviewer.entity.book.Book;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BooksOutputMapper {
     public static GetBooksOutput map(Book book, RatingSummary ratingSummary){
         GetBooksOutput getBooksOutput = new GetBooksOutput();
@@ -22,4 +25,5 @@ public class BooksOutputMapper {
         getBooksOutput.setTotalVotes(ratingSummary.getTotalVotes());
         return getBooksOutput;
     }
+
 }

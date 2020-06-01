@@ -1,8 +1,7 @@
 package bookReviewer.business.boundary.in.useCase.command;
 
-
-import bookReviewer.business.model.RatingBusiness;
+import bookReviewer.business.useCase.command.createRatingUseCase.CreateRatingCommand;
 
 public interface CreateRatingUseCase {
-    Long createRating(Long bookId, RatingBusiness rating, String token);
+    Long createRating(CreateRatingCommand createRatingCommand);
 }

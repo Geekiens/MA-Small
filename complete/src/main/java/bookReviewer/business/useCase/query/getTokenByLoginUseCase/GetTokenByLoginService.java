@@ -2,6 +2,7 @@ package bookReviewer.business.useCase.query.getTokenByLoginUseCase;
 
 import bookReviewer.business.boundary.in.useCase.query.GetTokenByLoginUseCase;
 import bookReviewer.business.boundary.out.persistence.FindUserByUsername;
+import bookReviewer.business.mapper.entityToBusiness.RoleMapper;
 import bookReviewer.business.util.JwtProvider;
 import bookReviewer.entity.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,18 +20,18 @@ public class GetTokenByLoginService implements GetTokenByLoginUseCase {
     @Qualifier("FindUserByUsernameService")
     FindUserByUsername findUserByUsername;
 
-    public String loginUser(String username, String password) throws Exception{
-        System.out.println("Username:" + username);
-        User user = findUserByUsername.findUserByUsername(username);
+    public LoginOutput loginUser(LoginInput loginInput) throws Exception{
+        System.out.println("Username:" + loginInput.getUsername());
+        User user = findUserByUsername.findUserByUsername(loginInput.getUsername());
         System.out.println(user.getCredentials().getUsername());
-        if (user.getCredentials().getPassword().equalsIgnoreCase(get_SHA_1_SecurePassword(password, user.getCredentials().getSalt()))) {
-            return getToken(user);
+        if (user.getCredentials().getPassword().equalsIgnoreCase(get_SHA_1_SecurePassword(loginInput.getPassword(), user.getCredentials().getSalt()))) {
+            LoginOutput loginOutput = new LoginOutput();
+            loginOutput.setRole(RoleMapper.map(user.getRole()));
+            loginOutput.setUserId(user.getId());
+            loginOutput.setUsername(user.getCredentials().getUsername());
+            return loginOutput;
         }
         throw new Exception();
-    }
-
-    public String getToken(User user){
-        return JwtProvider.createJWT(user);
     }
 
     private static String get_SHA_1_SecurePassword(String passwordToHash, byte[] salt)

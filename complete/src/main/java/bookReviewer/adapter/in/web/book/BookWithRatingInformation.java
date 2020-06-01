@@ -1,23 +1,23 @@
-package bookReviewer.business.useCase.query.getBockUseCase;
+package bookReviewer.adapter.in.web.book;
 
 import java.util.Arrays;
 
-public class GetBookOutput {
-    private long id;
-    private String author;
-    private String title;
-    private String genre;
-    private String[] keywords;
-    private String[] languages;
-    private  String publisher;
-    private int pages;
-    private String isbn;
-    private int publishingYear;
-    private String content;
-    private Double averageRating;
-    private int totalVotes = 0;
+public class BookWithRatingInformation {
+    public long id;
+    public String author;
+    public String title;
+    public String genre;
+    public String[] keywords;
+    public String[] languages;
+    public  String publisher;
+    public int pages;
+    public String isbn;
+    public int publishingYear;
+    public String content;
+    public Double averageRating;
+    public int totalVotes = 0;
 
-    public GetBookOutput() {
+    public BookWithRatingInformation() {
     }
 
     public long getId() {

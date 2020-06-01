@@ -3,10 +3,10 @@ package bookReviewer.business.useCase.command.registerUserUseCase;
 import bookReviewer.business.shared.model.Role;
 
 public class RegisterUserCommand {
-    String username;
-    String password;
-    String email;
-    Role role;
+    private String username;
+    private String password;
+    private String email;
+    private Role role;
 
     public RegisterUserCommand() {
     }
