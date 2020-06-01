@@ -3,7 +3,7 @@ package bookReviewer.adapter.out.persistence.mapping.persistenceToEntity;
 import bookReviewer.entity.user.Role;
 
 public final class RoleMapper {
-    public static Role map(bookReviewer.persistence.model.Role rolePersistence) {
+    public static Role map(bookReviewer.adapter.out.persistence.model.Role rolePersistence) {
         switch (rolePersistence) {
             case ADMIN:
                 return bookReviewer.entity.user.Role.ADMIN;

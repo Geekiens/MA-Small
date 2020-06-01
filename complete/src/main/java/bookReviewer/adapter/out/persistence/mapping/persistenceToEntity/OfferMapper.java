@@ -1,22 +1,21 @@
 package bookReviewer.adapter.out.persistence.mapping.persistenceToEntity;
 
-import bookReviewer.entity.offerHistory.Offer;
-import bookReviewer.persistence.model.OfferPersistence;
+import bookReviewer.adapter.out.persistence.model.Offer;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public final class OfferMapper {
-    public static Offer map(OfferPersistence offerPersistence) {
-        Offer offer = new Offer();
+    public static bookReviewer.entity.offerHistory.Offer map(Offer offerPersistence) {
+        bookReviewer.entity.offerHistory.Offer offer = new bookReviewer.entity.offerHistory.Offer();
         offer.setPrice(offerPersistence.getPrice());
         offer.setRequestDate(offerPersistence.getRequestDate());
         return offer;
     }
-    public static ArrayList<Offer> mapList(List<OfferPersistence> offerPersistenceList){
-        ArrayList<Offer> offers = new ArrayList<>();
-        for(OfferPersistence offerPersistence: offerPersistenceList){
-            offers.add(map(offerPersistence));
+    public static ArrayList<bookReviewer.entity.offerHistory.Offer> mapList(List<Offer> offerList){
+        ArrayList<bookReviewer.entity.offerHistory.Offer> offers = new ArrayList<>();
+        for(Offer offer : offerList){
+            offers.add(map(offer));
         }
         return  offers;
     }

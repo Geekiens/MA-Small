@@ -1,6 +1,6 @@
 package bookReviewer.adapter.out.persistence.mapping.persistenceToEntity;
 
-import bookReviewer.persistence.model.ActivityType;
+import bookReviewer.adapter.out.persistence.model.ActivityType;
 
 public final class ActivityTypeMapper {
     public static bookReviewer.entity.user.ActivityType map(ActivityType activityType){

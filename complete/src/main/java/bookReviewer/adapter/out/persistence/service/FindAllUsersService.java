@@ -3,9 +3,9 @@ package bookReviewer.adapter.out.persistence.service;
 import bookReviewer.adapter.out.persistence.mapping.persistenceToEntity.UserMapper;
 import bookReviewer.business.boundary.out.persistence.FindAllUsers;
 import bookReviewer.entity.user.User;
-import bookReviewer.persistence.model.Activity;
-import bookReviewer.persistence.repository.ActivityRepository;
-import bookReviewer.persistence.repository.UserRepository;
+import bookReviewer.adapter.out.persistence.model.Activity;
+import bookReviewer.adapter.out.persistence.repository.ActivityRepository;
+import bookReviewer.adapter.out.persistence.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -23,9 +23,9 @@ public class FindAllUsersService implements FindAllUsers {
     ActivityRepository activityRepository;
 
     public List<User> findAllUsers(){
-        List<bookReviewer.persistence.model.User> userList = userRepository.findAll();
+        List<bookReviewer.adapter.out.persistence.model.User> userList = userRepository.findAll();
         ArrayList<User> users = new ArrayList<>();
-        for (bookReviewer.persistence.model.User userPersistence : userList){
+        for (bookReviewer.adapter.out.persistence.model.User userPersistence : userList){
             List<Activity> activities = activityRepository.findAllByUser(userPersistence);
             users.add(UserMapper.map(userPersistence, activities));
         }

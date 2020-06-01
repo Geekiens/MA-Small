@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class ActivityMapper {
-    public static Activity map(bookReviewer.persistence.model.Activity activityPersistence){
+    public static Activity map(bookReviewer.adapter.out.persistence.model.Activity activityPersistence){
         Activity activity = new Activity();
         activity.setId(activityPersistence.getId());
         SubmissionsDate submissionsDate = new SubmissionsDate(activityPersistence.getSubmissionDate());
@@ -16,9 +16,9 @@ public final class ActivityMapper {
         return activity;
     }
 
-    public static List<Activity> mapList(List<bookReviewer.persistence.model.Activity> activityPersistenceList){
+    public static List<Activity> mapList(List<bookReviewer.adapter.out.persistence.model.Activity> activityPersistenceList){
         ArrayList<Activity> activities = new ArrayList<>();
-        for (bookReviewer.persistence.model.Activity activityPersistence : activityPersistenceList){
+        for (bookReviewer.adapter.out.persistence.model.Activity activityPersistence : activityPersistenceList){
             activities.add(map(activityPersistence));
         }
         return activities;

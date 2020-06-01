@@ -1,7 +1,7 @@
 package bookReviewer.persistence;
 
 
-import bookReviewer.persistence.repository.CachedOfferHistoryRepository;
+import bookReviewer.adapter.out.persistence.repository.CachedOfferHistoryRepository;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;

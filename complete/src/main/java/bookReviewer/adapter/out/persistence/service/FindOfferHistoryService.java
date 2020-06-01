@@ -5,7 +5,7 @@ import bookReviewer.adapter.out.persistence.mapping.persistenceToEntity.OfferHis
 import bookReviewer.business.boundary.out.persistence.FindOfferHistory;
 import bookReviewer.entity.offerHistory.MediaType;
 import bookReviewer.entity.offerHistory.OfferHistroy;
-import bookReviewer.persistence.repository.CachedOfferHistoryRepository;
+import bookReviewer.adapter.out.persistence.repository.CachedOfferHistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
