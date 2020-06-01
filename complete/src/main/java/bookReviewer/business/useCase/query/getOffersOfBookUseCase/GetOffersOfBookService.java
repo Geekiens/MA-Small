@@ -35,7 +35,7 @@ public class GetOffersOfBookService implements GetOffersOfBookUseCase {
 
     public ArrayList<OfferOutput> getOffers(Long bookId) {
         String isbn = getIsbnById(bookId);
-        ArrayList<OfferOutput> allOffers = new ArrayList<OfferOutput>();
+        ArrayList<OfferOutput> allOffers = new ArrayList<>();
         allOffers.addAll(getBuchladen123Offers(isbn, bookId));
         allOffers.addAll(getBuchVerkauf24Offers(isbn, bookId));
         allOffers.addAll(getYourFavoriteBookVendorOffers(isbn, bookId));

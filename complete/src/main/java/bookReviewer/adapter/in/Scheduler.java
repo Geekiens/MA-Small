@@ -1,4 +1,4 @@
-package bookReviewer.business;
+package bookReviewer.adapter.in;
 
 import bookReviewer.business.boundary.in.useCase.command.CheckUserPromotionUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
