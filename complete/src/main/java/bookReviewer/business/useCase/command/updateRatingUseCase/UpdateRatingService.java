@@ -5,10 +5,9 @@ import bookReviewer.business.boundary.out.persistence.FindBookById;
 import bookReviewer.business.boundary.out.persistence.FindRatingById;
 import bookReviewer.business.boundary.out.persistence.SaveRating;
 
+import bookReviewer.entity.book.Book;
 import bookReviewer.business.exception.ForbiddenResourceException;
 import bookReviewer.business.exception.ResourceNotFoundException;
-import bookReviewer.business.mapper.entityToBusiness.BookMapper;
-import bookReviewer.business.model.BookBusiness;
 import bookReviewer.entity.rating.Rating;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -31,7 +30,7 @@ public class UpdateRatingService implements UpdateRatingUseCase {
     FindRatingById findRatingById;
 
     public void updateRating(UpdateRatingCommand updateRatingCommand) {
-        BookBusiness book = BookMapper.map(findBookById.findBookById(updateRatingCommand.getBookId()).orElse(null));
+        Book book = findBookById.findBookById(updateRatingCommand.getBookId()).orElse(null);
         Rating rating = RatingEntityMapper.map(updateRatingCommand.getRating());
         isOwnRating(rating.getId(), updateRatingCommand.getUserId());
         rating.setBookId(book.getId());

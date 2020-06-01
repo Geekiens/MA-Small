@@ -1,9 +1,9 @@
-package bookReviewer.business.mapper.businessToEntity;
+package bookReviewer.business.shared.mapper.entityToBusiness;
 
-import bookReviewer.entity.offerHistory.MediaType;
+import bookReviewer.business.shared.model.MediaType;
 
 public class MediaTypeMapper {
-    public static MediaType map(bookReviewer.business.shared.model.MediaType mediaType) {
+    public static MediaType map(bookReviewer.entity.offerHistory.MediaType mediaType) {
         switch (mediaType) {
             case HARDCOVER:
                 return MediaType.HARDCOVER;
@@ -14,6 +14,7 @@ public class MediaTypeMapper {
             case AUDIOBOOK:
                 return MediaType.AUDIOBOOK;
             default:
+                USER:
                 return null;
         }
     }

@@ -1,9 +1,6 @@
 package bookReviewer.business.useCase.query.getRatingsOfBookUseCase;
 
-import bookReviewer.business.model.RatingBusiness;
 import bookReviewer.entity.rating.Rating;
-
-import java.util.List;
 
 public final class RatingsOutputMapper {
     public static GetRatingsOutput map(Rating rating, String author){

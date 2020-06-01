@@ -2,9 +2,9 @@ package bookReviewer.business.useCase.command.registerUserUseCase;
 
 import bookReviewer.business.boundary.in.useCase.command.RegisterUserUseCase;
 import bookReviewer.business.boundary.out.persistence.SaveUser;
-import bookReviewer.business.mapper.businessToEntity.UserMapper;
-import bookReviewer.business.shared.model.Role;
-import bookReviewer.business.model.UserBusiness;
+import bookReviewer.business.shared.mapper.businessToEntity.RoleMapper;
+import bookReviewer.entity.user.Credentials;
+import bookReviewer.entity.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -24,13 +24,15 @@ public class RegisterUserService implements RegisterUserUseCase {
     public void registerUser(RegisterUserCommand registerUserCommand) throws Exception {
         byte[] salt = getSalt();
         String hashedPassword = get_SHA_1_SecurePassword(registerUserCommand.getPassword(), salt);
-        UserBusiness user = new UserBusiness(
-                registerUserCommand.getUsername(),
-                hashedPassword,
-                registerUserCommand.getEmail(),
-                salt,
-                registerUserCommand.getRole());
-        saveUser.saveUser(UserMapper.map(user, null));
+        Credentials credentials = new Credentials();
+        credentials.setUsername(registerUserCommand.getUsername());
+        credentials.setPassword(hashedPassword);
+        credentials.setSalt(salt);
+        User user = new User();
+        user.setCredentials(credentials);
+        user.setEmail(registerUserCommand.getEmail());
+        user.setRole(RoleMapper.map(registerUserCommand.getRole()));
+        saveUser.saveUser(user);
     }
 
     private static String get_SHA_1_SecurePassword(String passwordToHash, byte[] salt)

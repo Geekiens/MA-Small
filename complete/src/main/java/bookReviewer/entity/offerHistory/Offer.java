@@ -6,7 +6,6 @@ import java.time.LocalDate;
 
 public class Offer {
     private BigDecimal price;
-
     private LocalDate requestDate;
 
     public Offer() {

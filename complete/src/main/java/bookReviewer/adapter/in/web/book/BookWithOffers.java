@@ -1,6 +1,6 @@
 package bookReviewer.adapter.in.web.book;
 
-import bookReviewer.business.useCase.query.getOffersOfBookUseCase.Offer;
+import bookReviewer.business.useCase.query.getOffersOfBookUseCase.OfferOutput;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,10 +21,10 @@ public class BookWithOffers {
     private int totalVotes;
     private double averageRating;
 
-    private List<Offer> hardcoverOffers;
-    private List<Offer> paperbackOffers;
-    private List<Offer> ebookOffers;
-    private List<Offer> audiobookOffers;
+    private List<OfferOutput> hardcoverOffers;
+    private List<OfferOutput> paperbackOffers;
+    private List<OfferOutput> ebookOffers;
+    private List<OfferOutput> audiobookOffers;
 
     public BookWithOffers() {
         hardcoverOffers = new ArrayList<>();
@@ -164,51 +164,51 @@ public class BookWithOffers {
         this.averageRating = averageRating;
     }
 
-    public List<Offer> getHardcoverOffers() {
+    public List<OfferOutput> getHardcoverOffers() {
         return hardcoverOffers;
     }
 
-    public void setHardcoverOffers(List<Offer> hardcoverOffers) {
+    public void setHardcoverOffers(List<OfferOutput> hardcoverOffers) {
         this.hardcoverOffers = hardcoverOffers;
     }
 
-    public List<Offer> getPaperbackOffers() {
+    public List<OfferOutput> getPaperbackOffers() {
         return paperbackOffers;
     }
 
-    public void setPaperbackOffers(List<Offer> paperbackOffers) {
+    public void setPaperbackOffers(List<OfferOutput> paperbackOffers) {
         this.paperbackOffers = paperbackOffers;
     }
 
-    public List<Offer> getEbookOffers() {
+    public List<OfferOutput> getEbookOffers() {
         return ebookOffers;
     }
 
-    public void setEbookOffers(List<Offer> ebookOffers) {
+    public void setEbookOffers(List<OfferOutput> ebookOffers) {
         this.ebookOffers = ebookOffers;
     }
 
-    public List<Offer> getAudiobookOffers() {
+    public List<OfferOutput> getAudiobookOffers() {
         return audiobookOffers;
     }
 
-    public void setAudiobookOffers(List<Offer> audiobookOffers) {
+    public void setAudiobookOffers(List<OfferOutput> audiobookOffers) {
         this.audiobookOffers = audiobookOffers;
     }
 
-    public void addHardcoverOffer(Offer offer) {
+    public void addHardcoverOffer(OfferOutput offer) {
         hardcoverOffers.add(offer);
     }
 
-    public void addPaperbackOffer(Offer offer) {
+    public void addPaperbackOffer(OfferOutput offer) {
         paperbackOffers.add(offer);
     }
 
-    public void addEbookOffer(Offer offer) {
+    public void addEbookOffer(OfferOutput offer) {
         ebookOffers.add(offer);
     }
 
-    public void addAudiobookOffer(Offer offer) {
+    public void addAudiobookOffer(OfferOutput offer) {
         audiobookOffers.add(offer);
     }
 

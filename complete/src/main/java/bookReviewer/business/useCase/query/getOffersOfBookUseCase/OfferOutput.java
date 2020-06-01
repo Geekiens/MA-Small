@@ -4,13 +4,13 @@ import bookReviewer.business.shared.model.MediaType;
 
 import java.math.BigDecimal;
 
-public class Offer {
+public class OfferOutput {
     BigDecimal price;
     String vendor;
     String affiliateLink;
     MediaType mediaType;
 
-    public Offer(BigDecimal price, String vendor, String affiliateLink, MediaType mediaType) {
+    public OfferOutput(BigDecimal price, String vendor, String affiliateLink, MediaType mediaType) {
         this.price = price;
         this.vendor = vendor;
         this.affiliateLink = affiliateLink;

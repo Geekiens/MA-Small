@@ -1,13 +1,13 @@
 package bookReviewer.adapter.in.web.book;
 
 import bookReviewer.business.useCase.query.getBookUseCase.GetBookOutput;
-import bookReviewer.business.useCase.query.getOffersOfBookUseCase.Offer;
+import bookReviewer.business.useCase.query.getOffersOfBookUseCase.OfferOutput;
 
 import java.util.List;
 
 public final class BookWithOffersMapper {
 
-    public static BookWithOffers map(GetBookOutput book, List<Offer> offers) {
+    public static BookWithOffers map(GetBookOutput book, List<OfferOutput> offers) {
         BookWithOffers bookWithOffers = new BookWithOffers(book.getAuthor(),
                 book.getTitle(),
                 book.getGenre(),
@@ -21,7 +21,7 @@ public final class BookWithOffersMapper {
                 book.getTotalVotes(),
                 book.getAverageRating()
         );
-        for (Offer offer : offers) {
+        for (OfferOutput offer : offers) {
             switch (offer.getMediaType()) {
                 case HARDCOVER:
                     bookWithOffers.addHardcoverOffer(offer);

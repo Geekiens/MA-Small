@@ -4,18 +4,14 @@ import bookReviewer.business.boundary.in.useCase.command.CreateRatingUseCase;
 import bookReviewer.business.boundary.out.persistence.*;
 import bookReviewer.business.exception.DuplicateRatingException;
 import bookReviewer.business.exception.ResourceNotFoundException;
-import bookReviewer.business.mapper.businessToEntity.RatingMapper;
-import bookReviewer.business.mapper.businessToEntity.RoleMapper;
-import bookReviewer.business.mapper.entityToBusiness.BookMapper;
-import bookReviewer.business.mapper.entityToBusiness.UserMapper;
-import bookReviewer.business.model.BookBusiness;
-import bookReviewer.business.model.UserBusiness;
 import bookReviewer.business.shared.authorizer.CheckRole;
+import bookReviewer.entity.book.Book;
 import bookReviewer.entity.rating.Rating;
 import bookReviewer.entity.user.Role;
 import bookReviewer.entity.user.SubmissionsDate;
 import bookReviewer.entity.user.Activity;
 import bookReviewer.entity.user.ActivityType;
+import bookReviewer.entity.user.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -56,14 +52,13 @@ public class CreateRatingService implements CreateRatingUseCase {
 
 
     public Long createRating(CreateRatingCommand createRatingCommand) {
-
-        BookBusiness book = BookMapper.map(findBookById.findBookById(createRatingCommand.getBookId()).orElseThrow(() -> new ResourceNotFoundException("book not found with id " + createRatingCommand.getBookId())));
+        Book book = findBookById.findBookById(createRatingCommand.getBookId()).orElseThrow(() -> new ResourceNotFoundException("book not found with id " + createRatingCommand.getBookId()));
         long reviewer = createRatingCommand.getUserId();
         Rating rating = RatingEntityMapper.map(createRatingCommand.getRating());
         rating.setBookId(book.getId());
         rating.setUserId(reviewer);
-        UserBusiness user = UserMapper.map(findUserById.findUserById(reviewer).orElseThrow(() -> new ResourceNotFoundException("user not found with id " + reviewer)));
-        CheckRole.checkHasMinimumRequiredRole(RoleMapper.map(user.getRole()), Role.USER);
+        User user = findUserById.findUserById(reviewer).orElseThrow(() -> new ResourceNotFoundException("user not found with id " + reviewer));
+        CheckRole.checkHasMinimumRequiredRole(user.getRole(), Role.USER);
         System.out.println("user: " + user.getEmail());
         if (isDuplicate(rating)){
             throw new DuplicateRatingException();
@@ -89,7 +84,7 @@ public class CreateRatingService implements CreateRatingUseCase {
         return saveRating.saveRating(rating);
     }
 
-    private void sendEmptyRatingEmail(UserBusiness receiver, String text) {
+    private void sendEmptyRatingEmail(User receiver, String text) {
         Properties properties = new Properties();
         properties.put("mail.smtp.host", "smtp.gmail.com");
         properties.put("mail.smtp.port", "587");
@@ -111,7 +106,7 @@ public class CreateRatingService implements CreateRatingUseCase {
                     InternetAddress.parse(receiver.getEmail())
             );
             message.setSubject("Schreib einen Kommentar zu deiner Bewertung");
-            message.setText("Hallo " + receiver.getUsername() + ","
+            message.setText("Hallo " + receiver.getCredentials().getUsername() + ","
                     + "\n\n danke für deine Bewertung! Mach deine Bewertung noch wertvoller, indem du einen Kommentar schreibst."
                     + text
                     + "\n Teile jetzt deine Meinung mit Anderen!"

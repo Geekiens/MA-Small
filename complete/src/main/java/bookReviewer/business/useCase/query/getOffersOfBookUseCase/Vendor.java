@@ -1,4 +1,4 @@
-package bookReviewer.business.model;
+package bookReviewer.business.useCase.query.getOffersOfBookUseCase;
 
 public enum Vendor {
     BUCHLADEN123DE("Buchladen123.de"),

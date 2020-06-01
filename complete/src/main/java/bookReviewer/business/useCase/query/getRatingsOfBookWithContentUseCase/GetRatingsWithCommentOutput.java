@@ -1,6 +1,5 @@
 package bookReviewer.business.useCase.query.getRatingsOfBookWithContentUseCase;
 
-import bookReviewer.business.model.BookBusiness;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
