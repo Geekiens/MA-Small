@@ -1,4 +1,4 @@
-package bookReviewer.business.util;
+package bookReviewer.adapter.in.web.util;
 
 import bookReviewer.business.useCase.query.getTokenByLoginUseCase.LoginOutput;
 import io.jsonwebtoken.SignatureAlgorithm;
