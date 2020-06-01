@@ -3,6 +3,7 @@ package bookReviewer.business.useCase.command.registerUserUseCase;
 import bookReviewer.business.boundary.in.useCase.command.RegisterUserUseCase;
 import bookReviewer.business.boundary.out.persistence.SaveUser;
 import bookReviewer.business.shared.mapper.businessToEntity.RoleMapper;
+import bookReviewer.business.shared.service.HashingService;
 import bookReviewer.entity.user.Credentials;
 import bookReviewer.entity.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class RegisterUserService implements RegisterUserUseCase {
 
     public void registerUser(RegisterUserCommand registerUserCommand) throws Exception {
         byte[] salt = getSalt();
-        String hashedPassword = get_SHA_1_SecurePassword(registerUserCommand.getPassword(), salt);
+        String hashedPassword = HashingService.get_SHA_1_SecurePassword(registerUserCommand.getPassword(), salt);
         Credentials credentials = new Credentials();
         credentials.setUsername(registerUserCommand.getUsername());
         credentials.setPassword(hashedPassword);
@@ -33,27 +34,6 @@ public class RegisterUserService implements RegisterUserUseCase {
         user.setEmail(registerUserCommand.getEmail());
         user.setRole(RoleMapper.map(registerUserCommand.getRole()));
         saveUser.saveUser(user);
-    }
-
-    private static String get_SHA_1_SecurePassword(String passwordToHash, byte[] salt)
-    {
-        String generatedPassword = null;
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-1");
-            md.update(salt);
-            byte[] bytes = md.digest(passwordToHash.getBytes());
-            StringBuilder sb = new StringBuilder();
-            for(int i=0; i< bytes.length ;i++)
-            {
-                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
-            }
-            generatedPassword = sb.toString();
-        }
-        catch (NoSuchAlgorithmException e)
-        {
-            e.printStackTrace();
-        }
-        return generatedPassword;
     }
 
     private static byte[] getSalt() throws NoSuchAlgorithmException

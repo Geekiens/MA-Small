@@ -33,6 +33,28 @@ public class User {
 
     }
 
+    public int calculateActivityPoints(){
+        return getActivities().stream().mapToInt(activity -> {
+                    switch (activity.getActivityType()) {
+                        case BOOK_CREATED:
+                            return 10;
+                        case RATING_CREATED:
+                            return 3;
+                        case RATING_CREATED_WITH_COMMENT:
+                            return 5;
+                        case BOOK_DELETED_BY_ADMIN:
+                            return -15;
+                        case RATING_DELETED_BY_ADMIN:
+                            return -20;
+                        case RATING_DELETED_BY_MODERATOR:
+                            return -10;
+                        default: return 0;
+                    }
+                }
+        ).sum();
+
+    }
+
     public long getId() {
         return id;
     }

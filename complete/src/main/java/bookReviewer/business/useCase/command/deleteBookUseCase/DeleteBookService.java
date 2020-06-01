@@ -3,7 +3,7 @@ package bookReviewer.business.useCase.command.deleteBookUseCase;
 import bookReviewer.business.boundary.in.useCase.command.DeleteBookUseCase;
 import bookReviewer.business.boundary.out.persistence.DeleteBookById;
 import bookReviewer.business.boundary.out.persistence.FindBookById;
-import bookReviewer.business.exception.ResourceNotFoundException;
+import bookReviewer.business.shared.exception.ResourceNotFoundException;
 import bookReviewer.business.shared.authorizer.CheckRole;
 import bookReviewer.business.shared.mapper.businessToEntity.RoleMapper;
 import bookReviewer.entity.user.Role;

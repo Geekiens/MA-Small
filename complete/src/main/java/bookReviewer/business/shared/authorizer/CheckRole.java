@@ -1,6 +1,6 @@
 package bookReviewer.business.shared.authorizer;
 
-import bookReviewer.business.exception.ForbiddenInteractionException;
+import bookReviewer.business.shared.exception.ForbiddenInteractionException;
 import bookReviewer.entity.user.Role;
 
 public final class CheckRole {
