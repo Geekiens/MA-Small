@@ -1,4 +1,4 @@
-package bookReviewer.adapter.out.externalSystems;
+package bookReviewer.adapter.out.externalSystems.buchLaden123;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

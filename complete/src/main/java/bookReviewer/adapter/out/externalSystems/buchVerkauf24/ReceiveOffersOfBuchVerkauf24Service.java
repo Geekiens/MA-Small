@@ -1,6 +1,7 @@
-package bookReviewer.adapter.out.externalSystems;
+package bookReviewer.adapter.out.externalSystems.buchVerkauf24;
 
 
+import bookReviewer.adapter.out.externalSystems.HttpClientFactory;
 import bookReviewer.business.boundary.out.externalSystems.ReceiveOffersOfBuchVerkauf24;
 import bookReviewer.business.shared.model.MediaType;
 import bookReviewer.business.useCase.query.getOffersOfBookUseCase.OfferOutput;

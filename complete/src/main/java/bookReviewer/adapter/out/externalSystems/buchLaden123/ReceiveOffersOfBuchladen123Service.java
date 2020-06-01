@@ -1,6 +1,6 @@
-package bookReviewer.adapter.out.externalSystems;
+package bookReviewer.adapter.out.externalSystems.buchLaden123;
 
-
+import bookReviewer.adapter.out.externalSystems.HttpClientFactory;
 import bookReviewer.business.boundary.out.externalSystems.ReceiveOffersOfBuchladen123;
 import bookReviewer.business.shared.model.MediaType;
 import bookReviewer.business.useCase.query.getOffersOfBookUseCase.OfferOutput;
@@ -28,7 +28,6 @@ public class ReceiveOffersOfBuchladen123Service implements ReceiveOffersOfBuchla
         return offers;
     }
 
-
     private static ArrayList<OfferOutput> offerApi1tToOfferMapper(OfferApi1[] offerApi1s) {
         ArrayList<OfferOutput> offers = new ArrayList<>();
         for (OfferApi1 offerApi1 : offerApi1s) {
@@ -42,8 +41,4 @@ public class ReceiveOffersOfBuchladen123Service implements ReceiveOffersOfBuchla
         }
         return offers;
     }
-
 }
-
-
-

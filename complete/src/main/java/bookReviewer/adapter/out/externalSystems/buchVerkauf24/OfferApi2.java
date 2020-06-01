@@ -1,4 +1,4 @@
-package bookReviewer.adapter.out.externalSystems;
+package bookReviewer.adapter.out.externalSystems.buchVerkauf24;
 
 import java.math.BigDecimal;
 
