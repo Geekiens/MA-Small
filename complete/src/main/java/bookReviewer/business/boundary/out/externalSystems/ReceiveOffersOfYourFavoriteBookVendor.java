@@ -5,5 +5,5 @@ import bookReviewer.business.useCase.query.getOffersOfBookUseCase.OfferOutput;
 import java.util.ArrayList;
 
 public interface ReceiveOffersOfYourFavoriteBookVendor {
-    ArrayList<OfferOutput> receiveOffers();
+    ArrayList<OfferOutput> receiveOffers(String isbn) throws Exception;
 }
