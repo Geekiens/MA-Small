@@ -1,4 +1,4 @@
-package bookReviewer.adapter.out.persistence.repository;
+package bookReviewer.periphery.persistence.repository;
 
 import bookReviewer.adapter.out.persistence.model.Rating;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -8,7 +8,7 @@ import java.util.List;
 
 
 @Repository
-public interface RatingRepository extends JpaRepository<Rating, Long> {
+public interface RatingRepositoryJpa extends JpaRepository<Rating, Long> {
 
     List<Rating> findAllByBookId(Long bookId);
 

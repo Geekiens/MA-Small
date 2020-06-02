@@ -1,4 +1,4 @@
-package bookReviewer.presentation.controller;
+package bookReviewer.periphery.controller;
 
 import bookReviewer.adapter.in.web.user.UserAdapter;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,10 +1,10 @@
-package bookReviewer.presentation.controller;
+package bookReviewer.periphery.controller;
 
 import bookReviewer.adapter.in.web.book.BookAdapter;
 import bookReviewer.adapter.in.web.book.BookWithOffers;
 import bookReviewer.adapter.in.web.book.BookWithRatingInformation;
 import bookReviewer.adapter.in.web.book.NewBook;
-import bookReviewer.presentation.controller.util.TokenFormatter;
+import bookReviewer.periphery.controller.util.TokenFormatter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

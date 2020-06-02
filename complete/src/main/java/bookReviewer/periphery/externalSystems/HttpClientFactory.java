@@ -1,4 +1,4 @@
-package bookReviewer.adapter.out.externalSystems;
+package bookReviewer.periphery.externalSystems;
 
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 

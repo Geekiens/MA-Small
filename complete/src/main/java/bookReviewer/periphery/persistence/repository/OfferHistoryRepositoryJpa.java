@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CachedOfferHistoryRepositoryJpa extends JpaRepository<CachedOfferHistory, Long> {
+public interface OfferHistoryRepositoryJpa extends JpaRepository<CachedOfferHistory, Long> {
 
     //@Query("select c from CachedOfferHistory c " +
     //        "where c.isbn = :isbn")

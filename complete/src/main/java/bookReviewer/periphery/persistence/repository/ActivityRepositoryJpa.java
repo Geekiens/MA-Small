@@ -1,4 +1,4 @@
-package bookReviewer.adapter.out.persistence.repository;
+package bookReviewer.periphery.persistence.repository;
 
 import bookReviewer.adapter.out.persistence.model.Activity;
 import bookReviewer.adapter.out.persistence.model.User;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ActivityRepository extends JpaRepository<Activity, Long> {
+public interface ActivityRepositoryJpa extends JpaRepository<Activity, Long> {
     List<Activity> findAllByUser(User user);
 
 }

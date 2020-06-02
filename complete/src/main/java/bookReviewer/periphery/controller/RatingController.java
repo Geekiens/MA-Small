@@ -1,11 +1,11 @@
-package bookReviewer.presentation.controller;
+package bookReviewer.periphery.controller;
 
 
 import bookReviewer.adapter.in.web.rating.NewRating;
 import bookReviewer.adapter.in.web.rating.Rating;
 import bookReviewer.adapter.in.web.rating.RatingAdapter;
 import bookReviewer.adapter.in.web.rating.UpdateRating;
-import bookReviewer.presentation.controller.util.TokenFormatter;
+import bookReviewer.periphery.controller.util.TokenFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
