@@ -14,6 +14,7 @@ import java.util.Optional;
 @Qualifier("FindRatingByIdService")
 public class FindRatingByIdService implements FindRatingById {
     @Autowired
+    @Qualifier("RatingRepositoryService")
     RatingRepository ratingRepository;
 
     public Optional<Rating> findRatingById(Long ratingId){

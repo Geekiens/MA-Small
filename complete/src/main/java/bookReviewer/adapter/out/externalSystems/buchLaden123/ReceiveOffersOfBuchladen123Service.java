@@ -1,10 +1,11 @@
 package bookReviewer.adapter.out.externalSystems.buchLaden123;
 
-import bookReviewer.adapter.out.externalSystems.HttpClientFactory;
+import bookReviewer.periphery.externalSystems.HttpClientFactory;
 import bookReviewer.business.boundary.out.externalSystems.ReceiveOffersOfBuchladen123;
 import bookReviewer.business.shared.model.MediaType;
 import bookReviewer.business.useCase.query.getOffersOfBookUseCase.OfferOutput;
 import bookReviewer.business.useCase.query.getOffersOfBookUseCase.Vendor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -16,16 +17,13 @@ import java.util.ArrayList;
 @Service
 @Qualifier("ReceiveOffersOfBuchladen123Service")
 public class ReceiveOffersOfBuchladen123Service implements ReceiveOffersOfBuchladen123 {
+
+    @Autowired
+    @Qualifier("Buchladen123AdapterService")
+    Buchladen123Adapter buchladen123Adapter;
+
     public ArrayList<OfferOutput> receiveOffers(String isbn) throws Exception {
-        RestTemplate restTemplate = new RestTemplate(HttpClientFactory.getClientHttpRequestFactory());
-        ResponseEntity<OfferApi1[]> response = restTemplate.getForEntity(
-                "http://localhost:9090/offer?isbn=" + isbn,
-                OfferApi1[].class);
-        OfferApi1[] offerApi1s = response.getBody();
-        System.out.println(response.getStatusCode().isError());
-        if (response.getStatusCode().isError()) throw new Exception();
-        ArrayList<OfferOutput> offers = offerApi1tToOfferMapper(offerApi1s);
-        return offers;
+        return offerApi1tToOfferMapper(buchladen123Adapter.queryOffers(isbn));
     }
 
     private static ArrayList<OfferOutput> offerApi1tToOfferMapper(OfferApi1[] offerApi1s) {

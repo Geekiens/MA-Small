@@ -1,10 +1,10 @@
 package bookReviewer.business.useCase.command.createRatingUseCase;
 
 import bookReviewer.business.boundary.in.useCase.command.CreateRatingUseCase;
+import bookReviewer.business.boundary.out.emailProvider.SendEmailProvider;
 import bookReviewer.business.boundary.out.persistence.*;
 import bookReviewer.business.shared.exception.DuplicateRatingException;
 import bookReviewer.business.shared.exception.ResourceNotFoundException;
-import bookReviewer.business.shared.service.EmailService;
 import bookReviewer.business.shared.authorizer.CheckRole;
 import bookReviewer.entity.book.Book;
 import bookReviewer.entity.rating.Rating;
@@ -44,6 +44,10 @@ public class CreateRatingService implements CreateRatingUseCase {
     @Qualifier("SaveActivityService")
     SaveActivity saveActivity;
 
+    @Autowired
+    @Qualifier("SendEmailProviderService")
+    SendEmailProvider sendEmailProvider;
+
     public Long createRating(CreateRatingCommand createRatingCommand) {
         Book book = findBookById.findBookById(createRatingCommand.getBookId()).orElseThrow(() -> new ResourceNotFoundException("book not found with id " + createRatingCommand.getBookId()));
         long reviewer = createRatingCommand.getUserId();
@@ -79,7 +83,7 @@ public class CreateRatingService implements CreateRatingUseCase {
 
         }
         new Thread(() -> {
-            EmailService.sendEmptyRatingEmail(user.getEmail(), text, subject);
+            sendEmailProvider.sendEmail(user.getEmail(), text, subject);
         }).start();
     }
 

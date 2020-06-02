@@ -24,7 +24,8 @@ public class RatingRepositoryTests {
     @Autowired
     private RatingRepository ratingRepository;
 
-    Book book = new Book("author", "title");
+    Book book = new Book();
+
 
     @Before
     public void setup(){

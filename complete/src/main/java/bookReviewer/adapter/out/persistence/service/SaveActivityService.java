@@ -14,9 +14,11 @@ import org.springframework.stereotype.Service;
 @Qualifier("SaveActivityService")
 public class SaveActivityService implements SaveActivity {
     @Autowired
+    @Qualifier("ActivityRepositoryService")
     ActivityRepository activityRepository;
 
     @Autowired
+    @Qualifier("UserRepositoryService")
     UserRepository userRepository;
 
 

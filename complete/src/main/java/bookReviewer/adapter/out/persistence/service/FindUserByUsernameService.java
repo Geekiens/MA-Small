@@ -13,9 +13,11 @@ import org.springframework.stereotype.Service;
 @Qualifier("FindUserByUsernameService")
 public class FindUserByUsernameService implements FindUserByUsername {
     @Autowired
+    @Qualifier("UserRepositoryService")
     UserRepository userRepository;
 
     @Autowired
+    @Qualifier("ActivityRepositoryService")
     ActivityRepository activityRepository;
 
     public User findUserByUsername(String username){

@@ -35,16 +35,26 @@ public class RatingAdapterService implements RatingAdapter {
     @Qualifier("GetRatingsOfBookWithContentService")
     GetRatingsOfBookWithContentUseCase getRatingsOfBookWithContentUseCase;
 
+    @Autowired
+    CreateRatingCommandMapper createRatingCommandMapper;
+
+    @Autowired
+    DeleteRatingCommandMapper deleteRatingCommandMapper;
+
+    @Autowired
+    UpdateRatingCommandMapper updateRatingCommandMapper;
+
+
     public Long createRating(Long bookId, NewRating newRating, String token){
-        return createRatingUseCase.createRating(CreateRatingCommandMapper.map(bookId, newRating, token));
+        return createRatingUseCase.createRating(createRatingCommandMapper.map(bookId, newRating, token));
     }
 
     public  void  deleteRating(Long ratingId, String token){
-        deleteRatingUseCase.deleteRating(DeleteRatingCommandMapper.map(ratingId, token));
+        deleteRatingUseCase.deleteRating(deleteRatingCommandMapper.map(ratingId, token));
     }
 
     public void updateRating(Long bookId, UpdateRating rating, String token){
-        updateRatingUseCase.updateRating(UpdateRatingCommandMapper.map(bookId, rating, token));
+        updateRatingUseCase.updateRating(updateRatingCommandMapper.map(bookId, rating, token));
     }
 
     public List<Rating> getRatingsOfBook(Long bookId){

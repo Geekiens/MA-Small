@@ -5,7 +5,7 @@ import bookReviewer.business.boundary.out.persistence.SaveOfferHistory;
 import bookReviewer.entity.offerHistory.OfferHistroy;
 import bookReviewer.adapter.out.persistence.model.Book;
 import bookReviewer.adapter.out.persistence.repository.BookRepository;
-import bookReviewer.adapter.out.persistence.repository.CachedOfferHistoryRepository;
+import bookReviewer.adapter.out.persistence.repository.OfferHistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -14,9 +14,11 @@ import org.springframework.stereotype.Service;
 @Qualifier("SaveOfferHistoryService")
 public class SaveOfferHistoryService implements SaveOfferHistory {
     @Autowired
-    CachedOfferHistoryRepository cachedOfferHistoryRepository;
+    @Qualifier("OfferHistoryRepositoryService")
+    OfferHistoryRepository offerHistoryRepository;
 
     @Autowired
+    @Qualifier("BookRepositoryService")
     BookRepository bookRepository;
 
     public void saveOfferHistory(OfferHistroy offerHistroy){
@@ -25,6 +27,6 @@ public class SaveOfferHistoryService implements SaveOfferHistory {
         if (book != null){
             isbn = book.getIsbn();
         }
-        cachedOfferHistoryRepository.save(OfferHistoryMapper.map(offerHistroy, isbn));
+        offerHistoryRepository.save(OfferHistoryMapper.map(offerHistroy, isbn));
     }
 }

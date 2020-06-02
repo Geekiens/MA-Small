@@ -1,15 +1,21 @@
 package bookReviewer.adapter.in.web.book;
 
-import bookReviewer.adapter.in.web.util.TokenDecoder;
+import bookReviewer.adapter.in.web.util.token.TokenDecoder;
 import bookReviewer.business.useCase.command.createBookUseCase.Book;
 import bookReviewer.business.useCase.command.createBookUseCase.CreateBookCommand;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-public final class CreateBookCommandMapper {
+@Service
+public class CreateBookCommandMapper {
 
-    public static CreateBookCommand map(String token, NewBook newBook){
+    @Autowired
+    TokenDecoder tokenDecoder;
+
+    public CreateBookCommand map(String token, NewBook newBook){
         CreateBookCommand createBookCommand = new CreateBookCommand();
         try {
-            Long userId = TokenDecoder.getUserId(token);
+            Long userId = tokenDecoder.getUserId(token);
             createBookCommand.setUserId(userId);
         } catch (Exception e){
             System.out.println("Guest creates Book");

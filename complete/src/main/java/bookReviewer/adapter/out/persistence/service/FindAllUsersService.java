@@ -17,9 +17,11 @@ import java.util.List;
 @Qualifier("FindAllUsersService")
 public class FindAllUsersService implements FindAllUsers {
     @Autowired
+    @Qualifier("UserRepositoryService")
     UserRepository userRepository;
 
     @Autowired
+    @Qualifier("ActivityRepositoryService")
     ActivityRepository activityRepository;
 
     public List<User> findAllUsers(){

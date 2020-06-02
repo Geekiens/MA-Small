@@ -1,15 +1,14 @@
 package bookReviewer.adapter.out.externalSystems.yourFavoriteBookVendor;
 
 
-import bookReviewer.adapter.out.externalSystems.HttpClientFactory;
+import bookReviewer.adapter.out.externalSystems.currencyApi.CurrencyApi;
 import bookReviewer.business.boundary.out.externalSystems.ReceiveOffersOfYourFavoriteBookVendor;
 import bookReviewer.business.shared.model.MediaType;
 import bookReviewer.business.useCase.query.getOffersOfBookUseCase.OfferOutput;
 import bookReviewer.business.useCase.query.getOffersOfBookUseCase.Vendor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -17,26 +16,24 @@ import java.util.ArrayList;
 @Service
 @Qualifier("ReceiveOffersOfYourFavoriteBookVendorService")
 public class ReceiveOffersOfYourFavoriteBookVendorService implements ReceiveOffersOfYourFavoriteBookVendor {
+
+    @Autowired
+    @Qualifier("YourFavoriteBookVendorAdapterService")
+    YourFavoriteBookVendorAdapter yourFavoriteBookVendorAdapter;
+
+    @Autowired
+    CurrencyApi currencyApi;
+
     public ArrayList<OfferOutput> receiveOffers(String isbn) throws Exception {
-        RestTemplate restTemplate = new RestTemplate(HttpClientFactory.getClientHttpRequestFactory());
-
-        ResponseEntity<OfferApi3[]> response = restTemplate.getForEntity(
-                "http://localhost:9092/offer/" + isbn,
-                OfferApi3[].class);
-        if (response.getStatusCode().isError()) throw new Exception();
-
-        OfferApi3[] offerApi3s = response.getBody();
-
-        ArrayList<OfferOutput> offers = offerApi3tToOfferMapper(offerApi3s, isbn);
-        return offers;
+        return offerApi3tToOfferMapper(yourFavoriteBookVendorAdapter.queryOffers(isbn), isbn);
     }
 
-    private static ArrayList<OfferOutput> offerApi3tToOfferMapper(OfferApi3[] offerApi3s, String isbn) {
+    private ArrayList<OfferOutput> offerApi3tToOfferMapper(OfferApi3[] offerApi3s, String isbn) {
         ArrayList<OfferOutput> offers = new ArrayList<>();
         for (OfferApi3 offerApi3 : offerApi3s) {
             BigDecimal price = offerApi3.getPrice();
             if (offerApi3.getCurrency().equals("USD")) {
-                price.multiply(CurrencyApi.getCurrencyExchange());
+                price.multiply(currencyApi.getCurrencyExchange());
                 price = price.setScale(2, BigDecimal.ROUND_HALF_EVEN);
             }
             // add shipping costs for vendor

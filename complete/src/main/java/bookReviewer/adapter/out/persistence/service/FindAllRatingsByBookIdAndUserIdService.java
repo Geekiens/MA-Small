@@ -14,6 +14,7 @@ import java.util.List;
 @Qualifier("FindAllRatingsByBookIdAndUserIdService")
 public class FindAllRatingsByBookIdAndUserIdService implements FindAllRatingsByBookIdAndUserId {
     @Autowired
+    @Qualifier("RatingRepositoryService")
     RatingRepository ratingRepository;
 
     public List<Rating> findAllRatingsByBookIdAndUserId(Long bookId, Long userId){

@@ -12,9 +12,10 @@ import org.springframework.stereotype.Service;
 @Qualifier("SaveBookService")
 public class SaveBookService implements SaveBook {
     @Autowired
+    @Qualifier("BookRepositoryService")
     BookRepository bookRepository;
 
     public Long saveBook(Book book){
-        return bookRepository.saveAndFlush(BookMapper.map(book)).getId();
+        return bookRepository.saveAndFlush(BookMapper.map(book));
     }
 }

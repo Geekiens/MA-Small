@@ -16,6 +16,7 @@ import java.util.List;
 @Qualifier("FindAllActivitiesByUserService")
 public class FindAllActivitiesByUserService implements FindAllActivitiesByUser {
     @Autowired
+    @Qualifier("ActivityRepositoryService")
     ActivityRepository activityRepository;
     public List<Activity> findAllActivitiesByUser(User user){
         return ActivityMapper.mapList(activityRepository.findAllByUser(UserMapper.map(user)));

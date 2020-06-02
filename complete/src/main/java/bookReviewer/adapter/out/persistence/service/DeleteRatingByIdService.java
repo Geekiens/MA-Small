@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 @Qualifier("DeleteRatingByIdService")
 public class DeleteRatingByIdService implements DeleteRatingById {
     @Autowired
+    @Qualifier("RatingRepositoryService")
     RatingRepository ratingRepository;
 
     public void deleteRatingById(Long ratingId){
