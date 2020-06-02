@@ -15,9 +15,11 @@ import java.util.Optional;
 @Qualifier("FindUserByIdService")
 public class FindUserByIdService implements FindUserById {
     @Autowired
+    @Qualifier("UserRepositoryService")
     UserRepository userRepository;
 
     @Autowired
+    @Qualifier("ActivityRepositoryService")
     ActivityRepository activityRepository;
 
     public Optional<User> findUserById(Long userId){

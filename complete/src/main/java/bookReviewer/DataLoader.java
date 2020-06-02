@@ -8,6 +8,8 @@ import bookReviewer.adapter.out.persistence.model.Rating;
 import bookReviewer.business.shared.model.Role;
 import bookReviewer.adapter.out.persistence.repository.BookRepository;
 import bookReviewer.adapter.out.persistence.repository.RatingRepository;
+import bookReviewer.periphery.persistence.service.BookRepositoryService;
+import bookReviewer.periphery.persistence.service.RatingRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -23,7 +25,7 @@ public class DataLoader implements ApplicationRunner {
     private RegisterUserUseCase registerUserUseCase;
 
     @Autowired
-    public DataLoader(BookRepository bookRepository, RegisterUserService registerUserService, RatingRepository ratingRepository) {
+    public DataLoader(BookRepositoryService bookRepository, RegisterUserService registerUserService, RatingRepositoryService ratingRepository) {
         this.bookRepository = bookRepository;
         this.registerUserUseCase = registerUserService;
         this.ratingRepository = ratingRepository;
@@ -45,7 +47,7 @@ public class DataLoader implements ApplicationRunner {
             String[] languages = {"Deutsch", "Englisch", "Französisch", "Spanisch"};
             book.setLanguages(languages);
             book.setContent("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
-            bookRepository.save(book);
+            bookRepository.saveAndFlush(book);
 
             Book book2 = new Book();
             book2.setAuthor("John R. R. Tolkien");
@@ -54,14 +56,14 @@ public class DataLoader implements ApplicationRunner {
             book2.setIsbn("978-3608933455");
             book2.setContent("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
             book2.setPublishingYear(1955);
-            bookRepository.save(book2);
+            bookRepository.saveAndFlush(book2);
 
             book = new Book();
             book.setAuthor("John R. R. Tolkien");
             book.setTitle("Der Herr der Ringe - Die Rückkehr des Königs");
             book.setPages(701);
             book.setIsbn("978-3608933456");
-            bookRepository.save(book);
+            bookRepository.saveAndFlush(book);
 
             // Create Users
             RegisterUserCommand registerUserCommand = new RegisterUserCommand(
@@ -88,8 +90,8 @@ public class DataLoader implements ApplicationRunner {
             Rating rating = new Rating(5, "Ok", 1L, "Content", ratedBook);
             Rating rating2 = new Rating(4, "Title", 2L, null, ratedBook);
 
-            ratingRepository.save(rating);
-            ratingRepository.save(rating2);
+            ratingRepository.saveAndFlush(rating);
+            ratingRepository.saveAndFlush(rating2);
 
 
 

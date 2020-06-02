@@ -1,7 +1,7 @@
 package bookReviewer.adapter.in.web.book;
 
 import bookReviewer.adapter.in.web.util.MapWithReflection;
-import bookReviewer.adapter.in.web.util.TokenDecoder;
+import bookReviewer.adapter.in.web.util.token.TokenDecoder;
 import bookReviewer.business.boundary.in.useCase.command.CreateBookUseCase;
 import bookReviewer.business.boundary.in.useCase.command.DeleteBookUseCase;
 import bookReviewer.business.boundary.in.useCase.query.GetBookUseCase;
@@ -42,14 +42,20 @@ public class BookAdapterService implements BookAdapter{
     @Qualifier("GetBooksService")
     GetBooksUseCase getBooksUseCase;
 
+    @Autowired
+    TokenDecoder tokenDecoder;
+
+    @Autowired
+    CreateBookCommandMapper createBookCommandMapper;
+
     public Long createBook(NewBook newBook, String token){
-         return createBookUseCase.createBook(CreateBookCommandMapper.map(token, newBook));
+         return createBookUseCase.createBook(createBookCommandMapper.map(token, newBook));
     }
 
     public void deleteBook(Long bookId, String token){
         DeleteBookCommand deleteBookCommand = new DeleteBookCommand();
         deleteBookCommand.setBookId(bookId);
-        deleteBookCommand.setRole(TokenDecoder.getRole(token));
+        deleteBookCommand.setRole(tokenDecoder.getRole(token));
         deleteBookUseCase.deleteBook(deleteBookCommand);
     }
 

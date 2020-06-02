@@ -15,7 +15,7 @@ public class Offer {
     private long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cachedOfferHistoryPersistence_id", nullable = false)
+    @JoinColumn(name = "cachedOfferHistory_id", nullable = false)
     private CachedOfferHistory cachedOfferHistory;
 
     @Column(name="price")

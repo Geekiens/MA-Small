@@ -1,4 +1,4 @@
-package bookReviewer.adapter.out.externalSystems.yourFavoriteBookVendor;
+package bookReviewer.adapter.out.externalSystems.currencyApi;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

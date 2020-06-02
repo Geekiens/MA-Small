@@ -1,13 +1,15 @@
 package bookReviewer.adapter.out.persistence.repository;
 
 import bookReviewer.adapter.out.persistence.model.User;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
-@Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+import java.util.List;
+import java.util.Optional;
 
+public interface UserRepository{
+    List<User> findAll();
+    Optional<User> findById(Long userId);
     User findByUsername(String username);
+    Long saveAndFlush(User user);
 }
 
 

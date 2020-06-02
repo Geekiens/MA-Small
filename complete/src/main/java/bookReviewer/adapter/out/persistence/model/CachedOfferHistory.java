@@ -24,7 +24,7 @@ public class CachedOfferHistory {
 
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
-            mappedBy = "cachedOfferHistoryPersistence")
+            mappedBy = "cachedOfferHistory")
     private List<Offer> offers = new ArrayList<>();
 
     public CachedOfferHistory() {

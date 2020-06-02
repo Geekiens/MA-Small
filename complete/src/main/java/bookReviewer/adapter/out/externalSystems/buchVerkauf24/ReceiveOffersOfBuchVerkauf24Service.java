@@ -1,11 +1,12 @@
 package bookReviewer.adapter.out.externalSystems.buchVerkauf24;
 
 
-import bookReviewer.adapter.out.externalSystems.HttpClientFactory;
+import bookReviewer.periphery.externalSystems.HttpClientFactory;
 import bookReviewer.business.boundary.out.externalSystems.ReceiveOffersOfBuchVerkauf24;
 import bookReviewer.business.shared.model.MediaType;
 import bookReviewer.business.useCase.query.getOffersOfBookUseCase.OfferOutput;
 import bookReviewer.business.useCase.query.getOffersOfBookUseCase.Vendor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -17,15 +18,13 @@ import java.util.ArrayList;
 @Service
 @Qualifier("ReceiveOffersOfBuchVerkauf24Service")
 public class ReceiveOffersOfBuchVerkauf24Service implements ReceiveOffersOfBuchVerkauf24 {
+
+    @Autowired
+    @Qualifier("Buchverkauf24AdapterService")
+    BuchVerkauf24Adapter buchVerkauf24Adapter;
+
     public ArrayList<OfferOutput> receiveOffers(String isbn) throws Exception {
-        RestTemplate restTemplate = new RestTemplate(HttpClientFactory.getClientHttpRequestFactory());
-        ResponseEntity<OfferApi2[]> response = restTemplate.getForEntity(
-                "http://localhost:9091/offer/" + isbn,
-                OfferApi2[].class);
-        if (response.getStatusCode().isError()) throw new Exception();
-        OfferApi2[] offerApi2s = response.getBody();
-        ArrayList<OfferOutput> offers = offerApi2tToOfferMapper(offerApi2s, isbn);
-        return offers;
+        return offerApi2tToOfferMapper(buchVerkauf24Adapter.queryOffers(isbn), isbn);
     }
 
     private static ArrayList<OfferOutput> offerApi2tToOfferMapper(OfferApi2[] offerApi2s, String isbn) {

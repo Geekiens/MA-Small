@@ -14,6 +14,7 @@ import java.util.List;
 @Qualifier("FindAllBooksService")
 public class FindAllBooksService implements FindAllBooks {
     @Autowired
+    @Qualifier("BookRepositoryService")
     BookRepository bookRepository;
     public List<Book> findAllBooks(){
         return BookMapper.mapList(bookRepository.findAll());

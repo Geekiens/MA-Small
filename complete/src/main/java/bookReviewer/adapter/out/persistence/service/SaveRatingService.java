@@ -16,12 +16,15 @@ import org.springframework.stereotype.Service;
 @Qualifier("SaveRatingService")
 public class SaveRatingService implements SaveRating {
     @Autowired
+    @Qualifier("RatingRepositoryService")
     RatingRepository ratingRepository;
 
     @Autowired
+    @Qualifier("UserRepositoryService")
     UserRepository userRepository;
 
     @Autowired
+    @Qualifier("BookRepositoryService")
     BookRepository bookRepository;
 
     public Long saveRating(Rating rating){
@@ -31,6 +34,6 @@ public class SaveRatingService implements SaveRating {
             author = user.getUsername();
         }
         Book book = bookRepository.findById(rating.getBookId()).orElse(null);
-        return ratingRepository.saveAndFlush(RatingMapper.map(rating, book, author)).getId();
+        return ratingRepository.saveAndFlush(RatingMapper.map(rating, book, author));
     }
 }

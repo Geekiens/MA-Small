@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 @Qualifier("DeleteBookByIdService")
 public class DeleteBookByIdService implements DeleteBookById {
     @Autowired
+    @Qualifier("BookRepositoryService")
     BookRepository bookRepository;
     public void deleteBookById(Long bookId){
         bookRepository.deleteById(bookId);

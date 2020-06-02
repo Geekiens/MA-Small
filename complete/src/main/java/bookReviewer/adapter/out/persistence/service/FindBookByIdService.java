@@ -14,6 +14,7 @@ import java.util.Optional;
 @Qualifier("FindBookByIdService")
 public class FindBookByIdService implements FindBookById {
     @Autowired
+    @Qualifier("BookRepositoryService")
     BookRepository bookRepository;
 
     public Optional<Book> findBookById(Long bookId){

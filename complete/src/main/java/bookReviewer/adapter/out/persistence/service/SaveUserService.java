@@ -12,9 +12,10 @@ import org.springframework.stereotype.Service;
 @Qualifier("SaveUserService")
 public class SaveUserService implements SaveUser {
     @Autowired
+    @Qualifier("UserRepositoryService")
     UserRepository userRepository;
 
     public Long saveUser(User user){
-        return userRepository.saveAndFlush(UserMapper.map(user)).getId();
+        return userRepository.saveAndFlush(UserMapper.map(user));
     }
 }

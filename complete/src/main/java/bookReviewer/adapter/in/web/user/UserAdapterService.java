@@ -7,7 +7,7 @@ import bookReviewer.business.shared.model.Role;
 import bookReviewer.business.useCase.command.registerUserUseCase.RegisterUserCommand;
 import bookReviewer.business.useCase.query.getTokenByLoginUseCase.LoginInput;
 import bookReviewer.business.useCase.query.getTokenByLoginUseCase.LoginOutput;
-import bookReviewer.adapter.in.web.util.JwtProvider;
+import bookReviewer.adapter.in.web.util.token.JwtProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -23,6 +23,9 @@ public class UserAdapterService implements UserAdapter {
     @Autowired
     @Qualifier("GetTokenByLoginService")
     GetTokenByLoginUseCase getTokenByLoginUseCase;
+
+    @Autowired
+    JwtProvider jwtProvider;
 
     public void registerUser(String username, String password, String email){
         RegisterUserCommand registerUserCommand = new RegisterUserCommand();
@@ -43,7 +46,8 @@ public class UserAdapterService implements UserAdapter {
         LoginInput loginInput = new LoginInput(username, password);
         try {
             LoginOutput loginOutput = getTokenByLoginUseCase.loginUser(loginInput);
-            String token = JwtProvider.createJWT(loginOutput);
+            System.out.println(loginOutput.getUsername());
+            String token = jwtProvider.createJWT(loginOutput);
             return token;
 
         }catch (Exception e){
