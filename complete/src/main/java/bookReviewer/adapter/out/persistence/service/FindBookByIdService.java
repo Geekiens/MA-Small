@@ -4,18 +4,17 @@ import bookReviewer.adapter.out.persistence.mapping.persistenceToEntity.BookMapp
 import bookReviewer.application.boundary.out.persistence.FindBookById;
 import bookReviewer.entity.book.Book;
 import bookReviewer.adapter.out.persistence.repository.BookRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@Service
-@Qualifier("FindBookByIdService")
+
 public class FindBookByIdService implements FindBookById {
-    @Autowired
-    @Qualifier("BookRepositoryService")
+
     BookRepository bookRepository;
+
+    public FindBookByIdService(BookRepository bookRepository){
+        this.bookRepository = bookRepository;
+    }
 
     public Optional<Book> findBookById(Long bookId){
         return bookRepository.findById(bookId).isPresent()

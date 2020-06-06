@@ -7,21 +7,18 @@ import bookReviewer.application.shared.mapper.businessToEntity.RoleMapper;
 import bookReviewer.application.boundary.out.persistence.DeleteBookById;
 import bookReviewer.application.boundary.out.persistence.FindBookById;
 import bookReviewer.entity.user.Role;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
 
-@Service
-@Qualifier("DeleteBookService")
 public class DeleteBookService implements DeleteBookUseCase {
 
-    @Autowired
-    @Qualifier("FindBookByIdService")
     FindBookById findBookById;
 
-    @Autowired
-    @Qualifier("DeleteBookByIdService")
     DeleteBookById deleteBookById;
+
+    public DeleteBookService(FindBookById findBookById, DeleteBookById deleteBookById){
+        this.findBookById = findBookById;
+        this.deleteBookById = deleteBookById;
+
+    }
 
     public void deleteBook(DeleteBookCommand deleteBookCommand) {
         CheckRole.checkHasMinimumRequiredRole(RoleMapper.map(deleteBookCommand.getRole()), Role.MODERATOR);

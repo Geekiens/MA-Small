@@ -10,27 +10,23 @@ import bookReviewer.entity.user.Activity;
 import bookReviewer.entity.user.SubmissionsDate;
 import bookReviewer.entity.user.ActivityType;
 import bookReviewer.entity.user.User;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
-@Service
-@Qualifier("CreateBookService")
 public class CreateBookService implements CreateBookUseCase {
 
-    @Autowired
-    @Qualifier("SaveBookService")
     SaveBook saveBook;
 
-    @Autowired
-    @Qualifier("SaveActivityService")
     SaveActivity saveActivity;
 
-    @Autowired
-    @Qualifier("FindUserByIdService")
     FindUserById findUserById;
+
+    public CreateBookService(SaveBook saveBook, SaveActivity saveActivity, FindUserById findUserById){
+        this.saveBook = saveBook;
+        this.saveActivity = saveActivity;
+        this.findUserById = findUserById;
+    };
+
 
     public Long createBook(CreateBookCommand createBookCommand) {
         Book book = BookEntityMapper.map(createBookCommand.getBook());

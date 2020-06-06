@@ -3,14 +3,14 @@ package bookReviewer.adapter.in.web.book;
 import bookReviewer.adapter.in.web.util.token.TokenDecoder;
 import bookReviewer.application.useCase.command.createBookUseCase.Book;
 import bookReviewer.application.useCase.command.createBookUseCase.CreateBookCommand;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-@Service
 public class CreateBookCommandMapper {
 
-    @Autowired
     TokenDecoder tokenDecoder;
+
+    public CreateBookCommandMapper(TokenDecoder tokenDecoder){
+        this.tokenDecoder = tokenDecoder;
+    }
 
     public CreateBookCommand map(String token, NewBook newBook){
         CreateBookCommand createBookCommand = new CreateBookCommand();

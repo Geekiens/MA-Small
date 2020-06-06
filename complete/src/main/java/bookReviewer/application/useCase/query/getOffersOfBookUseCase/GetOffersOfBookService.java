@@ -2,6 +2,7 @@ package bookReviewer.application.useCase.query.getOffersOfBookUseCase;
 
 import bookReviewer.application.boundary.in.useCase.query.GetOffersOfBookUseCase;
 import bookReviewer.application.boundary.out.externalSystems.ReceiveOffersOfBuchVerkauf24;
+import bookReviewer.application.boundary.out.externalSystems.ReceiveOffersOfBuchladen123;
 import bookReviewer.application.boundary.out.externalSystems.ReceiveOffersOfYourFavoriteBookVendor;
 import bookReviewer.application.boundary.out.persistence.FindAllOfferHistoriesByIsbn;
 import bookReviewer.application.boundary.out.persistence.FindBookById;
@@ -11,44 +12,41 @@ import bookReviewer.application.shared.exception.ResourceNotFoundException;
 import bookReviewer.application.shared.mapper.businessToEntity.MediaTypeMapper;
 import bookReviewer.entity.book.Book;
 import bookReviewer.entity.offerHistory.OfferHistroy;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
-@Qualifier("GetOffersOfBookService")
 public class GetOffersOfBookService implements GetOffersOfBookUseCase {
-    @Autowired
-    @Qualifier("FindBookByIdService")
     FindBookById findBookById;
 
-    @Autowired
-    @Qualifier("FindAllOfferHistoriesByIsbnService")
     FindAllOfferHistoriesByIsbn findAllOfferHistoriesByIsbn;
 
-    @Autowired
-    @Qualifier("FindOfferHistoryService")
     FindOfferHistory findOfferHistory;
 
-    @Autowired
-    @Qualifier("SaveOfferHistoryService")
     SaveOfferHistory saveOfferHistory;
 
-    @Autowired
-    @Qualifier("ReceiveOffersOfBuchladen123Service")
-    bookReviewer.application.boundary.out.externalSystems.ReceiveOffersOfBuchladen123 ReceiveOffersOfBuchladen123;
+    ReceiveOffersOfBuchladen123 receiveOffersOfBuchladen123;
 
-    @Autowired
-    @Qualifier("ReceiveOffersOfBuchVerkauf24Service")
     ReceiveOffersOfBuchVerkauf24 receiveOffersOfBuchVerkauf24;
 
-    @Autowired
-    @Qualifier("ReceiveOffersOfYourFavoriteBookVendorService")
     ReceiveOffersOfYourFavoriteBookVendor receiveOffersOfYourFavoriteBookVendor;
+
+    public GetOffersOfBookService(FindBookById findBookById,
+                                  FindAllOfferHistoriesByIsbn findAllOfferHistoriesByIsbn,
+                                  FindOfferHistory findOfferHistory,
+                                  SaveOfferHistory saveOfferHistory,
+                                  ReceiveOffersOfBuchladen123 receiveOffersOfBuchladen123,
+                                  ReceiveOffersOfBuchVerkauf24 receiveOffersOfBuchVerkauf24,
+                                  ReceiveOffersOfYourFavoriteBookVendor receiveOffersOfYourFavoriteBookVendor
+                                  ){
+        this.findBookById = findBookById;
+        this.findAllOfferHistoriesByIsbn = findAllOfferHistoriesByIsbn;
+        this.findOfferHistory = findOfferHistory;
+        this.receiveOffersOfBuchladen123 = receiveOffersOfBuchladen123;
+        this.receiveOffersOfBuchVerkauf24 = receiveOffersOfBuchVerkauf24;
+        this.receiveOffersOfYourFavoriteBookVendor = receiveOffersOfYourFavoriteBookVendor;
+    }
 
     public ArrayList<OfferOutput> getOffers(Long bookId) {
         String isbn = getIsbnById(bookId);
@@ -113,7 +111,7 @@ public class GetOffersOfBookService implements GetOffersOfBookUseCase {
 
     private ArrayList<OfferOutput> getBuchladen123Offers(String isbn, Long bookId) {
         try{
-            ArrayList<OfferOutput> offers = ReceiveOffersOfBuchladen123.receiveOffers(isbn);
+            ArrayList<OfferOutput> offers = receiveOffersOfBuchladen123.receiveOffers(isbn);
             cacheRequestedOffers(offers, isbn, bookId);
             return offers;
         } catch (Exception e) {

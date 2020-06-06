@@ -6,20 +6,17 @@ import bookReviewer.application.shared.service.HashingService;
 import bookReviewer.application.boundary.out.persistence.SaveUser;
 import bookReviewer.entity.user.Credentials;
 import bookReviewer.entity.user.User;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
-@Service
-@Qualifier("RegisterUserService")
 public class RegisterUserService implements RegisterUserUseCase {
 
-    @Autowired
-    @Qualifier("SaveUserService")
     SaveUser saveUser;
+
+    public RegisterUserService(SaveUser saveUser){
+        this.saveUser = saveUser;
+    }
 
     public void registerUser(RegisterUserCommand registerUserCommand) throws Exception {
         byte[] salt = getSalt();

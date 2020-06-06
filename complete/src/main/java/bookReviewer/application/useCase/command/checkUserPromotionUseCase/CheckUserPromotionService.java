@@ -6,27 +6,25 @@ import bookReviewer.application.boundary.out.persistence.FindAllUsers;
 import bookReviewer.application.boundary.out.persistence.SaveUser;
 import bookReviewer.entity.user.Role;
 import bookReviewer.entity.user.User;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-@Qualifier("CheckUserPromotionService")
+
 public class CheckUserPromotionService implements CheckUserPromotionUseCase {
 
-    @Autowired
-    @Qualifier("FindAllUsersService")
     FindAllUsers findAllUsers;
 
-    @Autowired
-    @Qualifier("SaveUserService")
     SaveUser saveUser;
 
-    @Autowired
-    @Qualifier("FindAllActivitiesByUserService")
     FindAllActivitiesByUser findAllActivitiesByUser;
+
+    public CheckUserPromotionService(FindAllUsers findAllUsers,
+                                     SaveUser saveUser,
+                                     FindAllActivitiesByUser findAllActivitiesByUser){
+        this.findAllUsers = findAllUsers;
+        this.saveUser = saveUser;
+        this.findAllActivitiesByUser = findAllActivitiesByUser;
+    }
 
     public void checkForUserPromotions(){
         List<User> users = findAllUsers.findAllUsers();

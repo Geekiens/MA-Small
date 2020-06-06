@@ -1,6 +1,6 @@
-package bookReviewer.business.boundary.out.externalSystems;
+package bookReviewer.application.boundary.out.externalSystems;
 
-import bookReviewer.business.useCase.query.getOffersOfBookUseCase.OfferOutput;
+import bookReviewer.application.useCase.query.getOffersOfBookUseCase.OfferOutput;
 
 import java.util.ArrayList;
 

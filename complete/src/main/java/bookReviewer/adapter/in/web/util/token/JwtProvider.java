@@ -1,22 +1,19 @@
 package bookReviewer.adapter.in.web.util.token;
 
 import bookReviewer.application.useCase.query.getTokenByLoginUseCase.LoginOutput;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
 
-@Service
-@Qualifier("JwtProvider")
-public final class JwtProvider {
+public class JwtProvider {
 
-    @Autowired
-    @Qualifier("JwtAdapterService")
     JwtAdapter jwtAdapter;
+
+    public JwtProvider(JwtAdapter jwtAdapter){
+        this.jwtAdapter = jwtAdapter;
+    }
 
     public String createJWT(LoginOutput loginOutput) {
         TokenInformation tokenInformation = new TokenInformation();

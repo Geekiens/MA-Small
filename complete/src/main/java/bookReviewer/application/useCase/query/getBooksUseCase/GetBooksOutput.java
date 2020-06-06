@@ -1,4 +1,4 @@
-package bookReviewer.business.useCase.query.getBooksUseCase;
+package bookReviewer.application.useCase.query.getBooksUseCase;
 
 import java.util.Arrays;
 

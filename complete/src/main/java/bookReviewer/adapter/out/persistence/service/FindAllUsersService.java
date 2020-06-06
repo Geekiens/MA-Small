@@ -6,23 +6,20 @@ import bookReviewer.entity.user.User;
 import bookReviewer.adapter.out.persistence.model.Activity;
 import bookReviewer.adapter.out.persistence.repository.ActivityRepository;
 import bookReviewer.adapter.out.persistence.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
-@Qualifier("FindAllUsersService")
 public class FindAllUsersService implements FindAllUsers {
-    @Autowired
-    @Qualifier("UserRepositoryService")
+
+    ActivityRepository activityRepository;
+
     UserRepository userRepository;
 
-    @Autowired
-    @Qualifier("ActivityRepositoryService")
-    ActivityRepository activityRepository;
+    public FindAllUsersService(ActivityRepository activityRepository, UserRepository userRepository){
+        this.activityRepository = activityRepository;
+        this.userRepository = userRepository;
+    }
 
     public List<User> findAllUsers(){
         List<bookReviewer.adapter.out.persistence.model.User> userList = userRepository.findAll();

@@ -5,22 +5,19 @@ import bookReviewer.application.boundary.out.persistence.FindUserById;
 import bookReviewer.entity.user.User;
 import bookReviewer.adapter.out.persistence.repository.ActivityRepository;
 import bookReviewer.adapter.out.persistence.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@Service
-@Qualifier("FindUserByIdService")
 public class FindUserByIdService implements FindUserById {
-    @Autowired
-    @Qualifier("UserRepositoryService")
+
+    ActivityRepository activityRepository;
+
     UserRepository userRepository;
 
-    @Autowired
-    @Qualifier("ActivityRepositoryService")
-    ActivityRepository activityRepository;
+    public FindUserByIdService(ActivityRepository activityRepository, UserRepository userRepository){
+        this.activityRepository = activityRepository;
+        this.userRepository = userRepository;
+    }
 
     public Optional<User> findUserById(Long userId){
         bookReviewer.adapter.out.persistence.model.User user = userRepository.findById(userId).orElse(null);

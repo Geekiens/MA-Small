@@ -5,21 +5,19 @@ import bookReviewer.application.shared.exception.ResourceNotFoundException;
 import bookReviewer.application.boundary.out.persistence.FindAllRatingsByBookId;
 import bookReviewer.application.boundary.out.persistence.FindBookById;
 import bookReviewer.entity.rating.AverageRatingCalculatorService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
 
-@Service
-@Qualifier("GetBookService")
+
+
 public class GetBookService implements GetBookUseCase {
 
-    @Autowired
-    @Qualifier("FindBookByIdService")
     FindBookById findBookById;
 
-    @Autowired
-    @Qualifier("FindAllRatingsByBookIdService")
     FindAllRatingsByBookId findAllRatingsByBookId;
+
+    public GetBookService(FindBookById findBookById, FindAllRatingsByBookId findAllRatingsByBookId){
+        this.findBookById =findBookById;
+        this.findAllRatingsByBookId = findAllRatingsByBookId;
+    }
 
     public GetBookOutput getBook(long id) {
         bookReviewer.entity.book.Book book = findBookById.findBookById(id).orElseThrow(() -> new ResourceNotFoundException("book not found with id " + id));

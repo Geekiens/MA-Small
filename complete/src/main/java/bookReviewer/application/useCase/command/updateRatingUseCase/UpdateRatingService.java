@@ -9,25 +9,22 @@ import bookReviewer.application.boundary.out.persistence.SaveRating;
 
 import bookReviewer.entity.book.Book;
 import bookReviewer.entity.rating.Rating;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
 
-@Service
-@Qualifier("UpdateRatingService")
 public class UpdateRatingService implements UpdateRatingUseCase {
 
-    @Autowired
-    @Qualifier("SaveRatingService")
     SaveRating saveRating;
 
-    @Autowired
-    @Qualifier("FindBookByIdService")
     FindBookById findBookById;
 
-    @Autowired
-    @Qualifier("FindRatingByIdService")
     FindRatingById findRatingById;
+
+    public UpdateRatingService(SaveRating saveRating,
+                               FindBookById findBookById,
+                               FindRatingById findRatingById){
+        this.saveRating = saveRating;
+        this.findBookById = findBookById;
+        this.findRatingById = findRatingById;
+    }
 
     public void updateRating(UpdateRatingCommand updateRatingCommand) {
         Book book = findBookById.findBookById(updateRatingCommand.getBookId()).orElse(null);

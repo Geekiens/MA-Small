@@ -5,44 +5,44 @@ import bookReviewer.application.boundary.in.useCase.command.DeleteRatingUseCase;
 import bookReviewer.application.boundary.in.useCase.command.UpdateRatingUseCase;
 import bookReviewer.application.boundary.in.useCase.query.GetRatingsOfBookUseCase;
 import bookReviewer.application.boundary.in.useCase.query.GetRatingsOfBookWithContentUseCase;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-@Qualifier("RatingAdapterService")
 public class RatingAdapterService implements RatingAdapter {
 
-    @Autowired
-    @Qualifier("CreateRatingService")
     CreateRatingUseCase createRatingUseCase;
 
-    @Autowired
-    @Qualifier("DeleteRatingService")
     DeleteRatingUseCase deleteRatingUseCase;
 
-    @Autowired
-    @Qualifier("UpdateRatingService")
     UpdateRatingUseCase updateRatingUseCase;
 
-    @Autowired
-    @Qualifier("GetRatingsOfBookService")
     GetRatingsOfBookUseCase getRatingsOfBookUseCase;
 
-    @Autowired
-    @Qualifier("GetRatingsOfBookWithContentService")
     GetRatingsOfBookWithContentUseCase getRatingsOfBookWithContentUseCase;
 
-    @Autowired
     CreateRatingCommandMapper createRatingCommandMapper;
 
-    @Autowired
     DeleteRatingCommandMapper deleteRatingCommandMapper;
 
-    @Autowired
     UpdateRatingCommandMapper updateRatingCommandMapper;
+
+    public RatingAdapterService(CreateRatingUseCase createRatingUseCase,
+                                DeleteRatingUseCase deleteRatingUseCase,
+                                UpdateRatingUseCase updateRatingUseCase,
+                                GetRatingsOfBookUseCase getRatingsOfBookUseCase,
+                                GetRatingsOfBookWithContentUseCase getRatingsOfBookWithContentUseCase,
+                                CreateRatingCommandMapper createRatingCommandMapper,
+                                DeleteRatingCommandMapper deleteRatingCommandMapper,
+                                UpdateRatingCommandMapper updateRatingCommandMapper){
+        this.createRatingUseCase = createRatingUseCase;
+        this.deleteRatingUseCase = deleteRatingUseCase;
+        this.updateRatingUseCase = updateRatingUseCase;
+        this.getRatingsOfBookUseCase = getRatingsOfBookUseCase;
+        this.getRatingsOfBookWithContentUseCase = getRatingsOfBookWithContentUseCase;
+        this.createRatingCommandMapper = createRatingCommandMapper;
+        this.deleteRatingCommandMapper = deleteRatingCommandMapper;
+        this.updateRatingCommandMapper = updateRatingCommandMapper;
+    }
 
 
     public Long createRating(Long bookId, NewRating newRating, String token){

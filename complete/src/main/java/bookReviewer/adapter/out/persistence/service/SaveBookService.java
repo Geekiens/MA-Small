@@ -4,16 +4,14 @@ import bookReviewer.adapter.out.persistence.mapping.entityToPersistence.BookMapp
 import bookReviewer.application.boundary.out.persistence.SaveBook;
 import bookReviewer.entity.book.Book;
 import bookReviewer.adapter.out.persistence.repository.BookRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
 
-@Service
-@Qualifier("SaveBookService")
 public class SaveBookService implements SaveBook {
-    @Autowired
-    @Qualifier("BookRepositoryService")
+
     BookRepository bookRepository;
+
+    public SaveBookService(BookRepository bookRepository){
+        this.bookRepository = bookRepository;
+    }
 
     public Long saveBook(Book book){
         return bookRepository.saveAndFlush(BookMapper.map(book));

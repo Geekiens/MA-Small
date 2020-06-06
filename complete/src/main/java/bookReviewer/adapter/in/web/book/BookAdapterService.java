@@ -11,42 +11,41 @@ import bookReviewer.application.useCase.command.deleteBookUseCase.DeleteBookComm
 import bookReviewer.application.useCase.query.getBookUseCase.GetBookOutput;
 import bookReviewer.application.useCase.query.getBooksUseCase.GetBooksOutput;
 import bookReviewer.application.useCase.query.getOffersOfBookUseCase.OfferOutput;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
-@Qualifier("BookAdapterService")
 public class BookAdapterService implements BookAdapter{
 
-    @Autowired
-    @Qualifier("CreateBookService")
     CreateBookUseCase createBookUseCase;
 
-    @Autowired
-    @Qualifier("DeleteBookService")
     DeleteBookUseCase deleteBookUseCase;
 
-    @Autowired
-    @Qualifier("GetBookService")
     GetBookUseCase getBookUseCase;
 
-    @Autowired
-    @Qualifier("GetOffersOfBookService")
     GetOffersOfBookUseCase getOffersOfBookUseCase;
 
-    @Autowired
-    @Qualifier("GetBooksService")
     GetBooksUseCase getBooksUseCase;
 
-    @Autowired
     TokenDecoder tokenDecoder;
 
-    @Autowired
     CreateBookCommandMapper createBookCommandMapper;
+
+    public BookAdapterService(CreateBookUseCase createBookUseCase,
+                              DeleteBookUseCase deleteBookUseCase,
+                              GetBookUseCase getBookUseCase,
+                              GetBooksUseCase getBooksUseCase,
+                              GetOffersOfBookUseCase getOffersOfBookUseCase,
+                              TokenDecoder tokenDecoder,
+                              CreateBookCommandMapper createBookCommandMapper){
+        this.createBookUseCase = createBookUseCase;
+        this.deleteBookUseCase = deleteBookUseCase;
+        this.getBookUseCase = getBookUseCase;
+        this.getBooksUseCase = getBooksUseCase;
+        this.getOffersOfBookUseCase = getOffersOfBookUseCase;
+        this.tokenDecoder = tokenDecoder;
+        this.createBookCommandMapper = createBookCommandMapper;
+    }
 
     public Long createBook(NewBook newBook, String token){
          return createBookUseCase.createBook(createBookCommandMapper.map(token, newBook));

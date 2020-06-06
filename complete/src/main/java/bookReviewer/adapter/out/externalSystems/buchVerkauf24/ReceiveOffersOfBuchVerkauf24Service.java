@@ -5,20 +5,17 @@ import bookReviewer.application.boundary.out.externalSystems.ReceiveOffersOfBuch
 import bookReviewer.application.shared.model.MediaType;
 import bookReviewer.application.useCase.query.getOffersOfBookUseCase.OfferOutput;
 import bookReviewer.application.useCase.query.getOffersOfBookUseCase.Vendor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
-@Service
-@Qualifier("ReceiveOffersOfBuchVerkauf24Service")
 public class ReceiveOffersOfBuchVerkauf24Service implements ReceiveOffersOfBuchVerkauf24 {
 
-    @Autowired
-    @Qualifier("Buchverkauf24AdapterService")
     BuchVerkauf24Adapter buchVerkauf24Adapter;
+
+    public ReceiveOffersOfBuchVerkauf24Service(BuchVerkauf24Adapter buchVerkauf24Adapter){
+        this.buchVerkauf24Adapter = buchVerkauf24Adapter;
+    }
 
     public ArrayList<OfferOutput> receiveOffers(String isbn) throws Exception {
         return offerApi2tToOfferMapper(buchVerkauf24Adapter.queryOffers(isbn), isbn);

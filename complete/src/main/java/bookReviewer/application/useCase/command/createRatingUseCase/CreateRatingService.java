@@ -14,39 +14,35 @@ import bookReviewer.entity.user.Activity;
 import bookReviewer.entity.user.ActivityType;
 import bookReviewer.entity.user.User;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
-
 import java.util.Date;
 
-@Service
-@Qualifier("CreateRatingService")
 public class CreateRatingService implements CreateRatingUseCase {
 
-    @Autowired
-    @Qualifier("SaveRatingService")
     SaveRating saveRating;
 
-    @Autowired
-    @Qualifier("FindAllRatingsByBookIdAndUserIdService")
     FindAllRatingsByBookIdAndUserId findAllRatingsByBookIdAndUserId;
 
-    @Autowired
-    @Qualifier("FindBookByIdService")
     FindBookById findBookById;
 
-    @Autowired
-    @Qualifier("FindUserByIdService")
     FindUserById findUserById;
 
-    @Autowired
-    @Qualifier("SaveActivityService")
     SaveActivity saveActivity;
 
-    @Autowired
-    @Qualifier("SendEmailProviderService")
     SendEmailProvider sendEmailProvider;
+
+    public CreateRatingService(SaveRating saveRating,
+                               FindAllRatingsByBookIdAndUserId findAllRatingsByBookIdAndUserId,
+                               FindBookById findBookById,
+                               FindUserById findUserById,
+                               SaveActivity saveActivity,
+                               SendEmailProvider sendEmailProvider){
+        this.saveRating = saveRating;
+        this.findAllRatingsByBookIdAndUserId = findAllRatingsByBookIdAndUserId;
+        this.findBookById = findBookById;
+        this.findUserById = findUserById;
+        this.saveActivity = saveActivity;
+        this.sendEmailProvider = sendEmailProvider;
+    }
 
     public Long createRating(CreateRatingCommand createRatingCommand) {
         Book book = findBookById.findBookById(createRatingCommand.getBookId()).orElseThrow(() -> new ResourceNotFoundException("book not found with id " + createRatingCommand.getBookId()));

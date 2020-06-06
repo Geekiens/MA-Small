@@ -1,6 +1,6 @@
-package bookReviewer.business.boundary.in.useCase.query;
+package bookReviewer.application.boundary.in.useCase.query;
 
-import bookReviewer.business.useCase.query.getBooksUseCase.GetBooksOutput;
+import bookReviewer.application.useCase.query.getBooksUseCase.GetBooksOutput;
 
 import java.util.List;
 

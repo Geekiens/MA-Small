@@ -5,17 +5,14 @@ import bookReviewer.application.shared.mapper.entityToBusiness.RoleMapper;
 import bookReviewer.application.shared.service.HashingService;
 import bookReviewer.application.boundary.out.persistence.FindUserByUsername;
 import bookReviewer.entity.user.User;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
 
-@Service
-@Qualifier("GetTokenByLoginService")
 public class GetTokenByLoginService implements GetTokenByLoginUseCase {
 
-    @Autowired
-    @Qualifier("FindUserByUsernameService")
     FindUserByUsername findUserByUsername;
+
+    public GetTokenByLoginService(FindUserByUsername findUserByUsername){
+        this.findUserByUsername = findUserByUsername;
+    }
 
     public LoginOutput loginUser(LoginInput loginInput) throws Exception{
         System.out.println("Username:" + loginInput.getUsername());

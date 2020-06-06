@@ -5,25 +5,21 @@ import bookReviewer.application.boundary.out.persistence.FindAllRatingsByBookIdW
 import bookReviewer.application.boundary.out.persistence.FindUserById;
 import bookReviewer.entity.rating.Rating;
 import bookReviewer.entity.user.User;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
-@Qualifier("GetRatingsOfBookWithContentService")
 public class GetRatingsOfBookWithContentService implements GetRatingsOfBookWithContentUseCase {
 
-    @Autowired
-    @Qualifier("FindAllRatingsByBookIdWithContentService")
     FindAllRatingsByBookIdWithContent findAllRatingsByBookIdWithContent;
 
-    @Autowired
-    @Qualifier("FindUserByIdService")
     FindUserById findUserById;
 
+    public GetRatingsOfBookWithContentService(FindAllRatingsByBookIdWithContent findAllRatingsByBookIdWithContent,
+                                              FindUserById findUserById){
+        this.findAllRatingsByBookIdWithContent = findAllRatingsByBookIdWithContent;
+        this.findUserById = findUserById;
+    }
 
     public List<GetRatingsWithCommentOutput> getRatingsOfBookWithContent(Long bookId) {
         List<Rating> ratings = findAllRatingsByBookIdWithContent.findAllRatingsByBookIdWithContent(bookId);
