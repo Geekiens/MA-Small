@@ -1,7 +1,7 @@
 package bookReviewer.adapter.out.persistence.service;
 
 import bookReviewer.adapter.out.persistence.mapping.entityToPersistence.BookMapper;
-import bookReviewer.business.boundary.out.persistence.SaveBook;
+import bookReviewer.application.boundary.out.persistence.SaveBook;
 import bookReviewer.entity.book.Book;
 import bookReviewer.adapter.out.persistence.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;

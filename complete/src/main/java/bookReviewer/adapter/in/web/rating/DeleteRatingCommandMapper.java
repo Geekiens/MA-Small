@@ -1,8 +1,8 @@
 package bookReviewer.adapter.in.web.rating;
 
 import bookReviewer.adapter.in.web.util.token.TokenDecoder;
-import bookReviewer.business.shared.model.Role;
-import bookReviewer.business.useCase.command.deleteRatingUseCase.DeleteRatingCommand;
+import bookReviewer.application.shared.model.Role;
+import bookReviewer.application.useCase.command.deleteRatingUseCase.DeleteRatingCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

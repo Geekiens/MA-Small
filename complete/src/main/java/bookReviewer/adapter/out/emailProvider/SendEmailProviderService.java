@@ -1,6 +1,6 @@
 package bookReviewer.adapter.out.emailProvider;
 
-import bookReviewer.business.boundary.out.emailProvider.SendEmailProvider;
+import bookReviewer.application.boundary.out.emailProvider.SendEmailProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;

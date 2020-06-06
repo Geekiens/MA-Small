@@ -2,10 +2,10 @@ package bookReviewer.adapter.out.externalSystems.yourFavoriteBookVendor;
 
 
 import bookReviewer.adapter.out.externalSystems.currencyApi.CurrencyApi;
-import bookReviewer.business.boundary.out.externalSystems.ReceiveOffersOfYourFavoriteBookVendor;
-import bookReviewer.business.shared.model.MediaType;
-import bookReviewer.business.useCase.query.getOffersOfBookUseCase.OfferOutput;
-import bookReviewer.business.useCase.query.getOffersOfBookUseCase.Vendor;
+import bookReviewer.application.boundary.out.externalSystems.ReceiveOffersOfYourFavoriteBookVendor;
+import bookReviewer.application.shared.model.MediaType;
+import bookReviewer.application.useCase.query.getOffersOfBookUseCase.OfferOutput;
+import bookReviewer.application.useCase.query.getOffersOfBookUseCase.Vendor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;

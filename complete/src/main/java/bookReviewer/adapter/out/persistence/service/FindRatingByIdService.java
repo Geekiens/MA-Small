@@ -1,7 +1,7 @@
 package bookReviewer.adapter.out.persistence.service;
 
 import bookReviewer.adapter.out.persistence.mapping.persistenceToEntity.RatingMapper;
-import bookReviewer.business.boundary.out.persistence.FindRatingById;
+import bookReviewer.application.boundary.out.persistence.FindRatingById;
 import bookReviewer.entity.rating.Rating;
 import bookReviewer.adapter.out.persistence.repository.RatingRepository;
 import org.springframework.beans.factory.annotation.Autowired;

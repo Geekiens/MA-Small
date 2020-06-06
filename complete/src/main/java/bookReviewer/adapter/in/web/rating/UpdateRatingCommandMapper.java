@@ -1,8 +1,8 @@
 package bookReviewer.adapter.in.web.rating;
 
 import bookReviewer.adapter.in.web.util.token.TokenDecoder;
-import bookReviewer.business.useCase.command.updateRatingUseCase.Rating;
-import bookReviewer.business.useCase.command.updateRatingUseCase.UpdateRatingCommand;
+import bookReviewer.application.useCase.command.updateRatingUseCase.Rating;
+import bookReviewer.application.useCase.command.updateRatingUseCase.UpdateRatingCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

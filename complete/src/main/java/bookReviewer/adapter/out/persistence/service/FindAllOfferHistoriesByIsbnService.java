@@ -1,7 +1,7 @@
 package bookReviewer.adapter.out.persistence.service;
 
 import bookReviewer.adapter.out.persistence.mapping.persistenceToEntity.OfferHistoryMapper;
-import bookReviewer.business.boundary.out.persistence.FindAllOfferHistoriesByIsbn;
+import bookReviewer.application.boundary.out.persistence.FindAllOfferHistoriesByIsbn;
 import bookReviewer.entity.offerHistory.OfferHistroy;
 import bookReviewer.adapter.out.persistence.repository.OfferHistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;

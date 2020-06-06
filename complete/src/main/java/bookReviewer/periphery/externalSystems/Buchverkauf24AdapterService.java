@@ -1,17 +1,15 @@
 package bookReviewer.periphery.externalSystems;
 
-import bookReviewer.adapter.out.externalSystems.buchLaden123.Buchladen123Adapter;
 import bookReviewer.adapter.out.externalSystems.buchVerkauf24.BuchVerkauf24Adapter;
 import bookReviewer.adapter.out.externalSystems.buchVerkauf24.OfferApi2;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 
-@Service
-@Qualifier("Buchverkauf24AdapterService")
 public class Buchverkauf24AdapterService implements BuchVerkauf24Adapter {
+
+    public Buchverkauf24AdapterService(){}
+
     public OfferApi2[] queryOffers(String isbn) throws Exception{
 
         RestTemplate restTemplate = new RestTemplate(HttpClientFactory.getClientHttpRequestFactory());

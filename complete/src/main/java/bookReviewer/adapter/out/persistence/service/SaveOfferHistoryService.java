@@ -1,7 +1,7 @@
 package bookReviewer.adapter.out.persistence.service;
 
 import bookReviewer.adapter.out.persistence.mapping.entityToPersistence.OfferHistoryMapper;
-import bookReviewer.business.boundary.out.persistence.SaveOfferHistory;
+import bookReviewer.application.boundary.out.persistence.SaveOfferHistory;
 import bookReviewer.entity.offerHistory.OfferHistroy;
 import bookReviewer.adapter.out.persistence.model.Book;
 import bookReviewer.adapter.out.persistence.repository.BookRepository;

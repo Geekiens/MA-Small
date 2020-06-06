@@ -1,7 +1,7 @@
 package bookReviewer.adapter.out.persistence.service;
 
 import bookReviewer.adapter.out.persistence.mapping.entityToPersistence.RatingMapper;
-import bookReviewer.business.boundary.out.persistence.SaveRating;
+import bookReviewer.application.boundary.out.persistence.SaveRating;
 import bookReviewer.entity.rating.Rating;
 import bookReviewer.adapter.out.persistence.model.Book;
 import bookReviewer.adapter.out.persistence.model.User;

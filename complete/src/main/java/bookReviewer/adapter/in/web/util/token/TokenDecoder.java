@@ -1,7 +1,7 @@
 package bookReviewer.adapter.in.web.util.token;
 
 import bookReviewer.adapter.in.web.util.InvalidTokenException;
-import bookReviewer.business.shared.model.Role;
+import bookReviewer.application.shared.model.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

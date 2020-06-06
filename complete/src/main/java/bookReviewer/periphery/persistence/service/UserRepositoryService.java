@@ -3,19 +3,18 @@ package bookReviewer.periphery.persistence.service;
 import bookReviewer.adapter.out.persistence.model.User;
 import bookReviewer.adapter.out.persistence.repository.UserRepository;
 import bookReviewer.periphery.persistence.repository.UserRepositoryJpa;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 import java.util.Optional;
 
-@Service
-@Qualifier("UserRepositoryService")
 public class UserRepositoryService implements UserRepository {
 
-    @Autowired
     UserRepositoryJpa userRepositoryJpa;
+
+    public UserRepositoryService(UserRepositoryJpa userRepositoryJpa){
+        this.userRepositoryJpa = userRepositoryJpa;
+    }
 
     public List<User> findAll(){
         return userRepositoryJpa.findAll();

@@ -1,17 +1,17 @@
 package bookReviewer.periphery.emailProvider;
 
 import bookReviewer.adapter.out.emailProvider.EmailAdapter;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
-@Service
-@Qualifier("EmailAdapterService")
+
 public class EmailAdapterService implements EmailAdapter {
+
+    public EmailAdapterService(){}
+
     public void send(String emailOfReceiver, String text, String subject) {
         final String emailSender = "max.master.thesis2@gmail.com";
         final String password = "supersafepassword";

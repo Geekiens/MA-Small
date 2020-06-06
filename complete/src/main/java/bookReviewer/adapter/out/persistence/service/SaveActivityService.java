@@ -1,7 +1,7 @@
 package bookReviewer.adapter.out.persistence.service;
 
 import bookReviewer.adapter.out.persistence.mapping.entityToPersistence.ActivityMapper;
-import bookReviewer.business.boundary.out.persistence.SaveActivity;
+import bookReviewer.application.boundary.out.persistence.SaveActivity;
 import bookReviewer.entity.user.Activity;
 import bookReviewer.adapter.out.persistence.model.User;
 import bookReviewer.adapter.out.persistence.repository.ActivityRepository;

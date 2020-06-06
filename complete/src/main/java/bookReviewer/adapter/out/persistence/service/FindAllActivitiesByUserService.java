@@ -2,7 +2,7 @@ package bookReviewer.adapter.out.persistence.service;
 
 import bookReviewer.adapter.out.persistence.mapping.entityToPersistence.UserMapper;
 import bookReviewer.adapter.out.persistence.mapping.persistenceToEntity.ActivityMapper;
-import bookReviewer.business.boundary.out.persistence.FindAllActivitiesByUser;
+import bookReviewer.application.boundary.out.persistence.FindAllActivitiesByUser;
 import bookReviewer.entity.user.Activity;
 import bookReviewer.entity.user.User;
 import bookReviewer.adapter.out.persistence.repository.ActivityRepository;

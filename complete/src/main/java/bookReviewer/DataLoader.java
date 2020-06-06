@@ -1,11 +1,11 @@
 package bookReviewer;
 
-import bookReviewer.business.boundary.in.useCase.command.RegisterUserUseCase;
-import bookReviewer.business.useCase.command.registerUserUseCase.RegisterUserCommand;
-import bookReviewer.business.useCase.command.registerUserUseCase.RegisterUserService;
+import bookReviewer.application.boundary.in.useCase.command.RegisterUserUseCase;
+import bookReviewer.application.useCase.command.registerUserUseCase.RegisterUserCommand;
+import bookReviewer.application.useCase.command.registerUserUseCase.RegisterUserService;
 import bookReviewer.adapter.out.persistence.model.Book;
 import bookReviewer.adapter.out.persistence.model.Rating;
-import bookReviewer.business.shared.model.Role;
+import bookReviewer.application.shared.model.Role;
 import bookReviewer.adapter.out.persistence.repository.BookRepository;
 import bookReviewer.adapter.out.persistence.repository.RatingRepository;
 import bookReviewer.periphery.persistence.service.BookRepositoryService;
@@ -25,7 +25,7 @@ public class DataLoader implements ApplicationRunner {
     private RegisterUserUseCase registerUserUseCase;
 
     @Autowired
-    public DataLoader(BookRepositoryService bookRepository, RegisterUserService registerUserService, RatingRepositoryService ratingRepository) {
+    public DataLoader(BookRepository bookRepository, RegisterUserUseCase registerUserService, RatingRepository ratingRepository) {
         this.bookRepository = bookRepository;
         this.registerUserUseCase = registerUserService;
         this.ratingRepository = ratingRepository;
@@ -106,4 +106,7 @@ public class DataLoader implements ApplicationRunner {
 
 
     }
+
 }
+
+

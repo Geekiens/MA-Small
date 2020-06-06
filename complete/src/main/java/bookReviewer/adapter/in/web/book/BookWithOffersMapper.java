@@ -1,7 +1,7 @@
 package bookReviewer.adapter.in.web.book;
 
-import bookReviewer.business.useCase.query.getBookUseCase.GetBookOutput;
-import bookReviewer.business.useCase.query.getOffersOfBookUseCase.OfferOutput;
+import bookReviewer.application.useCase.query.getBookUseCase.GetBookOutput;
+import bookReviewer.application.useCase.query.getOffersOfBookUseCase.OfferOutput;
 
 import java.util.List;
 

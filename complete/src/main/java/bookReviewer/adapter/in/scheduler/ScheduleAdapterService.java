@@ -1,7 +1,7 @@
 package bookReviewer.adapter.in.scheduler;
 
 
-import bookReviewer.business.boundary.in.useCase.command.CheckUserPromotionUseCase;
+import bookReviewer.application.boundary.in.useCase.command.CheckUserPromotionUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;

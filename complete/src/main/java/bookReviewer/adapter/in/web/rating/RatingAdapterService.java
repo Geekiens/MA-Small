@@ -1,10 +1,10 @@
 package bookReviewer.adapter.in.web.rating;
 
-import bookReviewer.business.boundary.in.useCase.command.CreateRatingUseCase;
-import bookReviewer.business.boundary.in.useCase.command.DeleteRatingUseCase;
-import bookReviewer.business.boundary.in.useCase.command.UpdateRatingUseCase;
-import bookReviewer.business.boundary.in.useCase.query.GetRatingsOfBookUseCase;
-import bookReviewer.business.boundary.in.useCase.query.GetRatingsOfBookWithContentUseCase;
+import bookReviewer.application.boundary.in.useCase.command.CreateRatingUseCase;
+import bookReviewer.application.boundary.in.useCase.command.DeleteRatingUseCase;
+import bookReviewer.application.boundary.in.useCase.command.UpdateRatingUseCase;
+import bookReviewer.application.boundary.in.useCase.query.GetRatingsOfBookUseCase;
+import bookReviewer.application.boundary.in.useCase.query.GetRatingsOfBookWithContentUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;

@@ -1,15 +1,12 @@
 package bookReviewer.adapter.out.externalSystems.buchLaden123;
 
-import bookReviewer.periphery.externalSystems.HttpClientFactory;
-import bookReviewer.business.boundary.out.externalSystems.ReceiveOffersOfBuchladen123;
-import bookReviewer.business.shared.model.MediaType;
-import bookReviewer.business.useCase.query.getOffersOfBookUseCase.OfferOutput;
-import bookReviewer.business.useCase.query.getOffersOfBookUseCase.Vendor;
+import bookReviewer.application.boundary.out.externalSystems.ReceiveOffersOfBuchladen123;
+import bookReviewer.application.shared.model.MediaType;
+import bookReviewer.application.useCase.query.getOffersOfBookUseCase.OfferOutput;
+import bookReviewer.application.useCase.query.getOffersOfBookUseCase.Vendor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

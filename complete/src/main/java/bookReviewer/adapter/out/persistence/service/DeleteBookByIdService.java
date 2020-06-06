@@ -1,6 +1,6 @@
 package bookReviewer.adapter.out.persistence.service;
 
-import bookReviewer.business.boundary.out.persistence.DeleteBookById;
+import bookReviewer.application.boundary.out.persistence.DeleteBookById;
 import bookReviewer.adapter.out.persistence.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

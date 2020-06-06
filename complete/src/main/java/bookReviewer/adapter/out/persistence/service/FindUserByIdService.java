@@ -1,7 +1,7 @@
 package bookReviewer.adapter.out.persistence.service;
 
 import bookReviewer.adapter.out.persistence.mapping.persistenceToEntity.UserMapper;
-import bookReviewer.business.boundary.out.persistence.FindUserById;
+import bookReviewer.application.boundary.out.persistence.FindUserById;
 import bookReviewer.entity.user.User;
 import bookReviewer.adapter.out.persistence.repository.ActivityRepository;
 import bookReviewer.adapter.out.persistence.repository.UserRepository;

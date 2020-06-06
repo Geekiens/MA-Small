@@ -1,8 +1,8 @@
 package bookReviewer.adapter.in.web.book;
 
 import bookReviewer.adapter.in.web.util.token.TokenDecoder;
-import bookReviewer.business.useCase.command.createBookUseCase.Book;
-import bookReviewer.business.useCase.command.createBookUseCase.CreateBookCommand;
+import bookReviewer.application.useCase.command.createBookUseCase.Book;
+import bookReviewer.application.useCase.command.createBookUseCase.CreateBookCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
