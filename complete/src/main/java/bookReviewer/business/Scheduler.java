@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class Scheduler {
 
     @Autowired
-    @Qualifier("CheckUserPromotionUseCaseImpl")
+    @Qualifier("CheckUserPromotionService")
     CheckUserPromotionUseCase checkUserPromotionUseCase;
 
     @Scheduled(fixedRate = 30000)
