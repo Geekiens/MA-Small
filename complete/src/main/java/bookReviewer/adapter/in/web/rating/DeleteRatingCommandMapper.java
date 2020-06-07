@@ -1,16 +1,16 @@
 package bookReviewer.adapter.in.web.rating;
 
 import bookReviewer.adapter.in.web.util.token.TokenDecoder;
-import bookReviewer.business.shared.model.Role;
-import bookReviewer.business.useCase.command.deleteRatingUseCase.DeleteRatingCommand;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import bookReviewer.application.shared.model.Role;
+import bookReviewer.application.useCase.command.deleteRatingUseCase.DeleteRatingCommand;
 
-@Service
 public class DeleteRatingCommandMapper {
 
-    @Autowired
     TokenDecoder tokenDecoder;
+
+    public DeleteRatingCommandMapper(TokenDecoder tokenDecoder){
+        this.tokenDecoder = tokenDecoder;
+    }
 
     public DeleteRatingCommand map(Long ratingId, String token){
         DeleteRatingCommand deleteRatingCommand = new DeleteRatingCommand();

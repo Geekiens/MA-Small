@@ -2,51 +2,50 @@ package bookReviewer.adapter.in.web.book;
 
 import bookReviewer.adapter.in.web.util.MapWithReflection;
 import bookReviewer.adapter.in.web.util.token.TokenDecoder;
-import bookReviewer.business.boundary.in.useCase.command.CreateBookUseCase;
-import bookReviewer.business.boundary.in.useCase.command.DeleteBookUseCase;
-import bookReviewer.business.boundary.in.useCase.query.GetBookUseCase;
-import bookReviewer.business.boundary.in.useCase.query.GetBooksUseCase;
-import bookReviewer.business.boundary.in.useCase.query.GetOffersOfBookUseCase;
-import bookReviewer.business.useCase.command.deleteBookUseCase.DeleteBookCommand;
-import bookReviewer.business.useCase.query.getBookUseCase.GetBookOutput;
-import bookReviewer.business.useCase.query.getBooksUseCase.GetBooksOutput;
-import bookReviewer.business.useCase.query.getOffersOfBookUseCase.OfferOutput;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
+import bookReviewer.application.boundary.in.useCase.command.CreateBookUseCase;
+import bookReviewer.application.boundary.in.useCase.command.DeleteBookUseCase;
+import bookReviewer.application.boundary.in.useCase.query.GetBookUseCase;
+import bookReviewer.application.boundary.in.useCase.query.GetBooksUseCase;
+import bookReviewer.application.boundary.in.useCase.query.GetOffersOfBookUseCase;
+import bookReviewer.application.useCase.command.deleteBookUseCase.DeleteBookCommand;
+import bookReviewer.application.useCase.query.getBookUseCase.GetBookOutput;
+import bookReviewer.application.useCase.query.getBooksUseCase.GetBooksOutput;
+import bookReviewer.application.useCase.query.getOffersOfBookUseCase.OfferOutput;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
-@Qualifier("BookAdapterService")
 public class BookAdapterService implements BookAdapter{
 
-    @Autowired
-    @Qualifier("CreateBookService")
     CreateBookUseCase createBookUseCase;
 
-    @Autowired
-    @Qualifier("DeleteBookService")
     DeleteBookUseCase deleteBookUseCase;
 
-    @Autowired
-    @Qualifier("GetBookService")
     GetBookUseCase getBookUseCase;
 
-    @Autowired
-    @Qualifier("GetOffersOfBookService")
     GetOffersOfBookUseCase getOffersOfBookUseCase;
 
-    @Autowired
-    @Qualifier("GetBooksService")
     GetBooksUseCase getBooksUseCase;
 
-    @Autowired
     TokenDecoder tokenDecoder;
 
-    @Autowired
     CreateBookCommandMapper createBookCommandMapper;
+
+    public BookAdapterService(CreateBookUseCase createBookUseCase,
+                              DeleteBookUseCase deleteBookUseCase,
+                              GetBookUseCase getBookUseCase,
+                              GetBooksUseCase getBooksUseCase,
+                              GetOffersOfBookUseCase getOffersOfBookUseCase,
+                              TokenDecoder tokenDecoder,
+                              CreateBookCommandMapper createBookCommandMapper){
+        this.createBookUseCase = createBookUseCase;
+        this.deleteBookUseCase = deleteBookUseCase;
+        this.getBookUseCase = getBookUseCase;
+        this.getBooksUseCase = getBooksUseCase;
+        this.getOffersOfBookUseCase = getOffersOfBookUseCase;
+        this.tokenDecoder = tokenDecoder;
+        this.createBookCommandMapper = createBookCommandMapper;
+    }
 
     public Long createBook(NewBook newBook, String token){
          return createBookUseCase.createBook(createBookCommandMapper.map(token, newBook));

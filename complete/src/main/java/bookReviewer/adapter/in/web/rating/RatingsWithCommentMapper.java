@@ -1,6 +1,6 @@
 package bookReviewer.adapter.in.web.rating;
 
-import bookReviewer.business.useCase.query.getRatingsOfBookWithContentUseCase.GetRatingsWithCommentOutput;
+import bookReviewer.application.useCase.query.getRatingsOfBookWithContentUseCase.GetRatingsWithCommentOutput;
 
 import java.util.ArrayList;
 import java.util.List;

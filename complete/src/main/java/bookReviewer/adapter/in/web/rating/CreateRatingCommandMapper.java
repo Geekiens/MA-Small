@@ -1,15 +1,17 @@
 package bookReviewer.adapter.in.web.rating;
 
 import bookReviewer.adapter.in.web.util.token.TokenDecoder;
-import bookReviewer.business.useCase.command.createRatingUseCase.CreateRatingCommand;
-import bookReviewer.business.useCase.command.createRatingUseCase.Rating;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import bookReviewer.application.useCase.command.createRatingUseCase.CreateRatingCommand;
+import bookReviewer.application.useCase.command.createRatingUseCase.Rating;
 
-@Service
 public class CreateRatingCommandMapper {
-    @Autowired
+
     TokenDecoder tokenDecoder;
+
+    public CreateRatingCommandMapper(TokenDecoder tokenDecoder){
+        this.tokenDecoder = tokenDecoder;
+    }
+
     public CreateRatingCommand map(Long bookId, NewRating newRating, String token) {
         CreateRatingCommand createRatingCommand = new CreateRatingCommand();
         createRatingCommand.setBookId(bookId);

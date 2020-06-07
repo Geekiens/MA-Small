@@ -1,17 +1,17 @@
 package bookReviewer.adapter.in.web.util.token;
 
 import bookReviewer.adapter.in.web.util.InvalidTokenException;
-import bookReviewer.business.shared.model.Role;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import bookReviewer.application.shared.model.Role;
 
 import java.util.Date;
 
-@Service
 public final class TokenDecoder {
 
-    @Autowired
     JwtProvider jwtProvider;
+
+    public TokenDecoder(JwtProvider jwtProvider){
+        this.jwtProvider = jwtProvider;
+    }
 
     private static void checkIsValidToken(TokenInformation tokenInformation){
         if(((long) (int) tokenInformation.getExpirationDate().getTime()) >= new Date().getTime()){

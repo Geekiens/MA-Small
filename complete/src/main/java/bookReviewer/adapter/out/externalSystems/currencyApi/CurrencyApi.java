@@ -1,17 +1,15 @@
 package bookReviewer.adapter.out.externalSystems.currencyApi;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
-
 import java.math.BigDecimal;
 
-@Service
+
 public final class CurrencyApi {
 
-    @Autowired
-    @Qualifier("CurrencyAdapterService")
     CurrencyAdapter currencyAdapter;
+
+    public CurrencyApi(CurrencyAdapter currencyAdapter){
+        this.currencyAdapter = currencyAdapter;
+    }
 
     public BigDecimal getCurrencyExchange() {
         BigDecimal exchangeRate = new BigDecimal(1); // fallback

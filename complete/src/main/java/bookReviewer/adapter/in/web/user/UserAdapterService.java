@@ -1,32 +1,29 @@
 package bookReviewer.adapter.in.web.user;
 
 import bookReviewer.adapter.in.web.util.RegisterUserException;
-import bookReviewer.business.boundary.in.useCase.command.RegisterUserUseCase;
-import bookReviewer.business.boundary.in.useCase.query.GetTokenByLoginUseCase;
-import bookReviewer.business.shared.model.Role;
-import bookReviewer.business.useCase.command.registerUserUseCase.RegisterUserCommand;
-import bookReviewer.business.useCase.query.getTokenByLoginUseCase.LoginInput;
-import bookReviewer.business.useCase.query.getTokenByLoginUseCase.LoginOutput;
+import bookReviewer.application.boundary.in.useCase.command.RegisterUserUseCase;
+import bookReviewer.application.boundary.in.useCase.query.GetTokenByLoginUseCase;
+import bookReviewer.application.shared.model.Role;
+import bookReviewer.application.useCase.command.registerUserUseCase.RegisterUserCommand;
+import bookReviewer.application.useCase.query.getTokenByLoginUseCase.LoginInput;
+import bookReviewer.application.useCase.query.getTokenByLoginUseCase.LoginOutput;
 import bookReviewer.adapter.in.web.util.token.JwtProvider;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
 
-@Service
-@Qualifier("UserAdapterService")
 public class UserAdapterService implements UserAdapter {
 
-    @Autowired
-    @Qualifier("RegisterUserService")
     RegisterUserUseCase registerUserUseCase;
 
-    @Autowired
-    @Qualifier("GetTokenByLoginService")
     GetTokenByLoginUseCase getTokenByLoginUseCase;
 
-    @Autowired
     JwtProvider jwtProvider;
 
+    public UserAdapterService(RegisterUserUseCase registerUserUseCase,
+                              GetTokenByLoginUseCase getTokenByLoginUseCase,
+                              JwtProvider jwtProvider){
+        this.registerUserUseCase = registerUserUseCase;
+        this.getTokenByLoginUseCase = getTokenByLoginUseCase;
+        this.jwtProvider = jwtProvider;
+    }
     public void registerUser(String username, String password, String email){
         RegisterUserCommand registerUserCommand = new RegisterUserCommand();
         registerUserCommand.setUsername(username);

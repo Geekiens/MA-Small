@@ -3,19 +3,18 @@ package bookReviewer.periphery.persistence.service;
 import bookReviewer.adapter.out.persistence.model.Rating;
 import bookReviewer.adapter.out.persistence.repository.RatingRepository;
 import bookReviewer.periphery.persistence.repository.RatingRepositoryJpa;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 import java.util.Optional;
 
-@Service
-@Qualifier("RatingRepositoryService")
 public class RatingRepositoryService implements RatingRepository {
 
-    @Autowired
     RatingRepositoryJpa ratingRepositoryJpa;
+
+    public RatingRepositoryService(RatingRepositoryJpa ratingRepositoryJpa){
+        this.ratingRepositoryJpa = ratingRepositoryJpa;
+    }
 
     public List<Rating> findAllByBookId(Long bookId){
         return ratingRepositoryJpa.findAllByBookId(bookId);

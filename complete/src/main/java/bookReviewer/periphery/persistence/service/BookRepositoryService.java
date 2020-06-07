@@ -3,19 +3,17 @@ package bookReviewer.periphery.persistence.service;
 import bookReviewer.adapter.out.persistence.model.Book;
 import bookReviewer.adapter.out.persistence.repository.BookRepository;
 import bookReviewer.periphery.persistence.repository.BookRepositoryJpa;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-@Service
-@Qualifier("BookRepositoryService")
 public class BookRepositoryService implements BookRepository {
 
-    @Autowired
     BookRepositoryJpa bookRepositoryJpa;
+
+    public BookRepositoryService(BookRepositoryJpa bookRepositoryJpa){
+        this.bookRepositoryJpa = bookRepositoryJpa;
+    }
 
     public void deleteById(Long bookId){
         bookRepositoryJpa.deleteById(bookId);

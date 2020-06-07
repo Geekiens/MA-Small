@@ -1,21 +1,20 @@
 package bookReviewer.adapter.out.persistence.service;
 
 import bookReviewer.adapter.out.persistence.mapping.persistenceToEntity.OfferHistoryMapper;
-import bookReviewer.business.boundary.out.persistence.FindAllOfferHistoriesByIsbn;
+import bookReviewer.application.boundary.out.persistence.FindAllOfferHistoriesByIsbn;
 import bookReviewer.entity.offerHistory.OfferHistroy;
 import bookReviewer.adapter.out.persistence.repository.OfferHistoryRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-@Qualifier("FindAllOfferHistoriesByIsbnService")
+
 public class FindAllOfferHistoriesByIsbnService implements FindAllOfferHistoriesByIsbn {
-    @Autowired
-    @Qualifier("OfferHistoryRepositoryService")
+
     OfferHistoryRepository offerHistoryRepository;
+
+    public FindAllOfferHistoriesByIsbnService(OfferHistoryRepository offerHistoryRepository){
+        this.offerHistoryRepository = offerHistoryRepository;
+    }
 
     public List<OfferHistroy> findAllOffersByIsbn(String isbn){
         return OfferHistoryMapper.mapList(offerHistoryRepository.findByIsbn(isbn));

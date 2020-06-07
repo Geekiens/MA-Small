@@ -8,9 +8,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 
-@Service
-@Qualifier("Buchladen123AdapterService")
 public class Buchladen123AdapterService implements Buchladen123Adapter {
+
+    public Buchladen123AdapterService(){ }
+
     public OfferApi1[] queryOffers(String isbn) throws Exception{
 
         RestTemplate restTemplate = new RestTemplate(HttpClientFactory.getClientHttpRequestFactory());

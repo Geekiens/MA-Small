@@ -1,26 +1,20 @@
 package bookReviewer.adapter.out.externalSystems.buchLaden123;
 
-import bookReviewer.periphery.externalSystems.HttpClientFactory;
-import bookReviewer.business.boundary.out.externalSystems.ReceiveOffersOfBuchladen123;
-import bookReviewer.business.shared.model.MediaType;
-import bookReviewer.business.useCase.query.getOffersOfBookUseCase.OfferOutput;
-import bookReviewer.business.useCase.query.getOffersOfBookUseCase.Vendor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+import bookReviewer.application.boundary.out.externalSystems.ReceiveOffersOfBuchladen123;
+import bookReviewer.application.shared.model.MediaType;
+import bookReviewer.application.useCase.query.getOffersOfBookUseCase.OfferOutput;
+import bookReviewer.application.useCase.query.getOffersOfBookUseCase.Vendor;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
-@Service
-@Qualifier("ReceiveOffersOfBuchladen123Service")
 public class ReceiveOffersOfBuchladen123Service implements ReceiveOffersOfBuchladen123 {
 
-    @Autowired
-    @Qualifier("Buchladen123AdapterService")
     Buchladen123Adapter buchladen123Adapter;
+
+    public ReceiveOffersOfBuchladen123Service(Buchladen123Adapter buchladen123Adapter){
+        this.buchladen123Adapter = buchladen123Adapter;
+    }
 
     public ArrayList<OfferOutput> receiveOffers(String isbn) throws Exception {
         return offerApi1tToOfferMapper(buchladen123Adapter.queryOffers(isbn));
