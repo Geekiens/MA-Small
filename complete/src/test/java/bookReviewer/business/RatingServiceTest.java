@@ -51,21 +51,4 @@ public class RatingServiceTest {
 
     // TODO: Test , findRatingsById, createRating
 
-    @Test
-    public void whenGetAverageRating_thenReturnAverage(){
-        // given
-        Rating rating = new Rating(3, "title", 1L, "content", null);
-        Rating rating2 = new Rating(5, "title", 1L, "content", null);
-        ArrayList<Rating> ratings = new ArrayList<>();
-        ratings.add(rating);
-        ratings.add(rating2);
-        when(ratingRepository.findAllByBookId(1L)).thenReturn(ratings);
-
-        // when
-        RatingSummary ratingSummary = ratingService.getAverageRating(1L);
-
-        // then
-        Assert.assertEquals(2, ratingSummary.getTotalVotes());
-        Assert.assertEquals(Double.valueOf(4) , ratingSummary.getAverageRating());
-    }
 }
