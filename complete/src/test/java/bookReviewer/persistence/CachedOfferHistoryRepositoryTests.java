@@ -16,6 +16,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import static bookReviewer.persistence.model.MediaType.HARDCOVER;
+
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -33,7 +35,7 @@ public class CachedOfferHistoryRepositoryTests {
         // given
         OfferPersistence offer = new OfferPersistence(new BigDecimal(9.99), LocalDate.now());
         CachedOfferHistoryPersistence cachedOfferHistory = new CachedOfferHistoryPersistence();
-        cachedOfferHistory.setMediaType(MediaType.HARDCOVER);
+        cachedOfferHistory.setMediaType(HARDCOVER);
         cachedOfferHistory.setVendor("vendor");
         cachedOfferHistory.setIsbn("isbn");
         cachedOfferHistory = entityManager.persistFlushFind(cachedOfferHistory);
@@ -43,7 +45,7 @@ public class CachedOfferHistoryRepositoryTests {
         entityManager.flush();
 
         // when
-        CachedOfferHistoryPersistence result = cachedOfferHistoryRepository.findByIsbnAndVendorAndMediaType("isbn", "vendor", MediaType.HARDCOVER);
+        CachedOfferHistoryPersistence result = cachedOfferHistoryRepository.findByIsbnAndVendorAndMediaType("isbn", "vendor", HARDCOVER);
 
         // then
         Assert.assertEquals(1, result.getOffers().size());
