@@ -1,9 +1,9 @@
 package bookReviewer.presentation.controller;
 
 import bookReviewer.adapter.in.web.book.BookAdapter;
-import bookReviewer.adapter.in.web.book.BookWithOffers;
-import bookReviewer.adapter.in.web.book.BookWithRatingInformation;
-import bookReviewer.adapter.in.web.book.NewBook;
+import bookReviewer.adapter.in.web.book.BookWithOffersDTO;
+import bookReviewer.adapter.in.web.book.BookWithRatingInformationDTO;
+import bookReviewer.adapter.in.web.book.NewBookDTO;
 import bookReviewer.presentation.TokenFormatter;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,19 +25,19 @@ public class BookController {
 
 
     @GetMapping(path="/books/{id}", produces = "application/json")
-    public BookWithOffers getBook(@PathVariable("id") long id) {
+    public BookWithOffersDTO getBook(@PathVariable("id") long id) {
         return  bookAdapter.getBook(id);
     }
 
     @GetMapping(path="/books", produces = "application/json")
-    public List<BookWithRatingInformation> listBooks() {
+    public List<BookWithRatingInformationDTO> listBooks() {
         return bookAdapter.getBooks();
     }
 
     @PostMapping(path= "/books", consumes = "application/json", produces = "application/json")
     @ResponseStatus( HttpStatus.CREATED
     )
-    public Long createBook(@RequestBody @Valid NewBook book, @RequestHeader Map<String, String> headers){
+    public Long createBook(@RequestBody @Valid NewBookDTO book, @RequestHeader Map<String, String> headers){
         String cleanToken = TokenFormatter.format(headers.get("authorization"));
         return bookAdapter.createBook(book, cleanToken);
     }

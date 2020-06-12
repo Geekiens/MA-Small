@@ -42,8 +42,8 @@ public class BookAdapterService implements BookAdapter{
     @Qualifier("GetBooksService")
     GetBooksUseCase getBooksUseCase;
 
-    public Long createBook(NewBook newBook, String token){
-         return createBookUseCase.createBook(CreateBookCommandMapper.map(token, newBook));
+    public Long createBook(NewBookDTO newBookDTO, String token){
+         return createBookUseCase.createBook(CreateBookCommandMapper.map(token, newBookDTO));
     }
 
     public void deleteBook(Long bookId, String token){
@@ -53,20 +53,20 @@ public class BookAdapterService implements BookAdapter{
         deleteBookUseCase.deleteBook(deleteBookCommand);
     }
 
-    public BookWithOffers getBook(Long bookId){
+    public BookWithOffersDTO getBook(Long bookId){
         GetBookOutput book = getBookUseCase.getBook(bookId);
         List<Offer> offers = getOffersOfBookUseCase.getOffers(bookId);
         return BookWithOffersMapper.map(book, offers);
     }
 
-    public List<BookWithRatingInformation> getBooks(){
+    public List<BookWithRatingInformationDTO> getBooks(){
         List<GetBooksOutput> books = getBooksUseCase.getBooks();
-        List<BookWithRatingInformation> bookWithRatingList = new ArrayList<>();
+        List<BookWithRatingInformationDTO> bookWithRatingList = new ArrayList<>();
         for (GetBooksOutput book : books){
-            BookWithRatingInformation bookWithRatingInformation = new BookWithRatingInformation();
+            BookWithRatingInformationDTO bookWithRatingInformationDTO = new BookWithRatingInformationDTO();
             try{
-                MapWithReflection.copy(book, bookWithRatingInformation);
-                bookWithRatingList.add(bookWithRatingInformation);
+                MapWithReflection.copy(book, bookWithRatingInformationDTO);
+                bookWithRatingList.add(bookWithRatingInformationDTO);
             }catch (Exception e){
                 e.printStackTrace();
                 System.out.println(e.getMessage());

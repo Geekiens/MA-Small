@@ -5,25 +5,25 @@ import bookReviewer.business.useCase.command.createRatingUseCase.CreateRatingCom
 import bookReviewer.business.useCase.command.createRatingUseCase.Rating;
 
 public final class CreateRatingCommandMapper {
-    public static CreateRatingCommand map(Long bookId, NewRating newRating, String token) {
+    public static CreateRatingCommand map(Long bookId, NewRatingDTO newRatingDTO, String token) {
         CreateRatingCommand createRatingCommand = new CreateRatingCommand();
         createRatingCommand.setBookId(bookId);
 
         Long userId = TokenDecoder.getUserId(token);
         createRatingCommand.setUserId(userId);
 
-        Rating rating = mapRating(newRating);
+        Rating rating = mapRating(newRatingDTO);
         createRatingCommand.setRating(rating);
 
         return createRatingCommand;
 
     }
 
-    private static Rating mapRating(NewRating newRating){
+    private static Rating mapRating(NewRatingDTO newRatingDTO){
         Rating rating = new Rating();
-        rating.setContent(newRating.getContent());
-        rating.setScore(newRating.getScore());
-        rating.setTitle(newRating.getTitle());
+        rating.setContent(newRatingDTO.getContent());
+        rating.setScore(newRatingDTO.getScore());
+        rating.setTitle(newRatingDTO.getTitle());
         return rating;
     }
 }

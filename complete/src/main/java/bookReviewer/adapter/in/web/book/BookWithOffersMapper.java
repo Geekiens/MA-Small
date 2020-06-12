@@ -7,8 +7,8 @@ import java.util.List;
 
 public final class BookWithOffersMapper {
 
-    public static BookWithOffers map(GetBookOutput book, List<Offer> offers) {
-        BookWithOffers bookWithOffers = new BookWithOffers(book.getAuthor(),
+    public static BookWithOffersDTO map(GetBookOutput book, List<Offer> offers) {
+        BookWithOffersDTO bookWithOffersDTO = new BookWithOffersDTO(book.getAuthor(),
                 book.getTitle(),
                 book.getGenre(),
                 book.getKeywords(),
@@ -24,19 +24,19 @@ public final class BookWithOffersMapper {
         for (Offer offer : offers) {
             switch (offer.getMediaType()) {
                 case HARDCOVER:
-                    bookWithOffers.addHardcoverOffer(offer);
+                    bookWithOffersDTO.addHardcoverOffer(offer);
                     break;
                 case PAPERBACK:
-                    bookWithOffers.addPaperbackOffer(offer);
+                    bookWithOffersDTO.addPaperbackOffer(offer);
                     break;
                 case EBOOK:
-                    bookWithOffers.addEbookOffer(offer);
+                    bookWithOffersDTO.addEbookOffer(offer);
                     break;
                 case AUDIOBOOK:
-                    bookWithOffers.addAudiobookOffer(offer);
+                    bookWithOffersDTO.addAudiobookOffer(offer);
                     break;
             }
         }
-        return bookWithOffers;
+        return bookWithOffersDTO;
     }
 }

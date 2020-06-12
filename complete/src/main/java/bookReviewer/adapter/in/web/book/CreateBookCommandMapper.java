@@ -6,7 +6,7 @@ import bookReviewer.business.useCase.command.createBookUseCase.CreateBookCommand
 
 public final class CreateBookCommandMapper {
 
-    public static CreateBookCommand map(String token, NewBook newBook){
+    public static CreateBookCommand map(String token, NewBookDTO newBookDTO){
         CreateBookCommand createBookCommand = new CreateBookCommand();
         try {
             Long userId = TokenDecoder.getUserId(token);
@@ -14,23 +14,23 @@ public final class CreateBookCommandMapper {
         } catch (Exception e){
             System.out.println("Guest creates Book");
         }
-        Book book = mapBook(newBook);
+        Book book = mapBook(newBookDTO);
         createBookCommand.setBook(book);
         return createBookCommand;
     }
 
-    private static Book mapBook(NewBook newBook) {
+    private static Book mapBook(NewBookDTO newBookDTO) {
         Book book = new Book();
-        book.setAuthor(newBook.getAuthor());
-        book.setTitle(newBook.getTitle());
-        book.setGenre(newBook.getGenre());
-        book.setKeywords(newBook.getKeywords());
-        book.setLanguages(newBook.getLanguages());
-        book.setPublisher(newBook.getPublisher());
-        book.setPages(newBook.getPages());
-        book.setIsbn(newBook.getIsbn());
-        book.setPublishingYear(newBook.getPublishingYear());
-        book.setContent(newBook.getContent());
+        book.setAuthor(newBookDTO.getAuthor());
+        book.setTitle(newBookDTO.getTitle());
+        book.setGenre(newBookDTO.getGenre());
+        book.setKeywords(newBookDTO.getKeywords());
+        book.setLanguages(newBookDTO.getLanguages());
+        book.setPublisher(newBookDTO.getPublisher());
+        book.setPages(newBookDTO.getPages());
+        book.setIsbn(newBookDTO.getIsbn());
+        book.setPublishingYear(newBookDTO.getPublishingYear());
+        book.setContent(newBookDTO.getContent());
         return book;
     }
 }

@@ -5,7 +5,7 @@ import bookReviewer.business.useCase.query.getOffersOfBookUseCase.Offer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookWithOffers {
+public class BookWithOffersDTO {
 
     private String author;
     private String title;
@@ -26,25 +26,25 @@ public class BookWithOffers {
     private List<Offer> ebookOffers;
     private List<Offer> audiobookOffers;
 
-    public BookWithOffers() {
+    public BookWithOffersDTO() {
         hardcoverOffers = new ArrayList<>();
         paperbackOffers = new ArrayList<>();
         ebookOffers = new ArrayList<>();
         audiobookOffers = new ArrayList<>();
     }
 
-    public BookWithOffers(String author,
-                          String title,
-                          String genre,
-                          String[] keywords,
-                          String[] languages,
-                          String publisher,
-                          int pages,
-                          String isbn,
-                          int publishingYear,
-                          String content,
-                          int totalVotes,
-                          double averageRating) {
+    public BookWithOffersDTO(String author,
+                             String title,
+                             String genre,
+                             String[] keywords,
+                             String[] languages,
+                             String publisher,
+                             int pages,
+                             String isbn,
+                             int publishingYear,
+                             String content,
+                             int totalVotes,
+                             double averageRating) {
         this.author = author;
         this.title = title;
         this.genre = genre;

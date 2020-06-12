@@ -1,10 +1,10 @@
 package bookReviewer.presentation.controller;
 
 
-import bookReviewer.adapter.in.web.rating.NewRating;
-import bookReviewer.adapter.in.web.rating.Rating;
+import bookReviewer.adapter.in.web.rating.NewRatingDTO;
+import bookReviewer.adapter.in.web.rating.RatingDTO;
 import bookReviewer.adapter.in.web.rating.RatingAdapter;
-import bookReviewer.adapter.in.web.rating.UpdateRating;
+import bookReviewer.adapter.in.web.rating.UpdateRatingDTO;
 import bookReviewer.business.model.RatingBusiness;
 import bookReviewer.business.util.JwtProvider;
 import bookReviewer.business.service.RatingService;
@@ -33,12 +33,12 @@ public class RatingController {
 
 
     @GetMapping(path="/books/{bookId}/ratings", produces = "application/json")
-    public List<Rating> getRatingsByBookId(@PathVariable("bookId") long bookId) {
+    public List<RatingDTO> getRatingsByBookId(@PathVariable("bookId") long bookId) {
         return ratingAdapter.getRatingsOfBook(bookId);
     }
 
     @GetMapping(path="/books/{bookId}/ratings/content", produces = "application/json")
-    public List<Rating> getRatingsByBookIdContent(@PathVariable("bookId") long bookId) {
+    public List<RatingDTO> getRatingsByBookIdContent(@PathVariable("bookId") long bookId) {
         return ratingAdapter.getRatingsOfBookWithContent(bookId);
     }
 
@@ -46,7 +46,7 @@ public class RatingController {
     @PostMapping(path= "/books/{bookId}/ratings", consumes = "application/json", produces = "application/json")
     @ResponseStatus( HttpStatus.CREATED)
     public Long createRating(@PathVariable (value = "bookId") Long bookId,
-                             @RequestBody @Valid NewRating rating,
+                             @RequestBody @Valid NewRatingDTO rating,
                              @RequestHeader Map<String, String> headers){
 
         String cleanToken = TokenFormatter.format(headers.get("authorization"));
@@ -55,7 +55,7 @@ public class RatingController {
     @PutMapping(path="/books/{bookId}/ratings/{ratingId}", consumes = "application/json", produces = "application/json")
     public void updateRating (@PathVariable (value="bookId") long bookId,
                               @PathVariable (value="ratingId") long ratingId,
-                              @RequestBody UpdateRating rating,
+                              @RequestBody UpdateRatingDTO rating,
                               @RequestHeader Map<String, String> headers
                               ){
         if (!isOwnRating(headers, ratingId)){

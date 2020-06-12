@@ -2,7 +2,7 @@ package bookReviewer.adapter.in.web.book;
 
 import javax.validation.constraints.NotNull;
 
-public class NewBook {
+public class NewBookDTO {
     @NotNull
     private String author;
     @NotNull
@@ -16,7 +16,7 @@ public class NewBook {
     private int publishingYear;
     private String content;
 
-    public NewBook() {
+    public NewBookDTO() {
     }
 
     public String getAuthor() {

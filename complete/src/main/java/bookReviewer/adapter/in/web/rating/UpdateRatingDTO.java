@@ -3,7 +3,7 @@ package bookReviewer.adapter.in.web.rating;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
-public class UpdateRating {
+public class UpdateRatingDTO {
         private long id;
         @Min(value = 1, message = "Score should not be less than 1")
         @Max(value = 5, message = "Score should not be greater than 5")
@@ -11,7 +11,7 @@ public class UpdateRating {
         private String title;
         private String content;
 
-        public UpdateRating() {
+        public UpdateRatingDTO() {
         }
 
         public long getId() {

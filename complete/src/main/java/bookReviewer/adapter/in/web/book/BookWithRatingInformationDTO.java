@@ -2,7 +2,7 @@ package bookReviewer.adapter.in.web.book;
 
 import java.util.Arrays;
 
-public class BookWithRatingInformation {
+public class BookWithRatingInformationDTO {
     public long id;
     public String author;
     public String title;
@@ -17,7 +17,7 @@ public class BookWithRatingInformation {
     public Double averageRating;
     public int totalVotes = 0;
 
-    public BookWithRatingInformation() {
+    public BookWithRatingInformationDTO() {
     }
 
     public long getId() {
