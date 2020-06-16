@@ -21,5 +21,4 @@ public class BooksOutputMapper {
         getBooksOutput.setTotalVotes(total);
         return getBooksOutput;
     }
-
 }

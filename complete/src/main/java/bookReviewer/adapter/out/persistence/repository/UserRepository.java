@@ -11,7 +11,3 @@ public interface UserRepository{
     User findByUsername(String username);
     Long saveAndFlush(User user);
 }
-
-
-
-

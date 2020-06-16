@@ -422,9 +422,5 @@ public class PeripheryConfig {
     public GetTokenByLoginUseCase getTokenByLoginUseCase() {
         return new GetTokenByLoginService(appContext.getBean(FindUserByUsername.class));
     }
-
-
-
-
 }
 

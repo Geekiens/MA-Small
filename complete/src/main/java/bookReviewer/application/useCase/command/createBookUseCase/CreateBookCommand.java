@@ -27,5 +27,4 @@ public class CreateBookCommand {
     public void setBook(Book book) {
         this.book = book;
     }
-
 }

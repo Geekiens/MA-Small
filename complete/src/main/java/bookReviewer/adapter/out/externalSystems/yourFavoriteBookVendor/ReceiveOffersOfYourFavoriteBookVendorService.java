@@ -76,5 +76,4 @@ public class ReceiveOffersOfYourFavoriteBookVendorService implements ReceiveOffe
         }
         return mediaType;
     }
-
 }

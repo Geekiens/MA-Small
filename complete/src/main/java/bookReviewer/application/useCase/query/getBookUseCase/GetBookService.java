@@ -6,8 +6,6 @@ import bookReviewer.application.boundary.out.persistence.FindAllRatingsByBookId;
 import bookReviewer.application.boundary.out.persistence.FindBookById;
 import bookReviewer.entity.rating.AverageRatingCalculatorService;
 
-
-
 public class GetBookService implements GetBookUseCase {
 
     FindBookById findBookById;

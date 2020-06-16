@@ -32,5 +32,4 @@ public class UpdateRatingCommandMapper {
         rating.setTitle(updateRating.getTitle());
         return rating;
     }
-
 }

@@ -45,5 +45,4 @@ public class Rating {
     public void setContent(String content) {
         this.content = content;
     }
-
 }

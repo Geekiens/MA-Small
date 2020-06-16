@@ -45,6 +45,4 @@ public class UpdateRating {
         public void setContent(String content) {
             this.content = content;
         }
-
-
 }

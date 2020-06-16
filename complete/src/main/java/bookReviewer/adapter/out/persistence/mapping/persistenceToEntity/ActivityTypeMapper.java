@@ -20,5 +20,4 @@ public final class ActivityTypeMapper {
             default: return null;
         }
     }
-
 }

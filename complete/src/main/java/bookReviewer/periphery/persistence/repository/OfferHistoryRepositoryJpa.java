@@ -25,6 +25,4 @@ public interface OfferHistoryRepositoryJpa extends JpaRepository<CachedOfferHist
             @Param("isbn") String isbn,
             @Param("vendor") String vendor,
             @Param("mediaType") MediaType mediaType);
-
-
 }

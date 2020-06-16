@@ -15,6 +15,4 @@ public interface RatingRepositoryJpa extends JpaRepository<Rating, Long> {
     List<Rating> findAllByBookIdAndUserId(Long bookId, Long userId);
 
     List<Rating> findAllByBookIdAndContentNotNull(Long bookId);
-
-
 }

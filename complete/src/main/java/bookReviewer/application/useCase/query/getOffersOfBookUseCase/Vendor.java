@@ -16,7 +16,4 @@ public enum Vendor {
 
         return vendorName;
     }
-
-
-
 }

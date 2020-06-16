@@ -13,5 +13,4 @@ public class SendEmailProviderService implements SendEmailProvider {
     public void sendEmail(String emailOfReceiver, String text, String subject){
         emailAdapter.send(emailOfReceiver, text, subject);
     }
-
 }

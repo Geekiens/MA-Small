@@ -25,5 +25,4 @@ public class DeleteBookService implements DeleteBookUseCase {
         findBookById.findBookById(deleteBookCommand.getBookId()).orElseThrow(() -> new ResourceNotFoundException("book doesn't exist with id: " + deleteBookCommand.getBookId()));
         deleteBookById.deleteBookById(deleteBookCommand.getBookId());
     }
-
 }

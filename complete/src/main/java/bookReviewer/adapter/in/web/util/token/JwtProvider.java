@@ -41,5 +41,4 @@ public class JwtProvider {
         customFields.add("userId");
         return jwtAdapter.decodeJWT(jwt, customFields);
     }
-
 }

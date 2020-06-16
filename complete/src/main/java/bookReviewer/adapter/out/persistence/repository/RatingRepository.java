@@ -13,5 +13,4 @@ public interface RatingRepository {
     void deleteById(Long ratingId);
     Optional<Rating> findById(Long ratingId);
     Long saveAndFlush(Rating rating);
-
 }
