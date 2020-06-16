@@ -167,4 +167,3 @@ public class Book {
         return Objects.hash(getId(), getAuthor(), getTitle(), getPublishingYear(), getContent());
     }
 }
-

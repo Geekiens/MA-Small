@@ -59,8 +59,3 @@ public class Offer {
                 '}';
     }
 }
-
-
-
-// Beim Speichern Verknüpfung zum Buch nötig z.B. über ISBN
-

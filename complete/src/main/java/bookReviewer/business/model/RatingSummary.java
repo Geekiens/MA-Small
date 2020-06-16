@@ -26,6 +26,4 @@ public class RatingSummary {
     public void setTotalVotes(int totalVotes) {
         this.totalVotes = totalVotes;
     }
-
-
 }

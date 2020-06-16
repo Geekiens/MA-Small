@@ -76,6 +76,4 @@ public class RatingController {
 
         return rating.getUserId() == userId;
     }
-
-
 }

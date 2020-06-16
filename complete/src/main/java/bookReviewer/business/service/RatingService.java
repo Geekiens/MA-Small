@@ -160,12 +160,8 @@ public class RatingService {
         ratingRepository.save(rating);
     }
 
-    public void deleteRating(long id) {
+    public void deleteRating(long id)
+    {
         ratingRepository.deleteById(id);
     }
-
-
-
 }
-
-

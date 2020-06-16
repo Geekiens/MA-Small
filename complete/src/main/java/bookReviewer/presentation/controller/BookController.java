@@ -75,6 +75,4 @@ public class BookController {
                            @RequestHeader Map<String, String> headers) {
         bookService.deleteBook(id);
     }
-
-
 }

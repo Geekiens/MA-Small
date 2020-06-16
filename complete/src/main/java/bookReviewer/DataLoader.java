@@ -76,10 +76,6 @@ public class DataLoader implements ApplicationRunner {
             ratingRepository.save(rating);
             ratingRepository.save(rating2);
 
-
-
-
-
         } catch (Exception e) {
             System.out.println("Init not completed");
             e.printStackTrace();

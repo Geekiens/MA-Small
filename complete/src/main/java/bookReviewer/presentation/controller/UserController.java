@@ -30,6 +30,4 @@ public class UserController {
         e.printStackTrace();
         System.err.println(e);
     }
-
-
 }

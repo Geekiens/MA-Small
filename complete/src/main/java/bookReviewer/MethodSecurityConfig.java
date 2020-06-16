@@ -20,4 +20,3 @@ public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
         return expressionHandler;
     }
 }
-

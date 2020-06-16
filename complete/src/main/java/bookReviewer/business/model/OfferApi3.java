@@ -51,5 +51,3 @@ public class OfferApi3 {
         this.affiliate = affiliate;
     }
 }
-
-

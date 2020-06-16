@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-
 @Repository
 public interface RatingRepository extends JpaRepository<Rating, Long> {
 
@@ -15,6 +14,4 @@ public interface RatingRepository extends JpaRepository<Rating, Long> {
     List<Rating> findAllByBookIdAndUserId(Long bookId, Long userId);
 
     List<Rating> findAllByBookIdAndContentNotNull(Long bookId);
-
-
 }
