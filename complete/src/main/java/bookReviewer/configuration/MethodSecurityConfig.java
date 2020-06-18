@@ -1,4 +1,4 @@
-package bookReviewer;
+package bookReviewer.configuration;
 
 import bookReviewer.presentation.security.CustomPermissionEvaluator;
 import bookReviewer.presentation.security.RoleMethodSecurityExpressionHandler;
