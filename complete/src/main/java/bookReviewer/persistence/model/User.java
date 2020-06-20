@@ -33,15 +33,19 @@ public class User {
     @NotNull
     private Role role;
 
+    @Column(name="gender")
+    private String gender;
+
     public User() {
     }
 
-    public User(String username, String password, String email, byte[] salt, Role role) {
+    public User(String username, String password, String email, byte[] salt, Role role, String gender) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.salt = salt;
         this.role = role;
+        this.gender = gender;
     }
 
     public long getId() {
@@ -90,5 +94,13 @@ public class User {
 
     public void setSalt(byte[] salt) {
         this.salt = salt;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 }
