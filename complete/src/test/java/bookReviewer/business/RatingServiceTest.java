@@ -76,8 +76,8 @@ public class RatingServiceTest {
         ArrayList<Rating> ratings = new ArrayList<>();
         ratings.add(rating);
         when(ratingRepository.findAllByBookId(1L)).thenReturn(ratings);
-        User user = new User("username", "password", "email", null, Role.USER);
-        User user2 = new User("username", "password", "email", null, Role.USER);
+        User user = new User("username", "password", "email", null, Role.USER, 0);
+        User user2 = new User("username", "password", "email", null, Role.USER, 1);
 
         when(userRepository.findById(2L)).thenReturn(Optional.of(user));
         when(userRepository.findById(1L)).thenReturn(Optional.of(user2));

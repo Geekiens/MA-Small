@@ -64,9 +64,9 @@ public class DataLoader implements ApplicationRunner {
             bookRepository.save(book);
 
             // Create Users
-            userService.registerUser("User", "passwort", "2f0df9b8-b645-4fc3-91c2-407d50706302@mailslurp.com", Role.USER);
-            userService.registerUser("Moderator", "passwort", "20fd08d4-5eaf-445c-a47e-7d3055009337@mailslurp.com", Role.MODERATOR);
-            userService.registerUser("Admin", "passwort", "max.master.thesis2+user@gmail.com", Role.ADMIN);
+            userService.registerUser("User", "passwort", "2f0df9b8-b645-4fc3-91c2-407d50706302@mailslurp.com", Role.USER, 0);
+            userService.registerUser("Moderator", "passwort", "20fd08d4-5eaf-445c-a47e-7d3055009337@mailslurp.com", Role.MODERATOR, 1);
+            userService.registerUser("Admin", "passwort", "max.master.thesis2+user@gmail.com", Role.ADMIN, 0);
 
             // Create Ratings
             Book ratedBook = bookRepository.findById(1L).orElse(null);

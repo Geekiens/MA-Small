@@ -47,6 +47,9 @@ public class Book {
     @Column(name = "content", length=5000)
     private String content;
 
+    @Column(name = "favoriteCounter")
+    private int favoriteCounter = 0;
+
     public Book() {}
 
     public Book(String author, String title) {
@@ -148,6 +151,18 @@ public class Book {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public void increaseFavoriteCounter() {
+        this.favoriteCounter++;
+    }
+
+    public void decreaseFavoriteCounter() {
+        this.favoriteCounter--;
+    }
+
+    public int getFavoriteCounter() {
+        return favoriteCounter;
     }
 
     @Override
