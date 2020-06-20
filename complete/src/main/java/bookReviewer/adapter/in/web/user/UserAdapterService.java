@@ -24,12 +24,13 @@ public class UserAdapterService implements UserAdapter {
         this.getTokenByLoginUseCase = getTokenByLoginUseCase;
         this.jwtProvider = jwtProvider;
     }
-    public void registerUser(String username, String password, String email){
+    public void registerUser(String username, String password, String email, String gender){
         RegisterUserCommand registerUserCommand = new RegisterUserCommand();
         registerUserCommand.setUsername(username);
         registerUserCommand.setPassword(password);
         registerUserCommand.setEmail(email);
         registerUserCommand.setRole(Role.USER);
+        registerUserCommand.setGender(gender);
         try {
             registerUserUseCase.registerUser(registerUserCommand);
         } catch (Exception e){

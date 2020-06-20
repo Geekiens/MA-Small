@@ -14,6 +14,7 @@ public final class UserMapper {
         user.setId(userPersistence.getId());
         user.setEmail(userPersistence.getEmail());
         user.setRole(RoleMapper.map(userPersistence.getRole()));
+        user.setGender(userPersistence.getGender());
 
         Credentials credentials = new Credentials();
         credentials.setPassword(userPersistence.getPassword());
