@@ -6,7 +6,8 @@ public class Book {
     private long id;
     private String isbn;
     private BookMetaDetails bookMetaDetails;
-    private  BookUserDetails bookUserDetails;
+    private BookUserDetails bookUserDetails;
+    private int favoriteCounter = 0;
 
     public Book() {
     }
@@ -37,7 +38,21 @@ public class Book {
         return false;
     }
 
+    public void increaseFavoriteCounter() {
+        this.favoriteCounter++;
+    }
 
+    public void decreaseFavoriteCounter() {
+        this.favoriteCounter--;
+    }
+
+    public int getFavoriteCounter() {
+        return favoriteCounter;
+    }
+
+    public void setFavoriteCounter(int favoriteCounter) {
+        this.favoriteCounter = favoriteCounter;
+    }
 
     public long getId() {
         return id;

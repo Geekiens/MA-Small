@@ -1,7 +1,5 @@
 package bookReviewer.adapter.in.web.util.token;
 
-import javafx.util.Pair;
-
 import java.util.Date;
 import java.util.HashMap;
 

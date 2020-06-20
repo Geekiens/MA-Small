@@ -41,6 +41,9 @@ public class Book {
     @Column(name = "content", length=5000)
     private String content;
 
+    @Column(name = "favoriteCounter")
+    private int favoriteCounter;
+
     public Book() {}
 
     public long getId() {
@@ -129,5 +132,13 @@ public class Book {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public int getFavoriteCounter() {
+        return favoriteCounter;
+    }
+
+    public void setFavoriteCounter(int favoriteCounter) {
+        this.favoriteCounter = favoriteCounter;
     }
 }

@@ -11,6 +11,7 @@ public class BooksOutputMapper {
         getBooksOutput.setGenre(book.getBookMetaDetails().getGenre());
         getBooksOutput.setId(book.getId());
         getBooksOutput.setIsbn(book.getIsbn());
+        getBooksOutput.setFavoriteCounter(book.getFavoriteCounter());
         getBooksOutput.setKeywords(book.getBookUserDetails().getKeywords());
         getBooksOutput.setLanguages(book.getBookMetaDetails().getLanguages());
         getBooksOutput.setPages(book.getBookMetaDetails().getPages());

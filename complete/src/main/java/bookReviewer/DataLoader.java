@@ -70,19 +70,22 @@ public class DataLoader implements ApplicationRunner {
                     "User",
                     "passwort",
                     "2f0df9b8-b645-4fc3-91c2-407d50706302@mailslurp.com",
-                    Role.USER);
+                    Role.USER,
+                    "M");
             registerUserUseCase.registerUser(registerUserCommand);
             registerUserCommand = new RegisterUserCommand(
                     "Moderator",
                     "passwort",
                     "20fd08d4-5eaf-445c-a47e-7d3055009337@mailslurp.com",
-                    Role.MODERATOR);
+                    Role.MODERATOR,
+                    "F");
             registerUserUseCase.registerUser(registerUserCommand);
             registerUserCommand = new RegisterUserCommand(
                     "Admin",
                     "passwort",
                     "max.master.thesis2+user@gmail.com",
-                    Role.ADMIN);
+                    Role.ADMIN,
+                    "M");
             registerUserUseCase.registerUser(registerUserCommand);
 
             // Create Ratings

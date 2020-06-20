@@ -46,4 +46,11 @@ public class BookController {
         String cleanToken = TokenFormatter.format(headers.get("authorization"));
         bookAdapter.deleteBook(id, cleanToken);
     }
+
+    @PostMapping(path= "/books/{id}/favorite", consumes = "application/json", produces = "application/json")
+    public void addFavoriteBook(@PathVariable("id") long id,
+                                @RequestHeader Map<String, String> headers){
+        String token = headers.get("authorization");
+        bookAdapter.addFavorite(id, token);
+    }
 }

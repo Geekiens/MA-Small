@@ -25,6 +25,7 @@ public final class BookMapper {
 
         book.setId(bookPersistence.getId());
         book.setIsbn(bookPersistence.getIsbn());
+        book.setFavoriteCounter(bookPersistence.getFavoriteCounter());
         book.setBookMetaDetails(bookMetaDetails);
         book.setBookUserDetails(bookUserDetails);
 

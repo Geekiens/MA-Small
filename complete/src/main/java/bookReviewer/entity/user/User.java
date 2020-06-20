@@ -14,6 +14,7 @@ public class User {
     private Credentials credentials;
     private List<Activity> activities;
     private String gender;
+    private Long favoriteBook;
 
     public User() {
     }
@@ -102,6 +103,14 @@ public class User {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public Long getFavoriteBook() {
+        return favoriteBook;
+    }
+
+    public void setFavoriteBook(Long favoriteBook) {
+        this.favoriteBook = favoriteBook;
     }
 
     @Override

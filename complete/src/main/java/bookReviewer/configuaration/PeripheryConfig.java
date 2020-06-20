@@ -36,6 +36,7 @@ import bookReviewer.application.useCase.command.createRatingUseCase.CreateRating
 import bookReviewer.application.useCase.command.deleteBookUseCase.DeleteBookService;
 import bookReviewer.application.useCase.command.deleteRatingUseCase.DeleteRatingService;
 import bookReviewer.application.useCase.command.registerUserUseCase.RegisterUserService;
+import bookReviewer.application.useCase.command.setFavoriteBookUseCase.SetFavoriteBookService;
 import bookReviewer.application.useCase.command.updateRatingUseCase.UpdateRatingService;
 import bookReviewer.application.useCase.query.getBookUseCase.GetBookService;
 import bookReviewer.application.useCase.query.getBooksUseCase.GetBooksService;
@@ -249,6 +250,7 @@ public class PeripheryConfig {
                 appContext.getBean(GetBookUseCase.class),
                 appContext.getBean(GetBooksUseCase.class),
                 appContext.getBean(GetOffersOfBookUseCase.class),
+                appContext.getBean(SetFavoriteBookUseCase.class),
                 appContext.getBean(TokenDecoder.class),
                 appContext.getBean(CreateBookCommandMapper.class)
                 );
@@ -382,6 +384,15 @@ public class PeripheryConfig {
     public GetBooksUseCase getBooksUseCase() {
         return new GetBooksService(appContext.getBean(FindAllBooks.class),
                 appContext.getBean(FindAllRatingsByBookId.class)
+        );
+    }
+
+    @Bean("SetFavoriteBookService")
+    public SetFavoriteBookUseCase setFavoriteBookUseCase() {
+        return new SetFavoriteBookService(appContext.getBean(FindUserById.class),
+                appContext.getBean(FindBookById.class),
+                appContext.getBean(SaveUser.class),
+                appContext.getBean(SaveBook.class)
         );
     }
 

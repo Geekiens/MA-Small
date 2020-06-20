@@ -16,6 +16,7 @@ public class GetBooksOutput {
     public String content;
     public Double averageRating;
     public int totalVotes = 0;
+    public int favoriteCounter;
 
     public GetBooksOutput() {
     }
@@ -122,6 +123,14 @@ public class GetBooksOutput {
 
     public void setTotalVotes(int totalVotes) {
         this.totalVotes = totalVotes;
+    }
+
+    public int getFavoriteCounter() {
+        return favoriteCounter;
+    }
+
+    public void setFavoriteCounter(int favoriteCounter) {
+        this.favoriteCounter = favoriteCounter;
     }
 
     @Override

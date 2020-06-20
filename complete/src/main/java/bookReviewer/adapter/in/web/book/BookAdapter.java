@@ -7,4 +7,5 @@ public interface BookAdapter {
     void deleteBook(Long bookId, String token);
     BookWithOffers getBook(Long bookId);
     List<BookWithRatingInformation> getBooks();
+    void addFavorite(Long bookId, String token);
 }

@@ -16,6 +16,7 @@ public final class BookMapper {
         bookPersistence.setPages(book.getBookMetaDetails().getPages());
         bookPersistence.setPublisher(book.getBookMetaDetails().getPublisher());
         bookPersistence.setPublishingYear(book.getBookMetaDetails().getPublishingYear());
+        bookPersistence.setFavoriteCounter(book.getFavoriteCounter());
         return bookPersistence;
     }
 }

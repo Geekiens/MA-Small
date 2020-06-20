@@ -4,6 +4,7 @@ import bookReviewer.adapter.in.web.util.MapWithReflection;
 import bookReviewer.adapter.in.web.util.token.TokenDecoder;
 import bookReviewer.application.boundary.in.useCase.command.CreateBookUseCase;
 import bookReviewer.application.boundary.in.useCase.command.DeleteBookUseCase;
+import bookReviewer.application.boundary.in.useCase.command.SetFavoriteBookUseCase;
 import bookReviewer.application.boundary.in.useCase.query.GetBookUseCase;
 import bookReviewer.application.boundary.in.useCase.query.GetBooksUseCase;
 import bookReviewer.application.boundary.in.useCase.query.GetOffersOfBookUseCase;
@@ -27,6 +28,8 @@ public class BookAdapterService implements BookAdapter{
 
     GetBooksUseCase getBooksUseCase;
 
+    SetFavoriteBookUseCase setFavoriteBookUseCase;
+
     TokenDecoder tokenDecoder;
 
     CreateBookCommandMapper createBookCommandMapper;
@@ -36,6 +39,7 @@ public class BookAdapterService implements BookAdapter{
                               GetBookUseCase getBookUseCase,
                               GetBooksUseCase getBooksUseCase,
                               GetOffersOfBookUseCase getOffersOfBookUseCase,
+                              SetFavoriteBookUseCase setFavoriteBookUseCase,
                               TokenDecoder tokenDecoder,
                               CreateBookCommandMapper createBookCommandMapper){
         this.createBookUseCase = createBookUseCase;
@@ -43,6 +47,7 @@ public class BookAdapterService implements BookAdapter{
         this.getBookUseCase = getBookUseCase;
         this.getBooksUseCase = getBooksUseCase;
         this.getOffersOfBookUseCase = getOffersOfBookUseCase;
+        this.setFavoriteBookUseCase = setFavoriteBookUseCase;
         this.tokenDecoder = tokenDecoder;
         this.createBookCommandMapper = createBookCommandMapper;
     }
@@ -79,5 +84,9 @@ public class BookAdapterService implements BookAdapter{
 
         }
         return bookWithRatingList;
+    }
+
+    public void addFavorite(Long bookId, String token){
+        setFavoriteBookUseCase.addFavorite(bookId, tokenDecoder.getUserId(token));
     }
 }
