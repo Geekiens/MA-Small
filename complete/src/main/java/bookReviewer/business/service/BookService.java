@@ -63,10 +63,14 @@ public class BookService {
                 Book oldFavoriteBook = bookRepository.findById(user.getFavoriteBook()).orElse(null);
                 if (oldFavoriteBook != null){
                     oldFavoriteBook.decreaseFavoriteCounter();
+                    bookRepository.save(oldFavoriteBook);
                 }
             }
             book.increaseFavoriteCounter();
             user.setFavoriteBook(bookId);
+            bookRepository.save(book);
+            userRepository.save(user);
+
         }
     }
 
