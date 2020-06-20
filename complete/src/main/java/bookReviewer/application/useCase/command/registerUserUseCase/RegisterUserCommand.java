@@ -7,15 +7,17 @@ public class RegisterUserCommand {
     private String password;
     private String email;
     private Role role;
+    private  String gender;
 
     public RegisterUserCommand() {
     }
 
-    public RegisterUserCommand(String username, String password, String email, Role role) {
+    public RegisterUserCommand(String username, String password, String email, Role role, String gender) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.role = role;
+        this.gender = gender;
     }
 
     public String getUsername() {
@@ -48,5 +50,13 @@ public class RegisterUserCommand {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 }

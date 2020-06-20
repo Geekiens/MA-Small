@@ -13,6 +13,7 @@ public class User {
     @NotNull
     private Credentials credentials;
     private List<Activity> activities;
+    private String gender;
 
     public User() {
     }
@@ -23,13 +24,13 @@ public class User {
         this.credentials = credentials;
     }
 
-    public User(long id, String email, Role role, Credentials credentials, List<Activity> activityList) {
+    public User(long id, String email, Role role, Credentials credentials, List<Activity> activityList, String gender) {
         this.id = id;
         this.email = email;
         this.role = role;
         this.credentials = credentials;
         this.activities = activityList;
-
+        this.gender = gender;
 
     }
 
@@ -93,6 +94,14 @@ public class User {
 
     public void setActivities(List<Activity> activities) {
         this.activities = activities;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     @Override

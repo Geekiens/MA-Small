@@ -29,6 +29,7 @@ public class RegisterUserService implements RegisterUserUseCase {
         user.setCredentials(credentials);
         user.setEmail(registerUserCommand.getEmail());
         user.setRole(RoleMapper.map(registerUserCommand.getRole()));
+        user.setGender(registerUserCommand.getGender());
         saveUser.saveUser(user);
     }
 

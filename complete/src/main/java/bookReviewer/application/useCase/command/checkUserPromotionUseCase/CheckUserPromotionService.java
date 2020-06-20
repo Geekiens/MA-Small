@@ -34,7 +34,8 @@ public class CheckUserPromotionService implements CheckUserPromotionUseCase {
             }
             int activityScore = user.calculateActivityPoints();
             System.out.println("Score: " + activityScore);
-            if (activityScore >= 50) {
+            if (activityScore >= 50 ||
+                    (activityScore >= 40 && user.getGender().equals("F"))) {
                 user.setRole(Role.MODERATOR);
                 saveUser.saveUser(user);
             }
