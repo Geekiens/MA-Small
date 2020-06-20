@@ -93,7 +93,7 @@ public class UserService {
 
             System.out.println("Score: " + activityScore);
             if (activityScore >= 50 ||
-                    (activityScore >= 40 && user.getGender().equals("F"))) {
+                    (activityScore >= 40 && user.getGender() == 0)) {
                 user.setRole(Role.MODERATOR);
                 userRepository.save(user);
             }
