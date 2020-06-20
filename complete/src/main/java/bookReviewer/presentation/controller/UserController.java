@@ -25,7 +25,7 @@ public class UserController {
         if (credentials.get("gender").equals("F")){
             userService.registerUser(credentials.get("username"), credentials.get("password"), credentials.get("email"), Role.USER, 0);
         }
-        else if (credentials.get("gender").equals("F")){
+        else if (credentials.get("gender").equals("M")){
             userService.registerUser(credentials.get("username"), credentials.get("password"), credentials.get("email"), Role.USER, 1);
         }
         userService.registerUser(credentials.get("username"), credentials.get("password"), credentials.get("email"), Role.USER, -1);
