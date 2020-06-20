@@ -36,6 +36,9 @@ public class User {
     @Column(name="gender")
     private int gender;
 
+    @Column(name="favoriteBook")
+    private Long favoriteBook;
+
     public User() {
     }
 
@@ -102,5 +105,13 @@ public class User {
 
     public void setGender(int gender) {
         this.gender = gender;
+    }
+
+    public Long getFavoriteBook() {
+        return favoriteBook;
+    }
+
+    public void setFavoriteBook(long favoriteBook) {
+        this.favoriteBook = favoriteBook;
     }
 }

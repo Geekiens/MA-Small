@@ -9,6 +9,7 @@ public class BookPresentation {
     String author;
     Double averageRating;
     int totalVotes;
+    int favoriteCounter;
 
     public BookPresentation(Book book, RatingSummary ratingSummary) {
         this.id = book.getId();
@@ -21,6 +22,7 @@ public class BookPresentation {
             this.averageRating = new Double(0);
         }
         this.totalVotes = ratingSummary.getTotalVotes();
+        this.favoriteCounter = book.getFavoriteCounter();
     }
 
     public Long getId() {
@@ -61,5 +63,13 @@ public class BookPresentation {
 
     public void setTotalVotes(int totalVotes) {
         this.totalVotes = totalVotes;
+    }
+
+    public int getFavoriteCounter() {
+        return favoriteCounter;
+    }
+
+    public void setFavoriteCounter(int favoriteCounter) {
+        this.favoriteCounter = favoriteCounter;
     }
 }

@@ -69,6 +69,19 @@ public class BookController {
         return bookService.createBook(book, cleanToken);
     }
 
+    @PostMapping(path= "/books/{id}/favorite", consumes = "application/json", produces = "application/json")
+    public void addFavoriteBook(@PathVariable("id") long id,
+                                @RequestHeader Map<String, String> headers){
+        String token = headers.get("authorization");
+        String cleanToken = null;
+        if (token != null){
+            String[] splittedToken = token.split(" ");
+            cleanToken = splittedToken[1];
+        }
+
+        bookService.addFavorite(id, cleanToken);
+    }
+
     @PreAuthorize("hasRequiredRole(#headers, 'MODERATOR')")
     @DeleteMapping(path = "/books/{id}")
     public void deleteBook(@PathVariable("id") long id,

@@ -53,6 +53,23 @@ public class BookService {
         return bookRepository.saveAndFlush(book).getId();
     }
 
+    public void addFavorite(Long bookId, String token){
+        if (token != null) {
+            Claims claims = JwtProvider.decodeJWT(token);
+            long userId = ((long) (int) claims.get("userId"));
+            User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("user doesn't exist with id: " + userId));
+            Book book = bookRepository.findById(bookId).orElseThrow(() -> new ResourceNotFoundException("book doesn't exist with id: " + bookId));
+            if (user.getFavoriteBook() != null){
+                Book oldFavoriteBook = bookRepository.findById(user.getFavoriteBook()).orElse(null);
+                if (oldFavoriteBook != null){
+                    oldFavoriteBook.decreaseFavoriteCounter();
+                }
+            }
+            book.increaseFavoriteCounter();
+            user.setFavoriteBook(bookId);
+        }
+    }
+
     public void deleteBook(long id) {
         bookRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("book doesn't exist with id: " + id));
         bookRepository.deleteById(id);
