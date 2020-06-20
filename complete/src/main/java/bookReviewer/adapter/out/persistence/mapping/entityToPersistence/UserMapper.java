@@ -11,6 +11,7 @@ public class UserMapper {
         userPersistence.setSalt(user.getCredentials().getSalt());
         userPersistence.setEmail(user.getEmail());
         userPersistence.setRole(RoleMapper.map(user.getRole()));
+        userPersistence.setFavoriteBook(user.getFavoriteBook());
         if (user.getGender().equals("F")){
             userPersistence.setGender(0);
         }
