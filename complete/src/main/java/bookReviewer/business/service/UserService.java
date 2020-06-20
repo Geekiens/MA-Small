@@ -24,7 +24,7 @@ public class UserService {
     @Autowired
     ActivityRepository activityRepository;
 
-    public void registerUser(String username, String password, String email, Role role, String gender) throws Exception {
+    public void registerUser(String username, String password, String email, Role role, int gender) throws Exception {
         byte[] salt = getSalt();
         String hashedPassword = get_SHA_1_SecurePassword(password, salt);
         User user = new User(username, hashedPassword, email, salt, role, gender);
