@@ -387,7 +387,7 @@ public class PeripheryConfig {
         );
     }
 
-    @Bean("GetBooksService")
+    @Bean("SetFavoriteBookService")
     public SetFavoriteBookUseCase setFavoriteBookUseCase() {
         return new SetFavoriteBookService(appContext.getBean(FindUserById.class),
                 appContext.getBean(FindBookById.class),
