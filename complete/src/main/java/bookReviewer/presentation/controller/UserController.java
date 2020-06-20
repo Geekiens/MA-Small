@@ -21,7 +21,15 @@ public class UserController {
 
     @PostMapping(path="/register*", produces = "application/json")
     public void register(@RequestBody Map<String, String> credentials) throws Exception {
-        userService.registerUser(credentials.get("username"), credentials.get("password"), credentials.get("email"), Role.USER, credentials.get("gender"));
+
+        if (credentials.get("gender").equals("F")){
+            userService.registerUser(credentials.get("username"), credentials.get("password"), credentials.get("email"), Role.USER, 0);
+        }
+        else if (credentials.get("gender").equals("F")){
+            userService.registerUser(credentials.get("username"), credentials.get("password"), credentials.get("email"), Role.USER, 1);
+        }
+        userService.registerUser(credentials.get("username"), credentials.get("password"), credentials.get("email"), Role.USER, -1);
+
     }
 
     @ExceptionHandler(Exception.class)
