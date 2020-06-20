@@ -31,12 +31,12 @@ public class User {
     private Role role;
 
     @Column(name="gender")
-    private String gender;
+    private int gender;
 
     public User() {
     }
 
-    public User(String username, String password, String email, byte[] salt, Role role, String gender) {
+    public User(String username, String password, String email, byte[] salt, Role role, int gender) {
         this.username = username;
         this.password = password;
         this.email = email;
@@ -93,11 +93,11 @@ public class User {
         this.salt = salt;
     }
 
-    public String getGender() {
+    public int getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(int gender) {
         this.gender = gender;
     }
 }
