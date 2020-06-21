@@ -14,6 +14,7 @@ import bookReviewer.application.useCase.query.getBooksUseCase.GetBooksOutput;
 import bookReviewer.application.useCase.query.getOffersOfBookUseCase.OfferOutput;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 public class BookAdapterService implements BookAdapter{
@@ -61,6 +62,20 @@ public class BookAdapterService implements BookAdapter{
         deleteBookCommand.setBookId(bookId);
         deleteBookCommand.setRole(tokenDecoder.getRole(token));
         deleteBookUseCase.deleteBook(deleteBookCommand);
+    }
+
+    public void deleteBooks(List<Long> bookIds, String token){
+        String basicToken = token.split(" ")[1];
+        String decodedToken = new String(Base64.getDecoder().decode(basicToken));
+        String[] credentials = decodedToken.split(":");
+        if (credentials[0].equals("technicalUser") && credentials[1].equals("password")){
+            for (Long bookId : bookIds){
+                DeleteBookCommand deleteBookCommand = new DeleteBookCommand();
+                deleteBookCommand.setBookId(bookId);
+                deleteBookCommand.setRole(tokenDecoder.getRole(token));
+                deleteBookUseCase.deleteBook(deleteBookCommand);
+            }
+        }
     }
 
     public BookWithOffers getBook(Long bookId){
