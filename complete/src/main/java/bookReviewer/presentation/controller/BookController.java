@@ -88,4 +88,11 @@ public class BookController {
                            @RequestHeader Map<String, String> headers) {
         bookService.deleteBook(id);
     }
+
+    @DeleteMapping(path = "/books")
+    public void deleteBook(@RequestBody List<Long> ids,
+                           @RequestHeader Map<String, String> headers) {
+        String basicToken = headers.get("authorization");
+        bookService.deleteBooks(ids, basicToken);
+    }
 }

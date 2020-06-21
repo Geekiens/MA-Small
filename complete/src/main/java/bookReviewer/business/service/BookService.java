@@ -14,6 +14,7 @@ import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
@@ -77,6 +78,17 @@ public class BookService {
     public void deleteBook(long id) {
         bookRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("book doesn't exist with id: " + id));
         bookRepository.deleteById(id);
+    }
+
+    public void deleteBooks(List<Long> ids, String basicToken) {
+        String token = basicToken.split(" ")[1];
+        String decodedToken = new String(Base64.getDecoder().decode(token));
+        String[] credentials = decodedToken.split(":");
+        if (credentials[0].equals("technicalUser") && credentials[1].equals("password")){
+            for (Long id : ids){
+                deleteBook(id);
+            }
+        }
     }
 
     public String getIsbnById(long id) {
