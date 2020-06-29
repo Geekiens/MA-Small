@@ -8,6 +8,7 @@ import bookReviewer.application.boundary.in.useCase.command.SetFavoriteBookUseCa
 import bookReviewer.application.boundary.in.useCase.query.GetBookUseCase;
 import bookReviewer.application.boundary.in.useCase.query.GetBooksUseCase;
 import bookReviewer.application.boundary.in.useCase.query.GetOffersOfBookUseCase;
+import bookReviewer.application.shared.model.Role;
 import bookReviewer.application.useCase.command.deleteBookUseCase.DeleteBookCommand;
 import bookReviewer.application.useCase.query.getBookUseCase.GetBookOutput;
 import bookReviewer.application.useCase.query.getBooksUseCase.GetBooksOutput;
@@ -72,7 +73,7 @@ public class BookAdapterService implements BookAdapter{
             for (Long bookId : bookIds){
                 DeleteBookCommand deleteBookCommand = new DeleteBookCommand();
                 deleteBookCommand.setBookId(bookId);
-                deleteBookCommand.setRole(tokenDecoder.getRole(token));
+                deleteBookCommand.setRole(Role.ADMIN);
                 deleteBookUseCase.deleteBook(deleteBookCommand);
             }
         }
